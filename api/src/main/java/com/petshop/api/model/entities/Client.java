@@ -5,15 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
+@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "animals")
-public class Animal {
+@Table(name = "clients")
+public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -22,14 +23,13 @@ public class Animal {
     private String name;
 
     @Column(nullable = false)
-    private String species;
+    private String phone;
 
-    private String breed;
+    @Embedded
+    private Adress adress;
 
-    private LocalDate birthDate;
+    @OneToMany(mappedBy = "client")
+    private List<Animal> animals;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
 
 }

@@ -5,31 +5,30 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.util.UUID;
-
-@Data
+@Embeddable
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "animals")
-public class Animal {
+@Table(name = "adresses")
+public class Adress {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false)
-    private String name;
+    private String street;
 
     @Column(nullable = false)
-    private String species;
+    private String city;
 
-    private String breed;
+    @Column(nullable = false)
+    private String state;
 
-    private LocalDate birthDate;
+    @Column(nullable = false)
+    private String zipCode;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    private String complement;
 
 }
