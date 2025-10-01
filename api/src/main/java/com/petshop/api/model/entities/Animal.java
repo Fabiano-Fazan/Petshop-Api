@@ -1,5 +1,6 @@
 package com.petshop.api.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,8 +29,8 @@ public class Animal {
 
     private LocalDate birthDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "client_id")
+    @JsonBackReference
     private Client client;
-
 }

@@ -5,30 +5,25 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+@Data
 @Embeddable
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "adresses")
-public class Adress {
+public class Address {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-
-    @Column(nullable = false)
+    @Column(name = "street", nullable = false)
     private String street;
 
-    @Column(nullable = false)
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(nullable = false)
+    @Column(name = "state", nullable = false)
     private String state;
 
-    @Column(nullable = false)
+    @Column(name = "zip_code", nullable = false)
     private String zipCode;
 
+    @Column(name = "complement")
     private String complement;
 
 }

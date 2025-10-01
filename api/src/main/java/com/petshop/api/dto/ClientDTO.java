@@ -1,6 +1,7 @@
 package com.petshop.api.dto;
 
-import com.petshop.api.model.entities.Adress;
+import com.petshop.api.model.entities.Address;
+import com.petshop.api.model.entities.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,8 @@ public class ClientDTO {
     private UUID id;
     private String name;
     private String phone;
-    private Adress adress;
-    private List<AnimalDTO> animals;
+    private Address address;
+    private List<Animal> animals;
 
 
 }

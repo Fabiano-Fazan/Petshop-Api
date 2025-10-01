@@ -1,11 +1,14 @@
 package com.petshop.api.dto;
 
-import com.petshop.api.model.entities.Client;
+
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
+
 
 @Data
 public class CreateAnimalDTO {
@@ -18,13 +21,10 @@ public class CreateAnimalDTO {
 
     private String breed;
 
-    @NotBlank(message = "Birth date is required")
+    @NotNull(message = "Birth date is required")
+    @PastOrPresent(message = "Birth date cannot be in the future")
     private LocalDate birthDate;
 
-    @NotBlank(message = "Client id is required")
+    @NotNull(message = "Client ID is required")
     private UUID clientId;
-
-
-
-
 }

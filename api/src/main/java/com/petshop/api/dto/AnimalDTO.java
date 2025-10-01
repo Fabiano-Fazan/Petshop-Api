@@ -17,5 +17,4 @@ public class AnimalDTO {
     private LocalDate birthDate;
     private String breed;
     private UUID clientId;
-
 }
