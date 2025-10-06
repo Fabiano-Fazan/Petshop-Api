@@ -21,8 +21,20 @@ public class ClientController {
 
     @GetMapping
     public ResponseEntity<Page<ClientDTO>> getAllClients(Pageable pageable) {
-        Page<ClientDTO> clients = clientService.getAllClients(pageable);
-        return ResponseEntity.ok(clients);
+        Page<ClientDTO> allClients = clientService.getAllClients(pageable);
+        return ResponseEntity.ok(allClients);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable UUID id) {
+        ClientDTO clientById = clientService.getClientById(id);
+        return ResponseEntity.ok(clientById);
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Page<ClientDTO>> getClientByName(@PathVariable String name,Pageable pageable) {
+        Page<ClientDTO> clientByName = clientService.getClientByNameContainingIgnoreCase(name,pageable);
+        return ResponseEntity.ok(clientByName);
     }
 
     @PostMapping

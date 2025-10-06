@@ -10,6 +10,7 @@ import org.mapstruct.MappingTarget;
 public interface ClientMapper {
     Client toEntity(CreateClientDTO createClientDTO);
     ClientDTO toDto(Client client);
+
     void updateClientFromDTO(CreateClientDTO createClientDTO, @MappingTarget Client client);
 
 }

@@ -2,6 +2,7 @@ package com.petshop.api.model.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,21 +10,21 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Address {
 
-    @Column(name = "street", nullable = false)
+    @Column(nullable = false)
     private String street;
 
-    @Column(name = "city", nullable = false)
+    @Column(nullable = false)
     private String city;
 
-    @Column(name = "state", nullable = false)
+    @Column(nullable = false)
     private String state;
 
-    @Column(name = "zip_code", nullable = false)
+    @Column(nullable = false)
     private String zipCode;
 
-    @Column(name = "complement")
     private String complement;
 
 }

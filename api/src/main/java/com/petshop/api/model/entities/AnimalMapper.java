@@ -8,6 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AnimalMapper {
     Animal toEntity(CreateAnimalDTO createAnimalDTO);
+
     @Mapping(source = "client.id", target = "clientId")
     AnimalDTO toDto(Animal animal);
 }

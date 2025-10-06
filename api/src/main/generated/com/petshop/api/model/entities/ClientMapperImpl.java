@@ -1,5 +1,6 @@
 package com.petshop.api.model.entities;
 
+import com.petshop.api.dto.AnimalDTO;
 import com.petshop.api.dto.ClientDTO;
 import com.petshop.api.dto.CreateClientDTO;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-09-30T21:08:17-0300",
+    date = "2025-10-05T23:03:33-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -26,6 +27,7 @@ public class ClientMapperImpl implements ClientMapper {
         client.setName( createClientDTO.getName() );
         client.setPhone( createClientDTO.getPhone() );
         client.setAddress( addressDataToAddress( createClientDTO.getAddress() ) );
+        client.setAnimals( animalDTOListToAnimalList( createClientDTO.getAnimals() ) );
 
         return client;
     }
@@ -67,6 +69,22 @@ public class ClientMapperImpl implements ClientMapper {
         else {
             client.setAddress( null );
         }
+        if ( client.getAnimals() != null ) {
+            List<Animal> list = animalDTOListToAnimalList( createClientDTO.getAnimals() );
+            if ( list != null ) {
+                client.getAnimals().clear();
+                client.getAnimals().addAll( list );
+            }
+            else {
+                client.setAnimals( null );
+            }
+        }
+        else {
+            List<Animal> list = animalDTOListToAnimalList( createClientDTO.getAnimals() );
+            if ( list != null ) {
+                client.setAnimals( list );
+            }
+        }
     }
 
     protected Address addressDataToAddress(CreateClientDTO.AddressData addressData) {
@@ -83,6 +101,35 @@ public class ClientMapperImpl implements ClientMapper {
         address.setComplement( addressData.getComplement() );
 
         return address;
+    }
+
+    protected Animal animalDTOToAnimal(AnimalDTO animalDTO) {
+        if ( animalDTO == null ) {
+            return null;
+        }
+
+        Animal animal = new Animal();
+
+        animal.setId( animalDTO.getId() );
+        animal.setName( animalDTO.getName() );
+        animal.setSpecies( animalDTO.getSpecies() );
+        animal.setBreed( animalDTO.getBreed() );
+        animal.setBirthDate( animalDTO.getBirthDate() );
+
+        return animal;
+    }
+
+    protected List<Animal> animalDTOListToAnimalList(List<AnimalDTO> list) {
+        if ( list == null ) {
+            return null;
+        }
+
+        List<Animal> list1 = new ArrayList<Animal>( list.size() );
+        for ( AnimalDTO animalDTO : list ) {
+            list1.add( animalDTOToAnimal( animalDTO ) );
+        }
+
+        return list1;
     }
 
     protected void addressDataToAddress1(CreateClientDTO.AddressData addressData, Address mappingTarget) {
