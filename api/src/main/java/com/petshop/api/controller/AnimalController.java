@@ -21,7 +21,6 @@ public class AnimalController {
 
     private final AnimalService animalService;
 
-
     @GetMapping
     public ResponseEntity<Page<AnimalDTO>> getAllAnimals(Pageable pageable) {
         Page<AnimalDTO> animals = animalService.getAllAnimals(pageable);

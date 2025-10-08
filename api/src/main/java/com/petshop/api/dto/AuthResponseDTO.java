@@ -1,9 +1,11 @@
 package com.petshop.api.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class AuthResponseDTO {
     private String acessToken;

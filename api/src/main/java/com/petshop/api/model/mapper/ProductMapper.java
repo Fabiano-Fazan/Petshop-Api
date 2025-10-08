@@ -1,8 +1,9 @@
-package com.petshop.api.model.entities;
+package com.petshop.api.model.mapper;
 
 
 import com.petshop.api.dto.CreateProductDTO;
 import com.petshop.api.dto.ProductDTO;
+import com.petshop.api.model.entities.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 

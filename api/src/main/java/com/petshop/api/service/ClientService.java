@@ -3,7 +3,7 @@ package com.petshop.api.service;
 import com.petshop.api.dto.ClientDTO;
 import com.petshop.api.dto.CreateClientDTO;
 import com.petshop.api.model.entities.Client;
-import com.petshop.api.model.entities.ClientMapper;
+import com.petshop.api.model.mapper.ClientMapper;
 import com.petshop.api.repository.AnimalRepository;
 import com.petshop.api.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;

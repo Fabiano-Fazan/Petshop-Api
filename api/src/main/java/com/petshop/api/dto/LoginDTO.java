@@ -3,9 +3,12 @@ package com.petshop.api.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-import lombok.Data;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class LoginDTO {
 
     @NotBlank(message = "Email is required")

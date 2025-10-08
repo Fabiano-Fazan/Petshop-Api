@@ -1,14 +1,16 @@
-package com.petshop.api.model.entities;
+package com.petshop.api.model.mapper;
 
 import com.petshop.api.dto.AnimalDTO;
 import com.petshop.api.dto.CreateAnimalDTO;
+import com.petshop.api.model.entities.Animal;
+import com.petshop.api.model.entities.Client;
 import java.util.UUID;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-05T23:03:33-0300",
+    date = "2025-10-07T21:08:51-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -20,14 +22,14 @@ public class AnimalMapperImpl implements AnimalMapper {
             return null;
         }
 
-        Animal animal = new Animal();
+        Animal.AnimalBuilder animal = Animal.builder();
 
-        animal.setName( createAnimalDTO.getName() );
-        animal.setSpecies( createAnimalDTO.getSpecies() );
-        animal.setBreed( createAnimalDTO.getBreed() );
-        animal.setBirthDate( createAnimalDTO.getBirthDate() );
+        animal.name( createAnimalDTO.getName() );
+        animal.species( createAnimalDTO.getSpecies() );
+        animal.breed( createAnimalDTO.getBreed() );
+        animal.birthDate( createAnimalDTO.getBirthDate() );
 
-        return animal;
+        return animal.build();
     }
 
     @Override

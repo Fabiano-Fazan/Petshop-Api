@@ -4,7 +4,7 @@ import com.petshop.api.dto.CreateProductDTO;
 import com.petshop.api.dto.ProductDTO;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.enums.ProductCategory;
-import com.petshop.api.model.entities.ProductMapper;
+import com.petshop.api.model.mapper.ProductMapper;
 import com.petshop.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
