@@ -1,7 +1,7 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.ClientDTO;
-import com.petshop.api.dto.CreateClientDTO;
+import com.petshop.api.dto.response.ClientDTO;
+import com.petshop.api.dto.request.CreateClientDTO;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.mapper.ClientMapper;
 import com.petshop.api.repository.AnimalRepository;
@@ -37,12 +37,14 @@ public class ClientService {
                 .map(clientMapper::toDto);
     }
 
+    @Transactional
     public ClientDTO createClient(CreateClientDTO createClientDTO) {
         Client client = clientMapper.toEntity(createClientDTO);
         Client savedClient = clientRepository.save(client);
         return clientMapper.toDto(savedClient);
     }
 
+    @Transactional
     public ClientDTO updateClient(UUID id, CreateClientDTO clientDTO) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client not found"));

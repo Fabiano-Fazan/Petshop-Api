@@ -1,7 +1,7 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.AnimalDTO;
-import com.petshop.api.dto.CreateAnimalDTO;
+import com.petshop.api.dto.response.AnimalDTO;
+import com.petshop.api.dto.request.CreateAnimalDTO;
 import com.petshop.api.model.entities.Animal;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

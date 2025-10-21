@@ -1,6 +1,6 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.CreateStockMoviment;
+import com.petshop.api.dto.request.CreateStockMoviment;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.repository.ProductRepository;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stock")
 public class StockMovimentController {
+
     private final StockMovimentService stockMovimentService;
     private final ProductRepository productRepository;
 

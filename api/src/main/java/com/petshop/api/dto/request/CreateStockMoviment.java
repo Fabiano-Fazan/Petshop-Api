@@ -1,4 +1,4 @@
-package com.petshop.api.dto;
+package com.petshop.api.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +19,6 @@ public class CreateStockMoviment {
     @Positive(message = "The quantity needs to be positive")
     private Integer quantity;
 
-    @NotBlank(message = "The quantity cannot be null")
+    @NotBlank(message = "The description cannot be null")
     private String description;
 }

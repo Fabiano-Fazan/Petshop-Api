@@ -1,7 +1,7 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.AnimalDTO;
-import com.petshop.api.dto.CreateAnimalDTO;
+import com.petshop.api.dto.response.AnimalDTO;
+import com.petshop.api.dto.request.CreateAnimalDTO;
 import com.petshop.api.service.AnimalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

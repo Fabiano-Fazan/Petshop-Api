@@ -28,10 +28,11 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductCategory category;
 
     @Column(name = "quantity_in_stock", nullable = false)
-    private Integer quantityInStock;
+    private Integer quantityInStock = 0;
 
 }

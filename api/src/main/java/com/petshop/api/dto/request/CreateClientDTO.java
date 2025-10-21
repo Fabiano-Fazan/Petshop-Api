@@ -1,5 +1,6 @@
-package com.petshop.api.dto;
+package com.petshop.api.dto.request;
 
+import com.petshop.api.dto.response.AnimalDTO;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

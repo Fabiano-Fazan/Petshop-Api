@@ -1,4 +1,4 @@
-package com.petshop.api.dto;
+package com.petshop.api.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

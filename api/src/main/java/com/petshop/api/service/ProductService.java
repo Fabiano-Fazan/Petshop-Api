@@ -1,7 +1,7 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.CreateProductDTO;
-import com.petshop.api.dto.ProductDTO;
+import com.petshop.api.dto.request.CreateProductDTO;
+import com.petshop.api.dto.response.ProductDTO;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.enums.ProductCategory;
 import com.petshop.api.model.mapper.ProductMapper;
@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -35,12 +36,20 @@ public class ProductService {
                 .map(productMapper::toDto);
     }
 
+    public ProductDTO getProductById(UUID id) {
+        return productRepository.findById(id)
+                .map(productMapper::toDto)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+    }
+
+    @Transactional
     public ProductDTO createProduct(CreateProductDTO createProductDTO) {
         Product product = productMapper.toEntity(createProductDTO);
         Product savedProduct = productRepository.save(product);
         return productMapper.toDto(savedProduct);
     }
 
+    @Transactional
     public ProductDTO updateProduct(UUID id, CreateProductDTO productDTO) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -49,15 +58,10 @@ public class ProductService {
         return productMapper.toDto(updatedProduct);
     }
 
+    @Transactional
     public void deleteProduct(UUID id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
         productRepository.delete(product);
-    }
-
-    public ProductDTO getProductById(UUID id) {
-        return productRepository.findById(id)
-                .map(productMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
     }
 }

@@ -1,7 +1,7 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.CreateProductDTO;
-import com.petshop.api.dto.ProductDTO;
+import com.petshop.api.dto.request.CreateProductDTO;
+import com.petshop.api.dto.response.ProductDTO;
 import com.petshop.api.model.enums.ProductCategory;
 import com.petshop.api.service.ProductService;
 import jakarta.validation.Valid;

@@ -1,8 +1,8 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.AuthResponseDTO;
-import com.petshop.api.dto.LoginDTO;
-import com.petshop.api.dto.RegisterDTO;
+import com.petshop.api.dto.response.AuthResponseDTO;
+import com.petshop.api.dto.request.LoginDTO;
+import com.petshop.api.dto.request.RegisterDTO;
 import com.petshop.api.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

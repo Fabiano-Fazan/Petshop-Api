@@ -19,6 +19,10 @@ public class ProductSale {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private Integer quantity;
+
+    private BigDecimal unitPrice;
+
     @ManyToOne
     @JoinColumn(name = "product_id",nullable = false)
     private Product product;
@@ -27,7 +31,4 @@ public class ProductSale {
     @JoinColumn(name = "sale_id",nullable = false)
     private Sale sale;
 
-    private Integer quantity;
-
-    private BigDecimal unitPrice;
 }

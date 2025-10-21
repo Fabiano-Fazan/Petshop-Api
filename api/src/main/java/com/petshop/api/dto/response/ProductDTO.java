@@ -1,4 +1,4 @@
-package com.petshop.api.dto;
+package com.petshop.api.dto.response;
 
 import com.petshop.api.model.enums.ProductCategory;
 import lombok.*;

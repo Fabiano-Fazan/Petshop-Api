@@ -1,8 +1,8 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.CreateProductSaleDTO;
-import com.petshop.api.dto.CreateSaleDTO;
-import com.petshop.api.dto.SaleDTO;
+import com.petshop.api.dto.request.CreateProductSaleDTO;
+import com.petshop.api.dto.request.CreateSaleDTO;
+import com.petshop.api.dto.response.SaleDTO;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.Product;
@@ -50,6 +50,7 @@ public class SaleService {
             ProductSale productSale = new ProductSale();
             productSale.setProduct(product);
             productSale.setQuantity(productSaleDTO.getQuantity());
+            productSale.setUnitPrice(product.getPrice());
             productSale.setSale(newSale);
             newSale.getProductSales().add(productSale);
 

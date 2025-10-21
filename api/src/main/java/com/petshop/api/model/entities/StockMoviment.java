@@ -22,7 +22,7 @@ public class StockMoviment {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @Enumerated(EnumType.STRING)
@@ -39,7 +39,7 @@ public class StockMoviment {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "sale_id", nullable = false)
+    @JoinColumn(name = "sale_id", nullable = true)
     private Sale sale;
 
     public static StockMoviment newInput(Product product, Integer quantity, String description){

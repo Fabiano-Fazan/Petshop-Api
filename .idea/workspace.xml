@@ -1,40 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="caafdb7b-ac7a-436a-9dc8-99a99f6f3e42" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/petshop-api (1).iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/entities/AnimalMapperImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/entities/ClientMapperImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/entities/ProductMapperImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/AnimalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/AnimalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/AnimalDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/AnimalDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/AuthResponseDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/AuthResponseDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/ClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/ClientDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/CreateAnimalDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/CreateAnimalDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/CreateClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/CreateClientDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/CreateProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/CreateProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/LoginDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/LoginDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/ProductDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/RegisterDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/RegisterDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Address.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Animal.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Animal.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/AnimalMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/AnimalMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/ClientMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/ClientMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/ProductMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/AnimalService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ClientService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ProductService.java" afterDir="false" />
-    </list>
+    <list default="true" id="caafdb7b-ac7a-436a-9dc8-99a99f6f3e42" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,36 +10,36 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Fabiano-Fazan"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Fabiano-Fazan&quot;
   }
-}]]></component>
+}</component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/Fabiano-Fazan/Petshop-Api.git",
-    "accountId": "fa3d711e-c6ff-4059-b72a-d365f0853807"
+    "accountId": "708d89bc-2dba-4443-b659-cae0cb178a78"
   }
 }]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="33lB21PfyM3DnBAGG7n47SIbwhD" />
   <component name="ProjectViewState">
     <option name="showExcludedFiles" value="false" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="caafdb7b-ac7a-436a-9dc8-99a99f6f3e42" name="Changes" comment="" />
