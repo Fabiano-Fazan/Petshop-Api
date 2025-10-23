@@ -21,6 +21,7 @@ public class CreateClientDTO {
     @Pattern(regexp = "^\\(?[1-9]{2}\\)?[\\s-]?[9]?[0-9]{4,5}-?[0-9]{4}$",
             message = "Phone number must be in the format (XX) XXXXX-XXXX or (XX) XXXX-XXXX")
     private String phone;
+
     private List<AnimalDTO> animals;
 
     @Valid

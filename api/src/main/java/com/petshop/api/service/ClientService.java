@@ -1,8 +1,11 @@
 package com.petshop.api.service;
 
+import com.petshop.api.dto.request.UpdateClientDTO;
 import com.petshop.api.dto.response.ClientDTO;
 import com.petshop.api.dto.request.CreateClientDTO;
+import com.petshop.api.model.entities.Address;
 import com.petshop.api.model.entities.Client;
+import com.petshop.api.model.mapper.AddressMapper;
 import com.petshop.api.model.mapper.ClientMapper;
 import com.petshop.api.repository.AnimalRepository;
 import com.petshop.api.repository.ClientRepository;
@@ -19,6 +22,7 @@ import java.util.UUID;
 public class ClientService {
     private final ClientRepository clientRepository;
     private final ClientMapper clientMapper;
+    private final AddressMapper addressMapper;
     private final AnimalRepository animalRepository;
 
     public Page<ClientDTO> getAllClients(Pageable pageable) {
@@ -45,12 +49,18 @@ public class ClientService {
     }
 
     @Transactional
-    public ClientDTO updateClient(UUID id, CreateClientDTO clientDTO) {
+    public ClientDTO updateClient(UUID id, UpdateClientDTO clientDTO) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client not found"));
         clientMapper.updateClientFromDTO(clientDTO, client);
-        Client updatedClient = clientRepository.save(client);
-        return clientMapper.toDto(updatedClient);
+        if (clientDTO.getAddress() != null) {
+            if (client.getAddress() != null) {
+                client.setAddress(new Address());
+            }
+            addressMapper.updateAddressFromDTO(clientDTO.getAddress(), client.getAddress());
+        }
+        clientRepository.save(client);
+        return clientMapper.toDto(client);
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.petshop.api.controller;
 
+import com.petshop.api.dto.request.UpdateClientDTO;
 import com.petshop.api.dto.response.ClientDTO;
 import com.petshop.api.dto.request.CreateClientDTO;
 import com.petshop.api.service.ClientService;
@@ -44,9 +45,9 @@ public class ClientController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ClientDTO> updateClient(@PathVariable UUID id, @Valid @RequestBody CreateClientDTO createClientDTO) {
-        ClientDTO updatedClient = clientService.updateClient(id, createClientDTO);
+    @PatchMapping("/{id}")
+    public ResponseEntity<ClientDTO> updateClient(@PathVariable UUID id, @Valid @RequestBody UpdateClientDTO updateClientDTO) {
+        ClientDTO updatedClient = clientService.updateClient(id, updateClientDTO);
         return new ResponseEntity<>(updatedClient, HttpStatus.OK);
     }
 

@@ -7,7 +7,7 @@ import com.petshop.api.model.mapper.AnimalMapper;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.repository.AnimalRepository;
 import com.petshop.api.repository.ClientRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,10 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class AnimalService {
 
-    private  final AnimalRepository animalRepository;
+    private final AnimalRepository animalRepository;
     private final ClientRepository clientRepository;
     private final AnimalMapper animalMapper;
 

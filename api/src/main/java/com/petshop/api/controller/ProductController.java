@@ -1,6 +1,7 @@
 package com.petshop.api.controller;
 
 import com.petshop.api.dto.request.CreateProductDTO;
+import com.petshop.api.dto.request.UpdateProductDTO;
 import com.petshop.api.dto.response.ProductDTO;
 import com.petshop.api.model.enums.ProductCategory;
 import com.petshop.api.service.ProductService;
@@ -51,9 +52,9 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable UUID id, @Valid @RequestBody CreateProductDTO createProductDTO) {
-        ProductDTO product = productService.updateProduct(id, createProductDTO);
+    @PatchMapping("/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable UUID id, @Valid @RequestBody UpdateProductDTO updateProductDTO) {
+        ProductDTO product = productService.updateProduct(id, updateProductDTO);
         return ResponseEntity.ok(product);
     }
 

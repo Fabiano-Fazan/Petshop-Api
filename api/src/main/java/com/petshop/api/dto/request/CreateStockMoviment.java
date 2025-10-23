@@ -21,4 +21,6 @@ public class CreateStockMoviment {
 
     @NotBlank(message = "The description cannot be null")
     private String description;
+
+    private String invoice;
 }

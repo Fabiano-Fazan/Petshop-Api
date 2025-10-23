@@ -39,16 +39,19 @@ public class StockMoviment {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "sale_id", nullable = true)
+    @JoinColumn(name = "sale_id")
     private Sale sale;
 
-    public static StockMoviment newInput(Product product, Integer quantity, String description){
+    private String invoice;
+
+    public static StockMoviment newInput(Product product, Integer quantity, String description, String invoice){
         return StockMoviment.builder()
                 .product(product)
                 .quantity(quantity)
                 .type(TypeMoviment.INPUT)
                 .dateMoviment(LocalDateTime.now())
                 .description(description)
+                .invoice(invoice)
                 .build();
     }
 

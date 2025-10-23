@@ -1,6 +1,7 @@
 package com.petshop.api.service;
 
 import com.petshop.api.dto.request.CreateProductDTO;
+import com.petshop.api.dto.request.UpdateProductDTO;
 import com.petshop.api.dto.response.ProductDTO;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.enums.ProductCategory;
@@ -50,10 +51,10 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO updateProduct(UUID id, CreateProductDTO productDTO) {
+    public ProductDTO updateProduct(UUID id, UpdateProductDTO updateProductDTO) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
-        productMapper.updateProductFromDTO(productDTO, product);
+        productMapper.updateProductFromDTO(updateProductDTO, product);
         Product updatedProduct = productRepository.save(product);
         return productMapper.toDto(updatedProduct);
     }
