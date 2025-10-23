@@ -9,11 +9,14 @@ import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.entities.ProductSale;
 import com.petshop.api.model.entities.Sale;
 
+import com.petshop.api.model.enums.SaleStatus;
 import com.petshop.api.model.mapper.SaleMapper;
 import com.petshop.api.repository.ClientRepository;
 import com.petshop.api.repository.ProductRepository;
 import com.petshop.api.repository.SaleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,10 +43,11 @@ public class SaleService {
 
         newSale.setClient(client);
         newSale.setSaleDate(LocalDateTime.now());
+        newSale.setStatus(SaleStatus.COMPLETED);
 
         BigDecimal totalValue = BigDecimal.ZERO;
 
-        for (CreateProductSaleDTO productSaleDTO : createSaleDTO.getProductSales()){
+        for (CreateProductSaleDTO productSaleDTO : createSaleDTO.getProductSales()) {
             Product product = productRepository.findById(productSaleDTO.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
 
@@ -60,7 +64,7 @@ public class SaleService {
 
         Sale savedSale = saleRepository.save(newSale);
 
-        for (ProductSale productSold : savedSale.getProductSales()){
+        for (ProductSale productSold : savedSale.getProductSales()) {
             String description = "SALE_ORDER_" + savedSale.getId();
             stockMovimentService.registerOutput(
                     productSold.getProduct(),
@@ -72,10 +76,40 @@ public class SaleService {
         return saleMapper.toDto(savedSale);
     }
 
-    public  SaleDTO findById(UUID id){
+    public SaleDTO findById(UUID id) {
         return saleRepository.findById(id)
                 .map(saleMapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Sale not found with ID: " + id));
+    }
+
+    public Page<SaleDTO> getAllSales(Pageable pageable) {
+        return saleRepository.findAll(pageable)
+                .map(saleMapper::toDto);
+    }
+
+    @Transactional
+    public SaleDTO cancelSale(UUID id) {
+        Sale sale = saleRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Sale not found with ID: " + id));
+
+        if (sale.getStatus() == SaleStatus.CANCELED) {
+            throw new IllegalStateException("This sale is already canceled");
+        }
+
+        sale.setStatus(SaleStatus.CANCELED);
+        Sale canceledSale = saleRepository.save(sale);
+
+        for (ProductSale productSold : canceledSale.getProductSales()) {
+            String description = "CANCELATION_OF_SALE_ORDER_" + canceledSale.getId();
+
+            stockMovimentService.registerInput(
+                    productSold.getProduct(),
+                    productSold.getQuantity(),
+                    description,
+                    null
+            );
+        }
+        return saleMapper.toDto(canceledSale);
     }
 }
 

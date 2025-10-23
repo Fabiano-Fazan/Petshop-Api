@@ -1,5 +1,6 @@
 package com.petshop.api.model.entities;
 
+import com.petshop.api.model.enums.SaleStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,6 +25,11 @@ public class Sale {
     private LocalDateTime saleDate;
 
     private BigDecimal totalValue;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SaleStatus status;
+
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)

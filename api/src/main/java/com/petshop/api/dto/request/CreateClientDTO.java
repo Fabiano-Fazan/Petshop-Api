@@ -22,8 +22,6 @@ public class CreateClientDTO {
             message = "Phone number must be in the format (XX) XXXXX-XXXX or (XX) XXXX-XXXX")
     private String phone;
 
-    private List<AnimalDTO> animals;
-
     @Valid
     @NotNull(message = "Adress is required")
      private AddressData address;
