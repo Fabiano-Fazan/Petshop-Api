@@ -2,7 +2,8 @@ package com.petshop.api.service;
 
 import com.petshop.api.dto.request.CreateProductDTO;
 import com.petshop.api.dto.request.UpdateProductDTO;
-import com.petshop.api.dto.response.ProductDTO;
+import com.petshop.api.dto.response.ProductResponseDTO;
+import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.enums.ProductCategory;
 import com.petshop.api.model.mapper.ProductMapper;
@@ -22,47 +23,48 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public Page<ProductDTO> getAllProducts(Pageable pageable) {
+    public Page<ProductResponseDTO> getAllProducts(Pageable pageable) {
         return productRepository.findAll(pageable)
-                .map(productMapper::toDto);
+                .map(productMapper::toResponseDto);
     }
 
-    public Page<ProductDTO> findProductByCategory(ProductCategory productCategory,Pageable pageable) {
+    public Page<ProductResponseDTO> findProductByCategory(ProductCategory productCategory, Pageable pageable) {
         return productRepository.findByCategory(productCategory, pageable)
-                .map(productMapper::toDto);
+                .map(productMapper::toResponseDto);
     }
 
-    public Page<ProductDTO>  findProductByName(String name, Pageable pageable){
+    public Page<ProductResponseDTO>  findProductByName(String name, Pageable pageable){
         return productRepository.findByNameContainingIgnoreCase(name, pageable)
-                .map(productMapper::toDto);
+                .map(productMapper::toResponseDto);
     }
 
-    public ProductDTO getProductById(UUID id) {
+    public ProductResponseDTO getProductById(UUID id) {
         return productRepository.findById(id)
-                .map(productMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
+                .map(productMapper::toResponseDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + id));
     }
 
     @Transactional
-    public ProductDTO createProduct(CreateProductDTO createProductDTO) {
+    public ProductResponseDTO createProduct(CreateProductDTO createProductDTO) {
         Product product = productMapper.toEntity(createProductDTO);
         Product savedProduct = productRepository.save(product);
-        return productMapper.toDto(savedProduct);
+        return productMapper.toResponseDto(savedProduct);
     }
 
     @Transactional
-    public ProductDTO updateProduct(UUID id, UpdateProductDTO updateProductDTO) {
+    public ProductResponseDTO updateProduct(UUID id, UpdateProductDTO updateProductDTO) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found"));
         productMapper.updateProductFromDTO(updateProductDTO, product);
         Product updatedProduct = productRepository.save(product);
-        return productMapper.toDto(updatedProduct);
+        return productMapper.toResponseDto(updatedProduct);
     }
 
     @Transactional
     public void deleteProduct(UUID id) {
-        Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
-        productRepository.delete(product);
+        if (!productRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Product not found with ID: " + id);
+            }
+        productRepository.deleteById(id);
     }
 }

@@ -10,10 +10,10 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDTO {
+public class ClientResponseDTO {
     private UUID id;
     private String name;
     private String phone;
     private Address address;
-    private List<AnimalDTO> animals;
+    private List<AnimalResponseDTO> animals;
 }

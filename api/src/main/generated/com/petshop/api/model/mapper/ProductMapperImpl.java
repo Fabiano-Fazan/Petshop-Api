@@ -1,14 +1,16 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.CreateProductDTO;
-import com.petshop.api.dto.ProductDTO;
+import com.petshop.api.dto.request.CreateProductDTO;
+import com.petshop.api.dto.request.UpdateProductDTO;
+import com.petshop.api.dto.response.ProductResponseDTO;
 import com.petshop.api.model.entities.Product;
+import com.petshop.api.model.enums.ProductCategory;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-07T21:08:51-0300",
+    date = "2025-10-23T21:14:39-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -22,6 +24,12 @@ public class ProductMapperImpl implements ProductMapper {
 
         Product.ProductBuilder product = Product.builder();
 
+        if ( createProductDTO.getQuantityInStock() != null ) {
+            product.quantityInStock( createProductDTO.getQuantityInStock() );
+        }
+        else {
+            product.quantityInStock( 0 );
+        }
         product.name( createProductDTO.getName() );
         product.description( createProductDTO.getDescription() );
         product.price( createProductDTO.getPrice() );
@@ -31,31 +39,39 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public ProductDTO toDto(Product product) {
+    public ProductResponseDTO toResponseDto(Product product) {
         if ( product == null ) {
             return null;
         }
 
-        ProductDTO productDTO = new ProductDTO();
+        ProductResponseDTO productResponseDTO = new ProductResponseDTO();
 
-        productDTO.setId( product.getId() );
-        productDTO.setName( product.getName() );
-        productDTO.setDescription( product.getDescription() );
-        productDTO.setPrice( product.getPrice() );
-        productDTO.setCategory( product.getCategory() );
+        productResponseDTO.setId( product.getId() );
+        productResponseDTO.setName( product.getName() );
+        productResponseDTO.setDescription( product.getDescription() );
+        productResponseDTO.setPrice( product.getPrice() );
+        productResponseDTO.setCategory( product.getCategory() );
 
-        return productDTO;
+        return productResponseDTO;
     }
 
     @Override
-    public void updateProductFromDTO(CreateProductDTO createProductDTO, Product product) {
-        if ( createProductDTO == null ) {
+    public void updateProductFromDTO(UpdateProductDTO updateProductDTO, Product product) {
+        if ( updateProductDTO == null ) {
             return;
         }
 
-        product.setName( createProductDTO.getName() );
-        product.setDescription( createProductDTO.getDescription() );
-        product.setPrice( createProductDTO.getPrice() );
-        product.setCategory( createProductDTO.getCategory() );
+        if ( updateProductDTO.getName() != null ) {
+            product.setName( updateProductDTO.getName() );
+        }
+        if ( updateProductDTO.getDescription() != null ) {
+            product.setDescription( updateProductDTO.getDescription() );
+        }
+        if ( updateProductDTO.getPrice() != null ) {
+            product.setPrice( updateProductDTO.getPrice() );
+        }
+        if ( updateProductDTO.getCategory() != null ) {
+            product.setCategory( Enum.valueOf( ProductCategory.class, updateProductDTO.getCategory() ) );
+        }
     }
 }

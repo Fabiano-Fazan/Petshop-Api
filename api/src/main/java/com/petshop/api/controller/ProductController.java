@@ -2,7 +2,7 @@ package com.petshop.api.controller;
 
 import com.petshop.api.dto.request.CreateProductDTO;
 import com.petshop.api.dto.request.UpdateProductDTO;
-import com.petshop.api.dto.response.ProductDTO;
+import com.petshop.api.dto.response.ProductResponseDTO;
 import com.petshop.api.model.enums.ProductCategory;
 import com.petshop.api.service.ProductService;
 import jakarta.validation.Valid;
@@ -23,38 +23,38 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> getAllProducts(Pageable pageable) {
-        Page<ProductDTO> products = productService.getAllProducts(pageable);
+    public ResponseEntity<Page<ProductResponseDTO>> getAllProducts(Pageable pageable) {
+        Page<ProductResponseDTO> products = productService.getAllProducts(pageable);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductDTO> getProductById(@PathVariable UUID id) {
-        ProductDTO product = productService.getProductById(id);
+    public ResponseEntity<ProductResponseDTO> getProductById(@PathVariable UUID id) {
+        ProductResponseDTO product = productService.getProductById(id);
         return ResponseEntity.ok(product);
     }
 
     @GetMapping("/category/{category}")
-    public ResponseEntity<Page<ProductDTO>> getProductByCategory(@PathVariable("category") ProductCategory productCategory,Pageable pageable) {
-        Page<ProductDTO> productsByCategory = productService.findProductByCategory(productCategory,pageable);
+    public ResponseEntity<Page<ProductResponseDTO>> getProductByCategory(@PathVariable("category") ProductCategory productCategory, Pageable pageable) {
+        Page<ProductResponseDTO> productsByCategory = productService.findProductByCategory(productCategory,pageable);
         return ResponseEntity.ok(productsByCategory);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Page<ProductDTO>> getProductByName(@PathVariable("name") String name,Pageable pageable) {
-        Page<ProductDTO> productsByName = productService.findProductByName(name,pageable);
+    public ResponseEntity<Page<ProductResponseDTO>> getProductByName(@PathVariable("name") String name, Pageable pageable) {
+        Page<ProductResponseDTO> productsByName = productService.findProductByName(name,pageable);
         return ResponseEntity.ok(productsByName);
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> createProduct(@Valid @RequestBody CreateProductDTO createProductDTO) {
-        ProductDTO product = productService.createProduct(createProductDTO);
+    public ResponseEntity<ProductResponseDTO> createProduct(@Valid @RequestBody CreateProductDTO createProductDTO) {
+        ProductResponseDTO product = productService.createProduct(createProductDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductDTO> updateProduct(@PathVariable UUID id, @Valid @RequestBody UpdateProductDTO updateProductDTO) {
-        ProductDTO product = productService.updateProduct(id, updateProductDTO);
+    public ResponseEntity<ProductResponseDTO> updateProduct(@PathVariable UUID id, @Valid @RequestBody UpdateProductDTO updateProductDTO) {
+        ProductResponseDTO product = productService.updateProduct(id, updateProductDTO);
         return ResponseEntity.ok(product);
     }
 

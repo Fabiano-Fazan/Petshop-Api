@@ -1,7 +1,7 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.ProductSaleDTO;
-import com.petshop.api.dto.SaleDTO;
+import com.petshop.api.dto.response.ProductSaleResponseDTO;
+import com.petshop.api.dto.response.SaleResponseDTO;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.entities.ProductSale;
@@ -14,43 +14,43 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-07T21:08:51-0300",
+    date = "2025-10-23T21:14:39-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
 public class SaleMapperImpl implements SaleMapper {
 
     @Override
-    public SaleDTO toDto(Sale sale) {
+    public SaleResponseDTO toResponseDto(Sale sale) {
         if ( sale == null ) {
             return null;
         }
 
-        SaleDTO saleDTO = new SaleDTO();
+        SaleResponseDTO saleResponseDTO = new SaleResponseDTO();
 
-        saleDTO.setClientName( saleClientName( sale ) );
-        saleDTO.setId( sale.getId() );
-        saleDTO.setSaleDate( sale.getSaleDate() );
-        saleDTO.setTotalValue( sale.getTotalValue() );
-        saleDTO.setProductSales( productSaleListToProductSaleDTOList( sale.getProductSales() ) );
+        saleResponseDTO.setClientName( saleClientName( sale ) );
+        saleResponseDTO.setId( sale.getId() );
+        saleResponseDTO.setSaleDate( sale.getSaleDate() );
+        saleResponseDTO.setTotalValue( sale.getTotalValue() );
+        saleResponseDTO.setProductSales( productSaleListToProductSaleResponseDTOList( sale.getProductSales() ) );
 
-        return saleDTO;
+        return saleResponseDTO;
     }
 
     @Override
-    public ProductSaleDTO toProductSaleDto(ProductSale productSale) {
+    public ProductSaleResponseDTO toProductSaleDto(ProductSale productSale) {
         if ( productSale == null ) {
             return null;
         }
 
-        ProductSaleDTO productSaleDTO = new ProductSaleDTO();
+        ProductSaleResponseDTO productSaleResponseDTO = new ProductSaleResponseDTO();
 
-        productSaleDTO.setProductId( productSaleProductId( productSale ) );
-        productSaleDTO.setProductName( productSaleProductName( productSale ) );
-        productSaleDTO.setQuantity( productSale.getQuantity() );
-        productSaleDTO.setUnitPrice( productSale.getUnitPrice() );
+        productSaleResponseDTO.setProductId( productSaleProductId( productSale ) );
+        productSaleResponseDTO.setProductName( productSaleProductName( productSale ) );
+        productSaleResponseDTO.setQuantity( productSale.getQuantity() );
+        productSaleResponseDTO.setUnitPrice( productSale.getUnitPrice() );
 
-        return productSaleDTO;
+        return productSaleResponseDTO;
     }
 
     private String saleClientName(Sale sale) {
@@ -68,12 +68,12 @@ public class SaleMapperImpl implements SaleMapper {
         return name;
     }
 
-    protected List<ProductSaleDTO> productSaleListToProductSaleDTOList(List<ProductSale> list) {
+    protected List<ProductSaleResponseDTO> productSaleListToProductSaleResponseDTOList(List<ProductSale> list) {
         if ( list == null ) {
             return null;
         }
 
-        List<ProductSaleDTO> list1 = new ArrayList<ProductSaleDTO>( list.size() );
+        List<ProductSaleResponseDTO> list1 = new ArrayList<ProductSaleResponseDTO>( list.size() );
         for ( ProductSale productSale : list ) {
             list1.add( toProductSaleDto( productSale ) );
         }

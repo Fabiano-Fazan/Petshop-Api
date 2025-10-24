@@ -11,11 +11,11 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SaleDTO {
+public class SaleResponseDTO {
     private UUID id;
     private UUID clientId;
     private String clientName;
     private LocalDateTime saleDate;
     private BigDecimal totalValue;
-    private List<ProductSaleDTO> productSales;
+    private List<ProductSaleResponseDTO> productSales;
 }

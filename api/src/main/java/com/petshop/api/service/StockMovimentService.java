@@ -54,7 +54,4 @@ public class StockMovimentService {
         StockMoviment stockMoviment = StockMoviment.newOutput(product, quantity,description,sale);
         stockMovimentRepository.save(stockMoviment);
     }
-
-
-
 }

@@ -1,7 +1,7 @@
 package com.petshop.api.controller;
 
 import com.petshop.api.dto.request.CreateSaleDTO;
-import com.petshop.api.dto.response.SaleDTO;
+import com.petshop.api.dto.response.SaleResponseDTO;
 import com.petshop.api.service.SaleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,26 +20,26 @@ public class SaleController {
     private  final SaleService saleService;
 
     @PostMapping
-    public ResponseEntity<SaleDTO> createSale(@RequestBody @Valid CreateSaleDTO createSaleDTO){
-        SaleDTO newSale = saleService.createSale(createSaleDTO);
+    public ResponseEntity<SaleResponseDTO> createSale(@RequestBody @Valid CreateSaleDTO createSaleDTO){
+        SaleResponseDTO newSale = saleService.createSale(createSaleDTO);
         return new ResponseEntity<>(newSale, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<SaleDTO> findSaleById(@PathVariable UUID id){
-        SaleDTO sale = saleService.findById(id);
+    public  ResponseEntity<SaleResponseDTO> findSaleById(@PathVariable UUID id){
+        SaleResponseDTO sale = saleService.findById(id);
         return ResponseEntity.ok(sale);
     }
 
     @GetMapping
-    public ResponseEntity<Page<SaleDTO>> getAllSales(Pageable pageable){
-        Page<SaleDTO> sales = saleService.getAllSales(pageable);
+    public ResponseEntity<Page<SaleResponseDTO>> getAllSales(Pageable pageable){
+        Page<SaleResponseDTO> sales = saleService.getAllSales(pageable);
         return ResponseEntity.ok(sales);
     }
 
     @PostMapping("/{id}/cancel")
-    public ResponseEntity<SaleDTO> cancelSale(@PathVariable UUID id){
-        SaleDTO canceledSale = saleService.cancelSale(id);
+    public ResponseEntity<SaleResponseDTO> cancelSale(@PathVariable UUID id){
+        SaleResponseDTO canceledSale = saleService.cancelSale(id);
         return ResponseEntity.ok(canceledSale);
     }
 }

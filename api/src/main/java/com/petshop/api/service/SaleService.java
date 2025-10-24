@@ -2,7 +2,7 @@ package com.petshop.api.service;
 
 import com.petshop.api.dto.request.CreateProductSaleDTO;
 import com.petshop.api.dto.request.CreateSaleDTO;
-import com.petshop.api.dto.response.SaleDTO;
+import com.petshop.api.dto.response.SaleResponseDTO;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.Product;
@@ -35,7 +35,7 @@ public class SaleService {
     private final StockMovimentService stockMovimentService;
 
     @Transactional
-    public SaleDTO createSale(CreateSaleDTO createSaleDTO) {
+    public SaleResponseDTO createSale(CreateSaleDTO createSaleDTO) {
         Client client = clientRepository.findById(createSaleDTO.getClientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + createSaleDTO.getClientId()));
 
@@ -73,22 +73,22 @@ public class SaleService {
                     savedSale
             );
         }
-        return saleMapper.toDto(savedSale);
+        return saleMapper.toResponseDto(savedSale);
     }
 
-    public SaleDTO findById(UUID id) {
+    public SaleResponseDTO findById(UUID id) {
         return saleRepository.findById(id)
-                .map(saleMapper::toDto)
+                .map(saleMapper::toResponseDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Sale not found with ID: " + id));
     }
 
-    public Page<SaleDTO> getAllSales(Pageable pageable) {
+    public Page<SaleResponseDTO> getAllSales(Pageable pageable) {
         return saleRepository.findAll(pageable)
-                .map(saleMapper::toDto);
+                .map(saleMapper::toResponseDto);
     }
 
     @Transactional
-    public SaleDTO cancelSale(UUID id) {
+    public SaleResponseDTO cancelSale(UUID id) {
         Sale sale = saleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Sale not found with ID: " + id));
 
@@ -109,7 +109,7 @@ public class SaleService {
                     null
             );
         }
-        return saleMapper.toDto(canceledSale);
+        return saleMapper.toResponseDto(canceledSale);
     }
 }
 

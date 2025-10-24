@@ -1,7 +1,7 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.AnimalDTO;
-import com.petshop.api.dto.CreateAnimalDTO;
+import com.petshop.api.dto.request.CreateAnimalDTO;
+import com.petshop.api.dto.response.AnimalResponseDTO;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
 import java.util.UUID;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-07T21:08:51-0300",
+    date = "2025-10-23T21:14:39-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -33,21 +33,21 @@ public class AnimalMapperImpl implements AnimalMapper {
     }
 
     @Override
-    public AnimalDTO toDto(Animal animal) {
+    public AnimalResponseDTO toResponseDto(Animal animal) {
         if ( animal == null ) {
             return null;
         }
 
-        AnimalDTO animalDTO = new AnimalDTO();
+        AnimalResponseDTO animalResponseDTO = new AnimalResponseDTO();
 
-        animalDTO.setClientId( animalClientId( animal ) );
-        animalDTO.setId( animal.getId() );
-        animalDTO.setName( animal.getName() );
-        animalDTO.setSpecies( animal.getSpecies() );
-        animalDTO.setBirthDate( animal.getBirthDate() );
-        animalDTO.setBreed( animal.getBreed() );
+        animalResponseDTO.setClientId( animalClientId( animal ) );
+        animalResponseDTO.setId( animal.getId() );
+        animalResponseDTO.setName( animal.getName() );
+        animalResponseDTO.setSpecies( animal.getSpecies() );
+        animalResponseDTO.setBirthDate( animal.getBirthDate() );
+        animalResponseDTO.setBreed( animal.getBreed() );
 
-        return animalDTO;
+        return animalResponseDTO;
     }
 
     private UUID animalClientId(Animal animal) {

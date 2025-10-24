@@ -26,4 +26,8 @@ public class CreateProductDTO {
 
     @NotNull(message = "The category cannot be null")
     private ProductCategory category;
+
+    @NotNull(message = "The quantity in stock cannot be null")
+    @Positive(message = "The quantity in stock needs to be positive")
+    private Integer quantityInStock;
 }

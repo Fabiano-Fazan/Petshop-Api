@@ -4,8 +4,8 @@ services:
     container_name: petshop-api
     restart: always
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: petshop
     ports:
       - "5432:5432"

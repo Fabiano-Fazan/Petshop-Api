@@ -4,24 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="caafdb7b-ac7a-436a-9dc8-99a99f6f3e42" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/copilot.data.migration.agent.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/material_theme_project_new.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="caafdb7b-ac7a-436a-9dc8-99a99f6f3e42" name="Changes" comment="Ajustado logica do StockMovimentService e adicionado endpoit de update do ClientController">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/AnimalMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/AnimalMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/ClientMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/ClientMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/ProductMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/ProductMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/SaleMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/generated/com/petshop/api/model/mapper/SaleMapperImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/AnimalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/AnimalController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/ClientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/ClientController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/ProductController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/StockMovimentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/StockMovimentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/SaleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/controller/SaleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/CreateClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/CreateClientDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/CreateStockMoviment.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/CreateStockMoviment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/StockMoviment.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/StockMoviment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/CreateProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/CreateProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/UpdateProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/request/UpdateProductDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/AnimalDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/AnimalResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/ClientDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/ClientResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/ProductDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/ProductResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/ProductSaleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/ProductSaleResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/SaleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/dto/response/SaleResponseDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Veterinary.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/entities/Veterinarian.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/AddressMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/AddressMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/AnimalMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/AnimalMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/ClientMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/ClientMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/ProductMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/ProductMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/SaleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/model/mapper/SaleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/repository/ProductRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/repository/ProductRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/AnimalService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/AnimalService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/AuthService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ClientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ClientService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/ProductService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/SaleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/SaleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/StockMovimentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/java/com/petshop/api/service/StockMovimentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/api/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/api/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,8 +70,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
+        <option value="Enum" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -73,6 +91,9 @@
     &quot;accountId&quot;: &quot;fa3d711e-c6ff-4059-b72a-d365f0853807&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="ProjectErrors" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
@@ -84,7 +105,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.PetshopApiApplication.executor": "Debug",
     "Gradle.Download Sources.executor": "Run",
+    "Gradle.api [:com.petshop.api.PetshopApiApplication.main()].executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
@@ -93,10 +116,10 @@
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/fabya/OneDrive/Desktop/projetos/PetShopAPI/Petshop-Api",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.pluginManager"
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle"
   }
 }]]></component>
   <component name="TaskManager">
@@ -107,6 +130,27 @@
       <option name="presentableId" value="Default" />
       <updated>1759881568571</updated>
     </task>
+    <task id="LOCAL-00001" summary="Ajustado logica do StockMovimentService e adicionado endpoit de update do ClientController">
+      <option name="closed" value="true" />
+      <created>1761183717647</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761183717647</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Ajustado logica do StockMovimentService e adicionado endpoit de update do ClientController">
+      <option name="closed" value="true" />
+      <created>1761183802293</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1761183802293</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Ajustado logica do StockMovimentService e adicionado endpoit de update do ClientController" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajustado logica do StockMovimentService e adicionado endpoit de update do ClientController" />
   </component>
 </project>

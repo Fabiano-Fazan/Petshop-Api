@@ -1,8 +1,9 @@
 package com.petshop.api.service;
 
 import com.petshop.api.dto.request.UpdateClientDTO;
-import com.petshop.api.dto.response.ClientDTO;
+import com.petshop.api.dto.response.ClientResponseDTO;
 import com.petshop.api.dto.request.CreateClientDTO;
+import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Address;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.mapper.AddressMapper;
@@ -24,48 +25,49 @@ public class ClientService {
     private final AddressMapper addressMapper;
 
 
-    public Page<ClientDTO> getAllClients(Pageable pageable) {
+    public Page<ClientResponseDTO> getAllClients(Pageable pageable) {
         return clientRepository.findAll(pageable)
-                .map(clientMapper::toDto);
+                .map(clientMapper::toResponseDto);
     }
 
-    public ClientDTO getClientById(UUID id) {
+    public ClientResponseDTO getClientById(UUID id) {
         return clientRepository.findById(id)
-                .map(clientMapper::toDto)
-                .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
+                .map(clientMapper::toResponseDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found with id: " + id));
     }
 
-    public Page<ClientDTO> getClientByNameContainingIgnoreCase(String name, Pageable pageable) {
+    public Page<ClientResponseDTO> getClientByNameContainingIgnoreCase(String name, Pageable pageable) {
         return clientRepository.findAllByNameContainingIgnoreCase(name,pageable)
-                .map(clientMapper::toDto);
+                .map(clientMapper::toResponseDto);
     }
 
     @Transactional
-    public ClientDTO createClient(CreateClientDTO createClientDTO) {
+    public ClientResponseDTO createClient(CreateClientDTO createClientDTO) {
         Client client = clientMapper.toEntity(createClientDTO);
         Client savedClient = clientRepository.save(client);
-        return clientMapper.toDto(savedClient);
+        return clientMapper.toResponseDto(savedClient);
     }
 
     @Transactional
-    public ClientDTO updateClient(UUID id, UpdateClientDTO clientDTO) {
+    public ClientResponseDTO updateClient(UUID id, UpdateClientDTO clientDTO) {
         Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + id));
         clientMapper.updateClientFromDTO(clientDTO, client);
         if (clientDTO.getAddress() != null) {
-            if (client.getAddress() != null) {
+            if (client.getAddress() == null) {
                 client.setAddress(new Address());
             }
             addressMapper.updateAddressFromDTO(clientDTO.getAddress(), client.getAddress());
         }
         clientRepository.save(client);
-        return clientMapper.toDto(client);
+        return clientMapper.toResponseDto(client);
     }
 
     @Transactional
     public void deleteClient(UUID id) {
-        Client client = clientRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Client not found with id: " + id));
-        clientRepository.delete(client);
+        if (!clientRepository.existsById(id)){
+            throw new ResourceNotFoundException("Client not found with ID: " + id);
+        }
+        clientRepository.deleteById(id);
     }
 }

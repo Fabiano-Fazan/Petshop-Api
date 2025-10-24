@@ -1,7 +1,8 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.response.AnimalDTO;
+import com.petshop.api.dto.response.AnimalResponseDTO;
 import com.petshop.api.dto.request.CreateAnimalDTO;
+import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.mapper.AnimalMapper;
 import com.petshop.api.model.entities.Client;
@@ -23,27 +24,27 @@ public class AnimalService {
     private final ClientRepository clientRepository;
     private final AnimalMapper animalMapper;
 
-    public Page<AnimalDTO> getAllAnimals(Pageable pageable){
+    public Page<AnimalResponseDTO> getAllAnimals(Pageable pageable){
         return animalRepository.findAll(pageable)
-                .map(animalMapper::toDto);
+                .map(animalMapper::toResponseDto);
     }
 
     @Transactional
-    public AnimalDTO createAnimal(CreateAnimalDTO createAnimalDTO){
+    public AnimalResponseDTO createAnimal(CreateAnimalDTO createAnimalDTO){
         Client client = clientRepository.findById(createAnimalDTO.getClientId())
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found"));
 
         Animal animal = animalMapper.toEntity(createAnimalDTO);
         animal.setClient(client);
 
         Animal savedAnimal = animalRepository.save(animal);
-        return animalMapper.toDto(savedAnimal);
+        return animalMapper.toResponseDto(savedAnimal);
     }
 
     @Transactional
     public void deleteAnimal(UUID id){
         if(!animalRepository.existsById(id)){
-            throw new RuntimeException("Animal not found");
+            throw new ResourceNotFoundException("Animal not found");
         }
         animalRepository.deleteById(id);
     }

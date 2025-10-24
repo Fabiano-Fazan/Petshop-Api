@@ -8,6 +8,7 @@ import com.petshop.api.repository.UserRepository;
 import com.petshop.api.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class AuthService {
                 )
         );
         var user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(()-> new IllegalArgumentException("Invalid email or password"));
+                .orElseThrow(()-> new BadCredentialsException("Invalid email or password"));
 
         var jwtToken = jwtService.generateToken(user);
 
