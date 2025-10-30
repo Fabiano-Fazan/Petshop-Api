@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/petshop
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  application:
+   name: petshop-api
+
+application:
+  security:
+    jwt:
+      secret-key: edf9e4b72f5adbb59fe0a45024895ae6f5425c73c846e890a150a59d506ae8b2
+      expiration: 86400000
