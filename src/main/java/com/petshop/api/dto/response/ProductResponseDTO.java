@@ -1,6 +1,6 @@
 package com.petshop.api.dto.response;
 
-import com.petshop.api.model.entities.ProductCategory;
+
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -15,5 +15,5 @@ public class ProductResponseDTO {
     private String name;
     private String description;
     private BigDecimal price;
-    private ProductCategory category;
+    private String category;
 }

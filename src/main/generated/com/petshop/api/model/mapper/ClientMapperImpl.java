@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-23T21:14:39-0300",
+    date = "2025-10-31T12:59:01-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -34,6 +34,7 @@ public class ClientMapperImpl implements ClientMapper {
 
         client.name( createClientDTO.getName() );
         client.phone( createClientDTO.getPhone() );
+        client.cpf( createClientDTO.getCpf() );
         client.address( addressDataToAddress( createClientDTO.getAddress() ) );
 
         return client.build();
@@ -50,6 +51,7 @@ public class ClientMapperImpl implements ClientMapper {
         clientResponseDTO.setId( client.getId() );
         clientResponseDTO.setName( client.getName() );
         clientResponseDTO.setPhone( client.getPhone() );
+        clientResponseDTO.setCpf( client.getCpf() );
         clientResponseDTO.setAddress( client.getAddress() );
         clientResponseDTO.setAnimals( animalListToAnimalResponseDTOList( client.getAnimals() ) );
 

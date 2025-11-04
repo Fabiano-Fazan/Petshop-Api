@@ -53,7 +53,6 @@ public class VeterinarianService {
                 return veterinarianMapper.toResponseDto(veterinarian);
     }
 
-
     @Transactional
     public void deleteVeterinarian(UUID id){
         if(!veterinarianRepository.existsById(id)){

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-23T21:14:39-0300",
+    date = "2025-10-31T12:59:01-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -33,23 +33,6 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
     }
 
     @Override
-    public void updateVeterinarianFromDTO(UpdateVeterinarianDTO updateVeterinarianDTO, Veterinarian veterinarian) {
-        if ( updateVeterinarianDTO == null ) {
-            return;
-        }
-        if ( updateVeterinarianDTO.getName() != null ) {
-            updateVeterinarianDTO.setName( updateVeterinarianDTO.getName() );
-        }
-        if ( updateVeterinarianDTO.getPhone() != null ) {
-            updateVeterinarianDTO.setPhone( updateVeterinarianDTO.getPhone() );
-        }
-        if(updateVeterinarianDTO.getEmail() != null){
-            updateVeterinarianDTO.setEmail(updateVeterinarianDTO.getEmail());
-        }
-    }
-
-
-    @Override
     public VeterinarianResponseDTO toResponseDto(Veterinarian veterinarian) {
         if ( veterinarian == null ) {
             return null;
@@ -57,6 +40,7 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
 
         VeterinarianResponseDTO veterinarianResponseDTO = new VeterinarianResponseDTO();
 
+        veterinarianResponseDTO.setId( veterinarian.getId() );
         veterinarianResponseDTO.setName( veterinarian.getName() );
         veterinarianResponseDTO.setCrmv( veterinarian.getCrmv() );
         veterinarianResponseDTO.setPhone( veterinarian.getPhone() );
@@ -64,5 +48,22 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
         veterinarianResponseDTO.setEmail( veterinarian.getEmail() );
 
         return veterinarianResponseDTO;
+    }
+
+    @Override
+    public void updateVeterinarianFromDTO(UpdateVeterinarianDTO updateVeterinarianDTO, Veterinarian veterinarian) {
+        if ( updateVeterinarianDTO == null ) {
+            return;
+        }
+
+        if ( updateVeterinarianDTO.getName() != null ) {
+            veterinarian.setName( updateVeterinarianDTO.getName() );
+        }
+        if ( updateVeterinarianDTO.getPhone() != null ) {
+            veterinarian.setPhone( updateVeterinarianDTO.getPhone() );
+        }
+        if ( updateVeterinarianDTO.getEmail() != null ) {
+            veterinarian.setEmail( updateVeterinarianDTO.getEmail() );
+        }
     }
 }

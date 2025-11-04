@@ -1,5 +1,6 @@
 package com.petshop.api.dto.response;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +24,8 @@ public class MedicalAppointmentResponseDTO {
 
     private UUID veterinarianId;
     private String veterinarianName;
-
     private UUID clientId;
     private String clientName;
-
-    private UUID petId;
-    private String petName;
-
-
+    private UUID animalId;
+    private String animalName;
 }

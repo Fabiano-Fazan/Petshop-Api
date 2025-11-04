@@ -2,8 +2,12 @@ package com.petshop.api.service;
 
 import com.petshop.api.dto.request.CreateMedicalAppointmentDTO;
 import com.petshop.api.dto.response.MedicalAppointmentResponseDTO;
+import com.petshop.api.exception.AppointmentDateTimeAlreadyExistsException;
 import com.petshop.api.exception.ResourceNotFoundException;
+import com.petshop.api.model.entities.Animal;
+import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.MedicalAppointment;
+import com.petshop.api.model.entities.Veterinarian;
 import com.petshop.api.model.mapper.MedicalAppointmentMapper;
 import com.petshop.api.repository.AnimalRepository;
 import com.petshop.api.repository.ClientRepository;
@@ -40,22 +44,20 @@ public class MedicalAppointmentService {
 
     @Transactional
     public MedicalAppointmentResponseDTO createMedicalAppointment(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
-        MedicalAppointment medicalAppointment = medicalAppointmentMapper.toEntity(createMedicalAppointmentDTO);
-        medicalAppointment.setVeterinarian(veterinarianRepository.findById(createMedicalAppointmentDTO.getVeterinarianId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Veterinarian not found with ID: " + createMedicalAppointmentDTO.getVeterinarianId())
-                ));
-        medicalAppointment.setAnimal(animalRepository.findById(createMedicalAppointmentDTO.getAnimalId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Animal not found with ID: " + createMedicalAppointmentDTO.getAnimalId())
-                ));
-        medicalAppointment.setClient(clientRepository.findById(createMedicalAppointmentDTO.getClientId())
-                .orElseThrow(() -> new ResourceNotFoundException(
-                        "Client not found with ID: " + createMedicalAppointmentDTO.getClientId())
-                ));
-        MedicalAppointment savedMedicalAppointment = medicalAppointmentRepository.save(medicalAppointment);
-        return medicalAppointmentMapper.toResponseDto(savedMedicalAppointment);
+        if (medicalAppointmentRepository.existsByAppointmentDateTime(createMedicalAppointmentDTO.getAppointmentDate())){
+            throw  new AppointmentDateTimeAlreadyExistsException("An appointment has already been scheduled for that date.");
+        }
+        Client client = clientRepository.findById(createMedicalAppointmentDTO.getClientId())
+                .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + createMedicalAppointmentDTO.getClientId()));
+
+        Animal animal = animalRepository.findById(createMedicalAppointmentDTO.getAnimalId())
+                .orElseThrow(() -> new ResourceNotFoundException("Animal not found with ID: " + createMedicalAppointmentDTO.getAnimalId()));
+
+        Veterinarian veterinarian = veterinarianRepository.findById(createMedicalAppointmentDTO.getVeterinarianId())
+                .orElseThrow(() -> new ResourceNotFoundException("Veterinarian not found with ID: " + createMedicalAppointmentDTO.getVeterinarianId()));
+
     }
+
 }
 
 

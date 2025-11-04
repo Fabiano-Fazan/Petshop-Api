@@ -3,14 +3,12 @@ package com.petshop.api.model.mapper;
 import com.petshop.api.dto.request.CreateMedicalAppointmentDTO;
 import com.petshop.api.dto.response.MedicalAppointmentResponseDTO;
 import com.petshop.api.model.entities.MedicalAppointment;
+import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-
+@Mapper(componentModel = "spring")
 public interface MedicalAppointmentMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(source = "veterinarianId", target = "veterinarian.id")
-    @Mapping(source = "clientId", target = "client.id")
-    @Mapping(source = "animalId", target = "animal.id")
     @Mapping(target = "status", constant = "SCHEDULED")
     MedicalAppointment toEntity(CreateMedicalAppointmentDTO createMedicalAppointmentDTO);
 

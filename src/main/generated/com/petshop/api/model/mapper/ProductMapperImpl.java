@@ -4,13 +4,12 @@ import com.petshop.api.dto.request.CreateProductDTO;
 import com.petshop.api.dto.request.UpdateProductDTO;
 import com.petshop.api.dto.response.ProductResponseDTO;
 import com.petshop.api.model.entities.Product;
-import com.petshop.api.model.entities.ProductCategory;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-23T21:14:39-0300",
+    date = "2025-10-31T12:59:01-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -71,7 +70,7 @@ public class ProductMapperImpl implements ProductMapper {
             product.setPrice( updateProductDTO.getPrice() );
         }
         if ( updateProductDTO.getCategory() != null ) {
-            product.setCategory( updateProductDTO.getCategory());
+            product.setCategory( updateProductDTO.getCategory() );
         }
     }
 }
