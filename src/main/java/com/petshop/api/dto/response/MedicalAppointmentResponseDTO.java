@@ -15,12 +15,11 @@ import java.util.UUID;
 @NoArgsConstructor
 public class MedicalAppointmentResponseDTO {
     private UUID id;
-    private LocalDateTime appointmentDate;
+    private LocalDateTime appointmentStartTime;
+    private LocalDateTime appointmentEndTime;
     private String status;
-    private String reason;
     private String diagnosis;
     private String treatment;
-    private String notes;
 
     private UUID veterinarianId;
     private String veterinarianName;

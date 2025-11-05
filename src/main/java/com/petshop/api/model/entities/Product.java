@@ -32,6 +32,7 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @Builder.Default
     private ProductCategory category;
 
 

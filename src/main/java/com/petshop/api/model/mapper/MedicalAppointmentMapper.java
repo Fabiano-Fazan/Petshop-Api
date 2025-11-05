@@ -9,16 +9,19 @@ import org.mapstruct.Mapping;
 public interface MedicalAppointmentMapper {
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "appointmentEndTime", ignore = true)
     @Mapping(target = "status", constant = "SCHEDULED")
+    @Mapping(target = "client", ignore = true)
+    @Mapping(target = "animal", ignore = true)
+    @Mapping(target = "veterinarian", ignore = true)
     MedicalAppointment toEntity(CreateMedicalAppointmentDTO createMedicalAppointmentDTO);
 
-    @Mapping(source = "veterinarian.id", target = "veterinarianId")
-    @Mapping(source = "veterinarian.name", target = "veterinarianName")
-    @Mapping(source = "client.id", target = "clientId")
-    @Mapping(source = "client.name", target = "clientName")
-    @Mapping(source = "animal.id", target = "animalId")
-    @Mapping(source = "animal.name", target = "animalName")
-    @Mapping(source = "status", target = "status")
+    @Mapping(target = "veterinarianName", source = "veterinarian.name")
+    @Mapping(target = "veterinarianId", source = "veterinarian.id")
+    @Mapping(target = "clientName", source = "client.name")
+    @Mapping(target = "clientId", source = "client.id")
+    @Mapping(target = "animalName", source = "animal.name")
+    @Mapping(target = "animalId", source = "animal.id")
     MedicalAppointmentResponseDTO toResponseDto(MedicalAppointment medicalAppointment);
 }
 

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-31T12:59:01-0300",
+    date = "2025-11-04T22:30:54-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -44,7 +44,9 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
         veterinarianResponseDTO.setName( veterinarian.getName() );
         veterinarianResponseDTO.setCrmv( veterinarian.getCrmv() );
         veterinarianResponseDTO.setPhone( veterinarian.getPhone() );
-        veterinarianResponseDTO.setVeterinarianCategory( veterinarian.getVeterinarianCategory() );
+        if ( veterinarian.getVeterinarianCategory() != null ) {
+            veterinarianResponseDTO.setVeterinarianCategory( veterinarian.getVeterinarianCategory().name() );
+        }
         veterinarianResponseDTO.setEmail( veterinarian.getEmail() );
 
         return veterinarianResponseDTO;

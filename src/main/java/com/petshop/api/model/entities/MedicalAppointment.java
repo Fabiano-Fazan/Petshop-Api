@@ -21,10 +21,10 @@ public class MedicalAppointment {
 
     private String notes;
 
-    private String reason;
-
+    @Column(nullable = false)
     private String diagnosis;
 
+    @Column(nullable = false)
     private String treatment;
 
     @ManyToOne
@@ -40,16 +40,14 @@ public class MedicalAppointment {
     private Veterinarian veterinarian;
 
     @Column(nullable = false)
-    private LocalDateTime appointmentDateTime;
+    private LocalDateTime appointmentStartTime;
+
+    private LocalDateTime appointmentEndTime;
+
+    private Integer durationMinutes;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private AppointmentStatus status;
 
-    @PrePersist
-    public void createdAppointmentAt() {
-        if (appointmentDateTime == null) {
-            appointmentDateTime = LocalDateTime.now();
-        }
-    }
 }

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-10-31T13:56:13-0300",
+    date = "2025-11-04T22:30:54-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -27,11 +27,10 @@ public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
 
         MedicalAppointment.MedicalAppointmentBuilder medicalAppointment = MedicalAppointment.builder();
 
-        medicalAppointment.veterinarian( createMedicalAppointmentDTOToVeterinarian( createMedicalAppointmentDTO ) );
-        medicalAppointment.client( createMedicalAppointmentDTOToClient( createMedicalAppointmentDTO ) );
-        medicalAppointment.animal( createMedicalAppointmentDTOToAnimal( createMedicalAppointmentDTO ) );
-        medicalAppointment.notes( createMedicalAppointmentDTO.getNotes() );
-        medicalAppointment.reason( createMedicalAppointmentDTO.getReason() );
+        medicalAppointment.diagnosis( createMedicalAppointmentDTO.getDiagnosis() );
+        medicalAppointment.treatment( createMedicalAppointmentDTO.getTreatment() );
+        medicalAppointment.appointmentStartTime( createMedicalAppointmentDTO.getAppointmentStartTime() );
+        medicalAppointment.durationMinutes( createMedicalAppointmentDTO.getDurationMinutes() );
 
         medicalAppointment.status( AppointmentStatus.SCHEDULED );
 
@@ -46,55 +45,37 @@ public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
 
         MedicalAppointmentResponseDTO medicalAppointmentResponseDTO = new MedicalAppointmentResponseDTO();
 
+        medicalAppointmentResponseDTO.setVeterinarianName( medicalAppointmentVeterinarianName( medicalAppointment ) );
         medicalAppointmentResponseDTO.setVeterinarianId( medicalAppointmentVeterinarianId( medicalAppointment ) );
+        medicalAppointmentResponseDTO.setClientName( medicalAppointmentClientName( medicalAppointment ) );
         medicalAppointmentResponseDTO.setClientId( medicalAppointmentClientId( medicalAppointment ) );
+        medicalAppointmentResponseDTO.setAnimalName( medicalAppointmentAnimalName( medicalAppointment ) );
         medicalAppointmentResponseDTO.setAnimalId( medicalAppointmentAnimalId( medicalAppointment ) );
+        medicalAppointmentResponseDTO.setId( medicalAppointment.getId() );
+        medicalAppointmentResponseDTO.setAppointmentStartTime( medicalAppointment.getAppointmentStartTime() );
+        medicalAppointmentResponseDTO.setAppointmentEndTime( medicalAppointment.getAppointmentEndTime() );
         if ( medicalAppointment.getStatus() != null ) {
             medicalAppointmentResponseDTO.setStatus( medicalAppointment.getStatus().name() );
         }
-        medicalAppointmentResponseDTO.setId( medicalAppointment.getId() );
-        medicalAppointmentResponseDTO.setReason( medicalAppointment.getReason() );
         medicalAppointmentResponseDTO.setDiagnosis( medicalAppointment.getDiagnosis() );
         medicalAppointmentResponseDTO.setTreatment( medicalAppointment.getTreatment() );
-        medicalAppointmentResponseDTO.setNotes( medicalAppointment.getNotes() );
 
         return medicalAppointmentResponseDTO;
     }
 
-    protected Veterinarian createMedicalAppointmentDTOToVeterinarian(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
-        if ( createMedicalAppointmentDTO == null ) {
+    private String medicalAppointmentVeterinarianName(MedicalAppointment medicalAppointment) {
+        if ( medicalAppointment == null ) {
             return null;
         }
-
-        Veterinarian.VeterinarianBuilder veterinarian = Veterinarian.builder();
-
-        veterinarian.id( createMedicalAppointmentDTO.getVeterinarianId() );
-
-        return veterinarian.build();
-    }
-
-    protected Client createMedicalAppointmentDTOToClient(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
-        if ( createMedicalAppointmentDTO == null ) {
+        Veterinarian veterinarian = medicalAppointment.getVeterinarian();
+        if ( veterinarian == null ) {
             return null;
         }
-
-        Client.ClientBuilder client = Client.builder();
-
-        client.id( createMedicalAppointmentDTO.getClientId() );
-
-        return client.build();
-    }
-
-    protected Animal createMedicalAppointmentDTOToAnimal(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
-        if ( createMedicalAppointmentDTO == null ) {
+        String name = veterinarian.getName();
+        if ( name == null ) {
             return null;
         }
-
-        Animal.AnimalBuilder animal = Animal.builder();
-
-        animal.id( createMedicalAppointmentDTO.getAnimalId() );
-
-        return animal.build();
+        return name;
     }
 
     private UUID medicalAppointmentVeterinarianId(MedicalAppointment medicalAppointment) {
@@ -112,6 +93,21 @@ public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
         return id;
     }
 
+    private String medicalAppointmentClientName(MedicalAppointment medicalAppointment) {
+        if ( medicalAppointment == null ) {
+            return null;
+        }
+        Client client = medicalAppointment.getClient();
+        if ( client == null ) {
+            return null;
+        }
+        String name = client.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
+    }
+
     private UUID medicalAppointmentClientId(MedicalAppointment medicalAppointment) {
         if ( medicalAppointment == null ) {
             return null;
@@ -125,6 +121,21 @@ public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
             return null;
         }
         return id;
+    }
+
+    private String medicalAppointmentAnimalName(MedicalAppointment medicalAppointment) {
+        if ( medicalAppointment == null ) {
+            return null;
+        }
+        Animal animal = medicalAppointment.getAnimal();
+        if ( animal == null ) {
+            return null;
+        }
+        String name = animal.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
     }
 
     private UUID medicalAppointmentAnimalId(MedicalAppointment medicalAppointment) {

@@ -23,12 +23,14 @@ public class CreateMedicalAppointmentDTO {
     private UUID clientId;
 
     @NotNull(message = "Appointment date is required")
-    private LocalDateTime appointmentDate;
+    private LocalDateTime appointmentStartTime;
 
-    @Size(min = 10, max = 500, message = "The reason must be between 10 and 500 characters")
-    private String reason;
+    private Integer durationMinutes;
 
-    @Size(min = 10, max = 700, message = "The notes must be between 10 and 700 characters")
-    private String notes;
+    @Size(min = 10, max = 500, message = "The diagnosis must be between 10 and 500 characters")
+    private String diagnosis;
+
+    @Size(min = 10, max = 700, message = "The treatment must be between 10 and 700 characters")
+    private String treatment;
 }
 

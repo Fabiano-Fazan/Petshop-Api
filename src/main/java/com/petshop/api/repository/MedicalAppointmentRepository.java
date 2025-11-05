@@ -2,10 +2,25 @@ package com.petshop.api.repository;
 
 import com.petshop.api.model.entities.MedicalAppointment;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppointment, UUID> {
-    boolean existsByAppointmentDateTime(LocalDateTime appointmentDateTime);
+
+    @Query("""
+            SELECT EXISTS(
+            SELECT 1 FROM MedicalAppointment a
+            WHERE a.veterinarian.id = :veterinarianId
+            AND :start < a.appointmentEndTime
+            AND :end > a.appointmentDateTime
+            )
+            """)
+    boolean existsConflictingAppointment(
+            @Param("veterinarianId") UUID veterinarianId,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end
+    );
 }
