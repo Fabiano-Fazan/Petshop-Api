@@ -1,6 +1,6 @@
 package com.petshop.api.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 import lombok.*;
 

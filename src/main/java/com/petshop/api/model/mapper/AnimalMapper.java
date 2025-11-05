@@ -8,8 +8,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AnimalMapper {
+
     Animal toEntity(CreateAnimalDTO createAnimalDTO);
 
-    @Mapping(source = "client.id", target = "clientId")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "clientId",source = "client.id")
     AnimalResponseDTO toResponseDto(Animal animal);
 }

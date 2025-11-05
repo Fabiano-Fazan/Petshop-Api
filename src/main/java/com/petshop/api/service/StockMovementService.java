@@ -42,11 +42,11 @@ public class StockMovementService {
     public void registerOutput(CreateStockMovementDTO createStockMovementDTO){
         Product product = productRepository.findById(createStockMovementDTO.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + createStockMovementDTO.getProductId()));
-        this.registerOutput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(), null);
+        this.registerOutput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(), null, null);
     }
 
     @Transactional
-    public void registerOutput(Product product, Integer quantity, String description, Sale sale){
+    public void registerOutput(Product product, Integer quantity, String description, BigDecimal price, Sale sale){
         if(product.getQuantityInStock() < quantity){
             throw new InsufficientStockException("Not enough stock for product " + product.getName() + "Requested: " + quantity + " Available: " + product.getQuantityInStock());
         }

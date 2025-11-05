@@ -4,16 +4,14 @@ import com.petshop.api.dto.request.CreateVeterinarianDTO;
 import com.petshop.api.dto.request.UpdateVeterinarianDTO;
 import com.petshop.api.dto.response.VeterinarianResponseDTO;
 import com.petshop.api.model.entities.Veterinarian;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface VeterinarianMapper {
 
     Veterinarian toEntity(CreateVeterinarianDTO createVeterinarianDTO);
 
+    @Mapping(target = "id", ignore = true)
     VeterinarianResponseDTO toResponseDto(Veterinarian veterinarian);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

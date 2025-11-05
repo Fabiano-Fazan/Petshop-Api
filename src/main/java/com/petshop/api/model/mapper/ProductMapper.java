@@ -13,6 +13,8 @@ public interface ProductMapper {
     @Mapping(target = "quantityInStock", defaultValue= "0")
     Product toEntity(CreateProductDTO createProductDTO);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "category", source = "category.name")
     ProductResponseDTO toResponseDto(Product product);
 
 

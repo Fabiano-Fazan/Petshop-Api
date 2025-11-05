@@ -15,6 +15,7 @@ public interface ClientMapper {
 
     Client toEntity(CreateClientDTO createClientDTO);
 
+    @Mapping(target = "id", ignore = true)
     ClientResponseDTO toResponseDto(Client client);
 
     @BeanMapping(nullValuePropertyMappingStrategy = org.mapstruct.NullValuePropertyMappingStrategy.IGNORE)

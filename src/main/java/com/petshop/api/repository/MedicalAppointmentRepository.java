@@ -15,7 +15,7 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
             SELECT 1 FROM MedicalAppointment a
             WHERE a.veterinarian.id = :veterinarianId
             AND :start < a.appointmentEndTime
-            AND :end > a.appointmentDateTime
+            AND :end > a.appointmentStartTime
             )
             """)
     boolean existsConflictingAppointment(

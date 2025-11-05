@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-04T22:30:54-0300",
+    date = "2025-11-05T08:36:42-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -28,8 +28,8 @@ public class SaleMapperImpl implements SaleMapper {
 
         SaleResponseDTO saleResponseDTO = new SaleResponseDTO();
 
+        saleResponseDTO.setClientId( saleClientId( sale ) );
         saleResponseDTO.setClientName( saleClientName( sale ) );
-        saleResponseDTO.setId( sale.getId() );
         saleResponseDTO.setSaleDate( sale.getSaleDate() );
         saleResponseDTO.setTotalValue( sale.getTotalValue() );
         saleResponseDTO.setProductSales( productSaleListToProductSaleResponseDTOList( sale.getProductSales() ) );
@@ -51,6 +51,21 @@ public class SaleMapperImpl implements SaleMapper {
         productSaleResponseDTO.setUnitPrice( productSale.getUnitPrice() );
 
         return productSaleResponseDTO;
+    }
+
+    private UUID saleClientId(Sale sale) {
+        if ( sale == null ) {
+            return null;
+        }
+        Client client = sale.getClient();
+        if ( client == null ) {
+            return null;
+        }
+        UUID id = client.getId();
+        if ( id == null ) {
+            return null;
+        }
+        return id;
     }
 
     private String saleClientName(Sale sale) {

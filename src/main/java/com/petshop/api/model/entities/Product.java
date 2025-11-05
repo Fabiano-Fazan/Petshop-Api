@@ -6,12 +6,13 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Entity
+
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@Entity
 @Table(name = "products")
 public class Product {
 
@@ -32,8 +33,6 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
-    @Builder.Default
     private ProductCategory category;
-
 
 }

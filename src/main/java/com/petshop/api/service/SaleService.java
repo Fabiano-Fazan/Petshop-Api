@@ -68,6 +68,7 @@ public class SaleService {
                     productSold.getProduct(),
                     productSold.getQuantity(),
                     description,
+                    productSold.getUnitPrice(),
                     savedSale
             );
         }

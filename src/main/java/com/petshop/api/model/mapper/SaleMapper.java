@@ -10,11 +10,14 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface SaleMapper {
 
-    @Mapping(source = "client.name", target = "clientName")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "clientId", source = "client.id")
+    @Mapping(target = "clientName",source = "client.name")
     SaleResponseDTO toResponseDto(Sale sale);
 
-    @Mapping(source = "product.id", target = "productId")
-    @Mapping(source = "product.name", target = "productName")
+
+    @Mapping(target = "productId", source = "product.id")
+    @Mapping(target = "productName", source = "product.name")
     ProductSaleResponseDTO toProductSaleDto(ProductSale productSale);
 
 }

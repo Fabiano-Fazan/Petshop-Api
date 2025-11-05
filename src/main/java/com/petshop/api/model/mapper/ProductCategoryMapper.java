@@ -4,16 +4,14 @@ import com.petshop.api.dto.request.CreateProductCategoryDTO;
 import com.petshop.api.dto.request.UpdateProductCategoryDTO;
 import com.petshop.api.dto.response.ProductCategoryResponseDTO;
 import com.petshop.api.model.entities.ProductCategory;
-import org.mapstruct.BeanMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingTarget;
-import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface ProductCategoryMapper {
 
     ProductCategory toEntity(CreateProductCategoryDTO createProductCategoryDTO);
 
+    @Mapping(target = "id", ignore = true)
     ProductCategoryResponseDTO toResponseDto(ProductCategory productCategory);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

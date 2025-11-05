@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-04T22:30:54-0300",
+    date = "2025-11-05T08:31:39-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -48,7 +48,6 @@ public class ClientMapperImpl implements ClientMapper {
 
         ClientResponseDTO clientResponseDTO = new ClientResponseDTO();
 
-        clientResponseDTO.setId( client.getId() );
         clientResponseDTO.setName( client.getName() );
         clientResponseDTO.setPhone( client.getPhone() );
         clientResponseDTO.setCpf( client.getCpf() );
