@@ -13,6 +13,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CreateSaleDto {
+
     @NotNull(message = "Client ID is required")
     private UUID clientId;
 

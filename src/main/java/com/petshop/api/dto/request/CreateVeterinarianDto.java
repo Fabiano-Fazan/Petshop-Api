@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateVeterinarianDto {
+
     @NotBlank(message = "Name is required")
     private String name;
 

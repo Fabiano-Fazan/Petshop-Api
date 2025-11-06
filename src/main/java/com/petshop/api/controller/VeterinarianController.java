@@ -44,7 +44,7 @@ public class VeterinarianController {
         return new ResponseEntity<>(createdVeterinarian, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<VeterinarianResponseDto> updateVeterinarian(@PathVariable UUID id, @Valid @RequestBody UpdateVeterinarianDto updateVeterinarianDTO){
         VeterinarianResponseDto updatedVeterinarian = veterinarianService.updateVeterinarian(id, updateVeterinarianDTO);
         return ResponseEntity.ok(updatedVeterinarian);

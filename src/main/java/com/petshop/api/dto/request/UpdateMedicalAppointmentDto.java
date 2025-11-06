@@ -1,6 +1,5 @@
 package com.petshop.api.dto.request;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -12,15 +11,10 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CreateMedicalAppointmentDto {
+public class UpdateMedicalAppointmentDto {
 
-    @NotNull(message = "Veterinarian ID is required")
     private UUID veterinarianId;
-
-    @NotNull(message = "Animal ID is required")
     private UUID animalId;
-
-    @NotNull(message = "Client ID ir required")
     private UUID clientId;
 
     @NotNull(message = "Appointment date is required")
@@ -34,5 +28,5 @@ public class CreateMedicalAppointmentDto {
 
     @Size(min = 5, max = 700, message = "The treatment must be between 10 and 700 characters")
     private String treatment;
-}
 
+}

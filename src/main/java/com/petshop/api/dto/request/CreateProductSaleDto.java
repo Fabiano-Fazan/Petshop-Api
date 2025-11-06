@@ -14,6 +14,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class CreateProductSaleDto {
+
     @NotNull(message = "Product ID is required")
     private UUID productId;
 
