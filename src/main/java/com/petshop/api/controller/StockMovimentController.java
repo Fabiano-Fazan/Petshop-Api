@@ -1,6 +1,6 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.request.CreateStockMovementDTO;
+import com.petshop.api.dto.request.CreateStockMovementDto;
 import com.petshop.api.service.StockMovementService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,13 +18,13 @@ public class StockMovimentController {
     private final StockMovementService stockMovementService;
 
     @PostMapping("/input")
-    public ResponseEntity<Void> giveInputStock(@RequestBody @Valid CreateStockMovementDTO createStockMovementDTO){
+    public ResponseEntity<Void> giveInputStock(@RequestBody @Valid CreateStockMovementDto createStockMovementDTO){
         stockMovementService.registerInput(createStockMovementDTO);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/output")
-    public ResponseEntity<Void> giveOutputStock(@RequestBody @Valid CreateStockMovementDTO createStockMovementDTO){
+    public ResponseEntity<Void> giveOutputStock(@RequestBody @Valid CreateStockMovementDto createStockMovementDTO){
         stockMovementService.registerOutput(createStockMovementDTO);
         return ResponseEntity.ok().build();
     }

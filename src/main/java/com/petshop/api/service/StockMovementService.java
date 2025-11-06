@@ -1,6 +1,6 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.request.CreateStockMovementDTO;
+import com.petshop.api.dto.request.CreateStockMovementDto;
 import com.petshop.api.exception.InsufficientStockException;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Product;
@@ -22,7 +22,7 @@ public class StockMovementService {
     private final ProductRepository productRepository;
 
     @Transactional
-    public void registerInput(CreateStockMovementDTO createStockMovementDTO){
+    public void registerInput(CreateStockMovementDto createStockMovementDTO){
         Product product = productRepository.findById(createStockMovementDTO.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + createStockMovementDTO.getProductId()));
         this.registerInput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(), createStockMovementDTO.getInvoice(), createStockMovementDTO.getPrice());
@@ -39,7 +39,7 @@ public class StockMovementService {
     }
 
     @Transactional
-    public void registerOutput(CreateStockMovementDTO createStockMovementDTO){
+    public void registerOutput(CreateStockMovementDto createStockMovementDTO){
         Product product = productRepository.findById(createStockMovementDTO.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + createStockMovementDTO.getProductId()));
         this.registerOutput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(), null, null);

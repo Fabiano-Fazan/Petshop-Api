@@ -1,8 +1,8 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.request.CreateProductSaleDTO;
-import com.petshop.api.dto.request.CreateSaleDTO;
-import com.petshop.api.dto.response.SaleResponseDTO;
+import com.petshop.api.dto.request.CreateProductSaleDto;
+import com.petshop.api.dto.request.CreateSaleDto;
+import com.petshop.api.dto.response.SaleResponseDto;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.Product;
@@ -34,7 +34,7 @@ public class SaleService {
     private final StockMovementService stockMovementService;
 
     @Transactional
-    public SaleResponseDTO createSale(CreateSaleDTO createSaleDTO) {
+    public SaleResponseDto createSale(CreateSaleDto createSaleDTO) {
         Client client = clientRepository.findById(createSaleDTO.getClientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + createSaleDTO.getClientId()));
 
@@ -45,7 +45,7 @@ public class SaleService {
 
         BigDecimal totalValue = BigDecimal.ZERO;
 
-        for (CreateProductSaleDTO productSaleDTO : createSaleDTO.getProductSales()) {
+        for (CreateProductSaleDto productSaleDTO : createSaleDTO.getProductSales()) {
             Product product = productRepository.findById(productSaleDTO.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID:" + productSaleDTO.getProductId()));
 
@@ -75,19 +75,19 @@ public class SaleService {
         return saleMapper.toResponseDto(savedSale);
     }
 
-    public SaleResponseDTO findById(UUID id) {
+    public SaleResponseDto findById(UUID id) {
         return saleRepository.findById(id)
                 .map(saleMapper::toResponseDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Sale not found with ID: " + id));
     }
 
-    public Page<SaleResponseDTO> getAllSales(Pageable pageable) {
+    public Page<SaleResponseDto> getAllSales(Pageable pageable) {
         return saleRepository.findAll(pageable)
                 .map(saleMapper::toResponseDto);
     }
 
     @Transactional
-    public SaleResponseDTO cancelSale(UUID id) {
+    public SaleResponseDto cancelSale(UUID id) {
         Sale sale = saleRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Sale not found with ID: " + id));
 

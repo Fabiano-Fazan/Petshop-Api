@@ -1,7 +1,7 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.response.AnimalResponseDTO;
-import com.petshop.api.dto.request.CreateAnimalDTO;
+import com.petshop.api.dto.request.CreateAnimalDto;
+import com.petshop.api.dto.response.AnimalResponseDto;
 import com.petshop.api.service.AnimalService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +22,14 @@ public class AnimalController {
     private final AnimalService animalService;
 
     @GetMapping
-    public ResponseEntity<Page<AnimalResponseDTO>> getAllAnimals(Pageable pageable) {
-        Page<AnimalResponseDTO> animals = animalService.getAllAnimals(pageable);
+    public ResponseEntity<Page<AnimalResponseDto>> getAllAnimals(Pageable pageable) {
+        Page<AnimalResponseDto> animals = animalService.getAllAnimals(pageable);
         return ResponseEntity.ok(animals);
     }
 
     @PostMapping
-    public ResponseEntity<AnimalResponseDTO> createAnimal(@Valid @RequestBody CreateAnimalDTO animalDTO) {
-        AnimalResponseDTO createdAnimal = animalService.createAnimal(animalDTO);
+    public ResponseEntity<AnimalResponseDto> createAnimal(@Valid @RequestBody CreateAnimalDto animalDTO) {
+        AnimalResponseDto createdAnimal = animalService.createAnimal(animalDTO);
         return new ResponseEntity<>(createdAnimal, HttpStatus.CREATED);
     }
 

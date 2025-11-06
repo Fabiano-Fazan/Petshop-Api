@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class UpdateProductDTO {
+public class UpdateProductDto {
     @Size(min = 3, max = 100, message = "The name must be between 3 and 100 characters")
     private String name;
 

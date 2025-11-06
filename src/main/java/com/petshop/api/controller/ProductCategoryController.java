@@ -1,8 +1,8 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.request.CreateProductCategoryDTO;
-import com.petshop.api.dto.request.UpdateProductCategoryDTO;
-import com.petshop.api.dto.response.ProductCategoryResponseDTO;
+import com.petshop.api.dto.request.CreateProductCategoryDto;
+import com.petshop.api.dto.request.UpdateProductCategoryDto;
+import com.petshop.api.dto.response.ProductCategoryResponseDto;
 import com.petshop.api.service.ProductCategoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,33 +21,33 @@ public class ProductCategoryController {
     private  final ProductCategoryService productCategoryService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductCategoryResponseDTO>> getAllProductCategories(Pageable pageable) {
-        Page<ProductCategoryResponseDTO> allProductCategories = productCategoryService.getAllProductCategories(pageable);
+    public ResponseEntity<Page<ProductCategoryResponseDto>> getAllProductCategories(Pageable pageable) {
+        Page<ProductCategoryResponseDto> allProductCategories = productCategoryService.getAllProductCategories(pageable);
         return ResponseEntity.ok(allProductCategories);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductCategoryResponseDTO> getProductCategoryById(@PathVariable UUID id){
-        ProductCategoryResponseDTO productCategoryById = productCategoryService.getProductCategoryById(id);
+    public ResponseEntity<ProductCategoryResponseDto> getProductCategoryById(@PathVariable UUID id){
+        ProductCategoryResponseDto productCategoryById = productCategoryService.getProductCategoryById(id);
         return ResponseEntity.ok(productCategoryById);
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<Page<ProductCategoryResponseDTO>> getByName(@PathVariable("name") String name, Pageable pageable){
-        Page<ProductCategoryResponseDTO> productCategoryByName = productCategoryService.getByName(name, pageable);
+    public ResponseEntity<ProductCategoryResponseDto> getByName(@PathVariable("name") String name){
+        ProductCategoryResponseDto productCategoryByName = productCategoryService.getByName(name);
         return ResponseEntity.ok(productCategoryByName);
     }
 
     @PostMapping
-    public ResponseEntity<ProductCategoryResponseDTO> createProductCategory(@Valid @RequestBody CreateProductCategoryDTO createProductCategoryDTO){
-        ProductCategoryResponseDTO createdProductCategory = productCategoryService.createProductCategory(createProductCategoryDTO);
+    public ResponseEntity<ProductCategoryResponseDto> createProductCategory(@Valid @RequestBody CreateProductCategoryDto createProductCategoryDTO){
+        ProductCategoryResponseDto createdProductCategory = productCategoryService.createProductCategory(createProductCategoryDTO);
         return new ResponseEntity<>(createdProductCategory, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductCategoryResponseDTO> updateProductCategory(@PathVariable UUID id, @Valid @RequestBody UpdateProductCategoryDTO updateProductCategoryDTO){
-        ProductCategoryResponseDTO updatedProductCategory = productCategoryService.updateProductCategory(id, updateProductCategoryDTO);
-        return new ResponseEntity<>(updatedProductCategory, HttpStatus.OK);
+    public ResponseEntity<ProductCategoryResponseDto> updateProductCategory(@PathVariable UUID id, @Valid @RequestBody UpdateProductCategoryDto updateProductCategoryDTO){
+        ProductCategoryResponseDto updatedProductCategory = productCategoryService.updateProductCategory(id, updateProductCategoryDTO);
+        return ResponseEntity.ok(updatedProductCategory);
     }
 
     @DeleteMapping("/{id}")

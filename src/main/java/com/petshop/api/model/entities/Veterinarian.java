@@ -1,6 +1,5 @@
 package com.petshop.api.model.entities;
 
-import com.petshop.api.model.enums.VeterinarianCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,9 +27,9 @@ public class Veterinarian {
     @Column(nullable = false)
     private String phone;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private VeterinarianCategory veterinarianCategory;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private VeterinarianCategory category;
 
     private String email;
 

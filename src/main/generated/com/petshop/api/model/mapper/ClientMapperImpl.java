@@ -1,9 +1,9 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.request.CreateClientDTO;
-import com.petshop.api.dto.request.UpdateClientDTO;
-import com.petshop.api.dto.response.AnimalResponseDTO;
-import com.petshop.api.dto.response.ClientResponseDTO;
+import com.petshop.api.dto.request.CreateClientDto;
+import com.petshop.api.dto.request.UpdateClientDto;
+import com.petshop.api.dto.response.AnimalResponseDto;
+import com.petshop.api.dto.response.ClientResponseDto;
 import com.petshop.api.model.entities.Address;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-05T08:31:39-0300",
+    date = "2025-11-05T23:21:43-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
@@ -25,7 +25,7 @@ public class ClientMapperImpl implements ClientMapper {
     private AnimalMapper animalMapper;
 
     @Override
-    public Client toEntity(CreateClientDTO createClientDTO) {
+    public Client toEntity(CreateClientDto createClientDTO) {
         if ( createClientDTO == null ) {
             return null;
         }
@@ -41,24 +41,25 @@ public class ClientMapperImpl implements ClientMapper {
     }
 
     @Override
-    public ClientResponseDTO toResponseDto(Client client) {
+    public ClientResponseDto toResponseDto(Client client) {
         if ( client == null ) {
             return null;
         }
 
-        ClientResponseDTO clientResponseDTO = new ClientResponseDTO();
+        ClientResponseDto clientResponseDto = new ClientResponseDto();
 
-        clientResponseDTO.setName( client.getName() );
-        clientResponseDTO.setPhone( client.getPhone() );
-        clientResponseDTO.setCpf( client.getCpf() );
-        clientResponseDTO.setAddress( client.getAddress() );
-        clientResponseDTO.setAnimals( animalListToAnimalResponseDTOList( client.getAnimals() ) );
+        clientResponseDto.setId( client.getId() );
+        clientResponseDto.setName( client.getName() );
+        clientResponseDto.setPhone( client.getPhone() );
+        clientResponseDto.setCpf( client.getCpf() );
+        clientResponseDto.setAddress( client.getAddress() );
+        clientResponseDto.setAnimals( animalListToAnimalResponseDtoList( client.getAnimals() ) );
 
-        return clientResponseDTO;
+        return clientResponseDto;
     }
 
     @Override
-    public void updateClientFromDTO(UpdateClientDTO updateClientDTO, Client client) {
+    public void updateClientFromDTO(UpdateClientDto updateClientDTO, Client client) {
         if ( updateClientDTO == null ) {
             return;
         }
@@ -71,7 +72,7 @@ public class ClientMapperImpl implements ClientMapper {
         }
     }
 
-    protected Address addressDataToAddress(CreateClientDTO.AddressData addressData) {
+    protected Address addressDataToAddress(CreateClientDto.AddressData addressData) {
         if ( addressData == null ) {
             return null;
         }
@@ -87,12 +88,12 @@ public class ClientMapperImpl implements ClientMapper {
         return address.build();
     }
 
-    protected List<AnimalResponseDTO> animalListToAnimalResponseDTOList(List<Animal> list) {
+    protected List<AnimalResponseDto> animalListToAnimalResponseDtoList(List<Animal> list) {
         if ( list == null ) {
             return null;
         }
 
-        List<AnimalResponseDTO> list1 = new ArrayList<AnimalResponseDTO>( list.size() );
+        List<AnimalResponseDto> list1 = new ArrayList<AnimalResponseDto>( list.size() );
         for ( Animal animal : list ) {
             list1.add( animalMapper.toResponseDto( animal ) );
         }

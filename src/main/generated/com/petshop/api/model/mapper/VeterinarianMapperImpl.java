@@ -1,22 +1,23 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.request.CreateVeterinarianDTO;
-import com.petshop.api.dto.request.UpdateVeterinarianDTO;
-import com.petshop.api.dto.response.VeterinarianResponseDTO;
+import com.petshop.api.dto.request.CreateVeterinarianDto;
+import com.petshop.api.dto.request.UpdateVeterinarianDto;
+import com.petshop.api.dto.response.VeterinarianResponseDto;
 import com.petshop.api.model.entities.Veterinarian;
+import com.petshop.api.model.entities.VeterinarianCategory;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-05T08:31:39-0300",
+    date = "2025-11-05T23:21:43-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
 public class VeterinarianMapperImpl implements VeterinarianMapper {
 
     @Override
-    public Veterinarian toEntity(CreateVeterinarianDTO createVeterinarianDTO) {
+    public Veterinarian toEntity(CreateVeterinarianDto createVeterinarianDTO) {
         if ( createVeterinarianDTO == null ) {
             return null;
         }
@@ -26,33 +27,31 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
         veterinarian.name( createVeterinarianDTO.getName() );
         veterinarian.crmv( createVeterinarianDTO.getCrmv() );
         veterinarian.phone( createVeterinarianDTO.getPhone() );
-        veterinarian.veterinarianCategory( createVeterinarianDTO.getVeterinarianCategory() );
         veterinarian.email( createVeterinarianDTO.getEmail() );
 
         return veterinarian.build();
     }
 
     @Override
-    public VeterinarianResponseDTO toResponseDto(Veterinarian veterinarian) {
+    public VeterinarianResponseDto toResponseDto(Veterinarian veterinarian) {
         if ( veterinarian == null ) {
             return null;
         }
 
-        VeterinarianResponseDTO veterinarianResponseDTO = new VeterinarianResponseDTO();
+        VeterinarianResponseDto veterinarianResponseDto = new VeterinarianResponseDto();
 
-        veterinarianResponseDTO.setName( veterinarian.getName() );
-        veterinarianResponseDTO.setCrmv( veterinarian.getCrmv() );
-        veterinarianResponseDTO.setPhone( veterinarian.getPhone() );
-        if ( veterinarian.getVeterinarianCategory() != null ) {
-            veterinarianResponseDTO.setVeterinarianCategory( veterinarian.getVeterinarianCategory().name() );
-        }
-        veterinarianResponseDTO.setEmail( veterinarian.getEmail() );
+        veterinarianResponseDto.setCategory( veterinarianCategoryName( veterinarian ) );
+        veterinarianResponseDto.setId( veterinarian.getId() );
+        veterinarianResponseDto.setName( veterinarian.getName() );
+        veterinarianResponseDto.setCrmv( veterinarian.getCrmv() );
+        veterinarianResponseDto.setPhone( veterinarian.getPhone() );
+        veterinarianResponseDto.setEmail( veterinarian.getEmail() );
 
-        return veterinarianResponseDTO;
+        return veterinarianResponseDto;
     }
 
     @Override
-    public void updateVeterinarianFromDTO(UpdateVeterinarianDTO updateVeterinarianDTO, Veterinarian veterinarian) {
+    public void updateVeterinarianFromDTO(UpdateVeterinarianDto updateVeterinarianDTO, Veterinarian veterinarian) {
         if ( updateVeterinarianDTO == null ) {
             return;
         }
@@ -66,5 +65,20 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
         if ( updateVeterinarianDTO.getEmail() != null ) {
             veterinarian.setEmail( updateVeterinarianDTO.getEmail() );
         }
+    }
+
+    private String veterinarianCategoryName(Veterinarian veterinarian) {
+        if ( veterinarian == null ) {
+            return null;
+        }
+        VeterinarianCategory category = veterinarian.getCategory();
+        if ( category == null ) {
+            return null;
+        }
+        String name = category.getName();
+        if ( name == null ) {
+            return null;
+        }
+        return name;
     }
 }

@@ -1,7 +1,7 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.request.CreateMedicalAppointmentDTO;
-import com.petshop.api.dto.response.MedicalAppointmentResponseDTO;
+import com.petshop.api.dto.request.CreateMedicalAppointmentDto;
+import com.petshop.api.dto.response.MedicalAppointmentResponseDto;
 import com.petshop.api.exception.AppointmentDateTimeAlreadyExistsException;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Animal;
@@ -32,12 +32,12 @@ public class MedicalAppointmentService {
     private final MedicalAppointmentMapper medicalAppointmentMapper;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
 
-    public Page<MedicalAppointmentResponseDTO> getAllMedicalAppointments(Pageable pageable) {
+    public Page<MedicalAppointmentResponseDto> getAllMedicalAppointments(Pageable pageable) {
         return medicalAppointmentRepository.findAll(pageable)
                 .map(medicalAppointmentMapper::toResponseDto);
     }
 
-    public MedicalAppointmentResponseDTO getMedicalAppointmentById(UUID id) {
+    public MedicalAppointmentResponseDto getMedicalAppointmentById(UUID id) {
         MedicalAppointment medicalAppointmentById = medicalAppointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Medical appointment not found with ID: " + id));
         return medicalAppointmentMapper.toResponseDto(medicalAppointmentById);
@@ -45,7 +45,7 @@ public class MedicalAppointmentService {
     }
 
     @Transactional
-    public MedicalAppointmentResponseDTO createMedicalAppointment(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
+    public MedicalAppointmentResponseDto createMedicalAppointment(CreateMedicalAppointmentDto createMedicalAppointmentDTO) {
 
         LocalDateTime start = createMedicalAppointmentDTO.getAppointmentStartTime();
         int duration = createMedicalAppointmentDTO.getDurationMinutes() != null ? createMedicalAppointmentDTO.getDurationMinutes() : 30;

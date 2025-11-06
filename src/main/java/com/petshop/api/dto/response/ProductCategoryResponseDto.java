@@ -11,11 +11,10 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VeterinarianResponseDTO {
+public class ProductCategoryResponseDto {
+
     private UUID id;
     private String name;
-    private String crmv;
-    private String phone;
-    private String veterinarianCategory;
-    private String email;
+    private String description;
+
 }

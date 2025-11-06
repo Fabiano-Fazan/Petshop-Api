@@ -3,7 +3,6 @@ package com.petshop.api.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CreateAnimalDTO {
+public class CreateAnimalDto {
 
     @NotBlank(message = "Name is required")
     private String name;
@@ -24,8 +23,6 @@ public class CreateAnimalDTO {
 
     private String breed;
 
-    @NotNull(message = "Birth date is required")
-    @PastOrPresent(message = "Birth date cannot be in the future")
     private LocalDate birthDate;
 
     @NotNull(message = "Client ID is required")

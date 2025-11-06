@@ -1,7 +1,7 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.request.CreateMedicalAppointmentDTO;
-import com.petshop.api.dto.response.MedicalAppointmentResponseDTO;
+import com.petshop.api.dto.request.CreateMedicalAppointmentDto;
+import com.petshop.api.dto.response.MedicalAppointmentResponseDto;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.MedicalAppointment;
@@ -13,14 +13,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-05T08:22:26-0300",
+    date = "2025-11-05T23:21:43-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
 public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
 
     @Override
-    public MedicalAppointment toEntity(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
+    public MedicalAppointment toEntity(CreateMedicalAppointmentDto createMedicalAppointmentDTO) {
         if ( createMedicalAppointmentDTO == null ) {
             return null;
         }
@@ -38,29 +38,29 @@ public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
     }
 
     @Override
-    public MedicalAppointmentResponseDTO toResponseDto(MedicalAppointment medicalAppointment) {
+    public MedicalAppointmentResponseDto toResponseDto(MedicalAppointment medicalAppointment) {
         if ( medicalAppointment == null ) {
             return null;
         }
 
-        MedicalAppointmentResponseDTO medicalAppointmentResponseDTO = new MedicalAppointmentResponseDTO();
+        MedicalAppointmentResponseDto medicalAppointmentResponseDto = new MedicalAppointmentResponseDto();
 
-        medicalAppointmentResponseDTO.setVeterinarianName( medicalAppointmentVeterinarianName( medicalAppointment ) );
-        medicalAppointmentResponseDTO.setVeterinarianId( medicalAppointmentVeterinarianId( medicalAppointment ) );
-        medicalAppointmentResponseDTO.setClientName( medicalAppointmentClientName( medicalAppointment ) );
-        medicalAppointmentResponseDTO.setClientId( medicalAppointmentClientId( medicalAppointment ) );
-        medicalAppointmentResponseDTO.setAnimalName( medicalAppointmentAnimalName( medicalAppointment ) );
-        medicalAppointmentResponseDTO.setAnimalId( medicalAppointmentAnimalId( medicalAppointment ) );
-        medicalAppointmentResponseDTO.setId( medicalAppointment.getId() );
-        medicalAppointmentResponseDTO.setAppointmentStartTime( medicalAppointment.getAppointmentStartTime() );
-        medicalAppointmentResponseDTO.setAppointmentEndTime( medicalAppointment.getAppointmentEndTime() );
-        if ( medicalAppointment.getStatus() != null ) {
-            medicalAppointmentResponseDTO.setStatus( medicalAppointment.getStatus().name() );
+        medicalAppointmentResponseDto.setVeterinarianName( medicalAppointmentVeterinarianName( medicalAppointment ) );
+        medicalAppointmentResponseDto.setVeterinarianId( medicalAppointmentVeterinarianId( medicalAppointment ) );
+        medicalAppointmentResponseDto.setClientName( medicalAppointmentClientName( medicalAppointment ) );
+        medicalAppointmentResponseDto.setClientId( medicalAppointmentClientId( medicalAppointment ) );
+        medicalAppointmentResponseDto.setAnimalName( medicalAppointmentAnimalName( medicalAppointment ) );
+        medicalAppointmentResponseDto.setAnimalId( medicalAppointmentAnimalId( medicalAppointment ) );
+        if ( medicalAppointment.getAppointmentStatus() != null ) {
+            medicalAppointmentResponseDto.setAppointmentStatus( medicalAppointment.getAppointmentStatus().name() );
         }
-        medicalAppointmentResponseDTO.setDiagnosis( medicalAppointment.getDiagnosis() );
-        medicalAppointmentResponseDTO.setTreatment( medicalAppointment.getTreatment() );
+        medicalAppointmentResponseDto.setId( medicalAppointment.getId() );
+        medicalAppointmentResponseDto.setAppointmentStartTime( medicalAppointment.getAppointmentStartTime() );
+        medicalAppointmentResponseDto.setAppointmentEndTime( medicalAppointment.getAppointmentEndTime() );
+        medicalAppointmentResponseDto.setDiagnosis( medicalAppointment.getDiagnosis() );
+        medicalAppointmentResponseDto.setTreatment( medicalAppointment.getTreatment() );
 
-        return medicalAppointmentResponseDTO;
+        return medicalAppointmentResponseDto;
     }
 
     private String medicalAppointmentVeterinarianName(MedicalAppointment medicalAppointment) {

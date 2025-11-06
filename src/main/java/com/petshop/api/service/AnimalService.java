@@ -1,7 +1,7 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.response.AnimalResponseDTO;
-import com.petshop.api.dto.request.CreateAnimalDTO;
+import com.petshop.api.dto.response.AnimalResponseDto;
+import com.petshop.api.dto.request.CreateAnimalDto;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.mapper.AnimalMapper;
@@ -24,13 +24,13 @@ public class AnimalService {
     private final ClientRepository clientRepository;
     private final AnimalMapper animalMapper;
 
-    public Page<AnimalResponseDTO> getAllAnimals(Pageable pageable){
+    public Page<AnimalResponseDto> getAllAnimals(Pageable pageable){
         return animalRepository.findAll(pageable)
                 .map(animalMapper::toResponseDto);
     }
 
     @Transactional
-    public AnimalResponseDTO createAnimal(CreateAnimalDTO createAnimalDTO){
+    public AnimalResponseDto createAnimal(CreateAnimalDto createAnimalDTO){
         Client client = clientRepository.findById(createAnimalDTO.getClientId())
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + createAnimalDTO.getClientId()));
 

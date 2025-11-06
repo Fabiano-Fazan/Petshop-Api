@@ -29,6 +29,7 @@ public class Product {
     private BigDecimal price;
 
     @Column(name = "quantity_in_stock", nullable = false)
+    @Builder.Default
     private Integer quantityInStock = 0;
 
     @ManyToOne

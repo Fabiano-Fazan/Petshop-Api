@@ -9,7 +9,8 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnimalResponseDTO {
+public class AnimalResponseDto {
+
     private UUID id;
     private String name;
     private String species;

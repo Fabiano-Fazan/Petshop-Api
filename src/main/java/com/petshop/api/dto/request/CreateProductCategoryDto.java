@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateProductCategoryDTO {
+public class CreateProductCategoryDto {
 
     @NotBlank(message = "Name is required")
     private String name;
