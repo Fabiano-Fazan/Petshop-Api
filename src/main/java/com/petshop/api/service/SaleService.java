@@ -14,9 +14,11 @@ import com.petshop.api.model.mapper.SaleMapper;
 import com.petshop.api.repository.ClientRepository;
 import com.petshop.api.repository.ProductRepository;
 import com.petshop.api.repository.SaleRepository;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,17 +48,17 @@ public class SaleService {
         BigDecimal totalValue = BigDecimal.ZERO;
 
         for (CreateProductSaleDto productSaleDTO : createSaleDTO.getProductSales()) {
-            Product product = productRepository.findById(productSaleDTO.getProductId())
+            Product product = productRepository.findWithLockById(productSaleDTO.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID:" + productSaleDTO.getProductId()));
 
             ProductSale productSale = new ProductSale();
             productSale.setProduct(product);
             productSale.setQuantity(productSaleDTO.getQuantity());
-            productSale.setUnitPrice(product.getPrice());
+            productSale.setUnitPrice(productSaleDTO.getPrice());
             productSale.setSale(newSale);
             newSale.getProductSales().add(productSale);
 
-            totalValue = totalValue.add(product.getPrice().multiply(BigDecimal.valueOf(productSaleDTO.getQuantity())));
+            totalValue = totalValue.add(productSaleDTO.getPrice().multiply(BigDecimal.valueOf(productSaleDTO.getQuantity())));
         }
         newSale.setTotalValue(totalValue);
 

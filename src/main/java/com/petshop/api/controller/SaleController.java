@@ -31,7 +31,7 @@ public class SaleController {
         return new ResponseEntity<>(createdSale, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public  ResponseEntity<SaleResponseDto> findSaleById(@PathVariable UUID id){
         SaleResponseDto sale = saleService.findById(id);
         return ResponseEntity.ok(sale);

@@ -26,13 +26,13 @@ public class ClientController {
         return ResponseEntity.ok(allClients);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<ClientResponseDto> getClientById(@PathVariable UUID id) {
         ClientResponseDto clientById = clientService.getClientById(id);
         return ResponseEntity.ok(clientById);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<Page<ClientResponseDto>> getClientByName(@PathVariable String name, Pageable pageable) {
         Page<ClientResponseDto> clientByName = clientService.getClientByNameContainingIgnoreCase(name,pageable);
         return ResponseEntity.ok(clientByName);

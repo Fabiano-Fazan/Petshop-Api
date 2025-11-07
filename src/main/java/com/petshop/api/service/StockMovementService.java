@@ -23,7 +23,7 @@ public class StockMovementService {
 
     @Transactional
     public void registerInput(CreateStockMovementDto createStockMovementDTO){
-        Product product = productRepository.findById(createStockMovementDTO.getProductId())
+        Product product = productRepository.findWithLockById(createStockMovementDTO.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + createStockMovementDTO.getProductId()));
         this.registerInput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(), createStockMovementDTO.getInvoice(), createStockMovementDTO.getPrice());
 
@@ -40,9 +40,9 @@ public class StockMovementService {
 
     @Transactional
     public void registerOutput(CreateStockMovementDto createStockMovementDTO){
-        Product product = productRepository.findById(createStockMovementDTO.getProductId())
+        Product product = productRepository.findWithLockById(createStockMovementDTO.getProductId())
                 .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + createStockMovementDTO.getProductId()));
-        this.registerOutput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(), null, null);
+        this.registerOutput(product, createStockMovementDTO.getQuantity(), createStockMovementDTO.getDescription(),createStockMovementDTO.getPrice(), null);
     }
 
     @Transactional
@@ -53,7 +53,7 @@ public class StockMovementService {
         product.setQuantityInStock(product.getQuantityInStock() - quantity);
         productRepository.save(product);
 
-        StockMovement stockMovement = StockMovement.newOutput(product, quantity,description,sale, null);
+        StockMovement stockMovement = StockMovement.newOutput(product, quantity,description,sale, price);
         stockMovementRepository.save(stockMovement);
     }
 }

@@ -51,7 +51,7 @@ public class ProductService {
     public ProductResponseDto createProduct(CreateProductDto createProductDTO) {
         Product product = productMapper.toEntity(createProductDTO);
         ProductCategory category = productCategoryRepository.findByNameContainingIgnoreCase(createProductDTO.getCategory())
-                .orElseThrow(() -> new ResourceNotFoundException("Product Category not found with name: " + createProductDTO.getCategory()));
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with name: " + createProductDTO.getCategory()));
         product.setCategory(category);
         Product savedProduct = productRepository.save(product);
         return productMapper.toResponseDto(savedProduct);
