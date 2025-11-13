@@ -1,16 +1,25 @@
 services:
-  postgres-db:
+  postgres:
     image: postgres:15
-    container_name: petshop-api
+    container_name: postgres_petshop
     restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: petshop
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: adminer_petshop
+    restart: always
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+
 volumes:
-  postgres-data:
-    name: petshop-db-data
+  postgres_data:
