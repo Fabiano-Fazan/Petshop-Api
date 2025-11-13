@@ -1,8 +1,8 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.request.UpdateClientDTO;
-import com.petshop.api.dto.response.ClientResponseDTO;
-import com.petshop.api.dto.request.CreateClientDTO;
+import com.petshop.api.dto.request.CreateClientDto;
+import com.petshop.api.dto.request.UpdateClientDto;
+import com.petshop.api.dto.response.ClientResponseDto;
 import com.petshop.api.exception.CpfAlreadyExistsException;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Address;
@@ -26,24 +26,24 @@ public class ClientService {
     private final AddressMapper addressMapper;
 
 
-    public Page<ClientResponseDTO> getAllClients(Pageable pageable) {
+    public Page<ClientResponseDto> getAllClients(Pageable pageable) {
         return clientRepository.findAll(pageable)
                 .map(clientMapper::toResponseDto);
     }
 
-    public ClientResponseDTO getClientById(UUID id) {
+    public ClientResponseDto getClientById(UUID id) {
         return clientRepository.findById(id)
                 .map(clientMapper::toResponseDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found with id: " + id));
     }
 
-    public Page<ClientResponseDTO> getClientByNameContainingIgnoreCase(String name, Pageable pageable) {
+    public Page<ClientResponseDto> getClientByNameContainingIgnoreCase(String name, Pageable pageable) {
         return clientRepository.findAllByNameContainingIgnoreCase(name,pageable)
                 .map(clientMapper::toResponseDto);
     }
 
     @Transactional
-    public ClientResponseDTO createClient(CreateClientDTO createClientDTO) {
+    public ClientResponseDto createClient(CreateClientDto createClientDTO) {
         if (clientRepository.existsByCpf(createClientDTO.getCpf())){
             throw new CpfAlreadyExistsException("This CPF already exists");
         }
@@ -53,7 +53,7 @@ public class ClientService {
     }
 
     @Transactional
-    public ClientResponseDTO updateClient(UUID id, UpdateClientDTO clientDTO) {
+    public ClientResponseDto updateClient(UUID id, UpdateClientDto clientDTO) {
         Client client = clientRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + id));
         clientMapper.updateClientFromDTO(clientDTO, client);

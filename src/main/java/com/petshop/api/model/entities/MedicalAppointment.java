@@ -39,6 +39,10 @@ public class MedicalAppointment {
     @JoinColumn(name = "veterinarian_id", nullable = false)
     private Veterinarian veterinarian;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private AppointmentStatus  appointmentStatus;
+
     @Column(nullable = false)
     private LocalDateTime appointmentStartTime;
 

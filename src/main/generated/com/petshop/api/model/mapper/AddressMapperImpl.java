@@ -1,20 +1,20 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.request.UpdateClientDTO;
+import com.petshop.api.dto.request.UpdateClientDto;
 import com.petshop.api.model.entities.Address;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-05T08:22:27-0300",
+    date = "2025-11-12T20:42:33-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
 public class AddressMapperImpl implements AddressMapper {
 
     @Override
-    public void updateAddressFromDTO(UpdateClientDTO.AddressData addressDataUpdate, Address address) {
+    public void updateAddressFromDTO(UpdateClientDto.AddressData addressDataUpdate, Address address) {
         if ( addressDataUpdate == null ) {
             return;
         }

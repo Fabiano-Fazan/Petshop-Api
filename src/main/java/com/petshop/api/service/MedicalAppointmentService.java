@@ -1,7 +1,8 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.request.CreateMedicalAppointmentDTO;
-import com.petshop.api.dto.response.MedicalAppointmentResponseDTO;
+import com.petshop.api.dto.request.CreateMedicalAppointmentDto;
+import com.petshop.api.dto.request.UpdateMedicalAppointmentDto;
+import com.petshop.api.dto.response.MedicalAppointmentResponseDto;
 import com.petshop.api.exception.AppointmentDateTimeAlreadyExistsException;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Animal;
@@ -32,12 +33,12 @@ public class MedicalAppointmentService {
     private final MedicalAppointmentMapper medicalAppointmentMapper;
     private final MedicalAppointmentRepository medicalAppointmentRepository;
 
-    public Page<MedicalAppointmentResponseDTO> getAllMedicalAppointments(Pageable pageable) {
+    public Page<MedicalAppointmentResponseDto> getAllMedicalAppointments(Pageable pageable) {
         return medicalAppointmentRepository.findAll(pageable)
                 .map(medicalAppointmentMapper::toResponseDto);
     }
 
-    public MedicalAppointmentResponseDTO getMedicalAppointmentById(UUID id) {
+    public MedicalAppointmentResponseDto getMedicalAppointmentById(UUID id) {
         MedicalAppointment medicalAppointmentById = medicalAppointmentRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Medical appointment not found with ID: " + id));
         return medicalAppointmentMapper.toResponseDto(medicalAppointmentById);
@@ -45,7 +46,7 @@ public class MedicalAppointmentService {
     }
 
     @Transactional
-    public MedicalAppointmentResponseDTO createMedicalAppointment(CreateMedicalAppointmentDTO createMedicalAppointmentDTO) {
+    public MedicalAppointmentResponseDto createMedicalAppointment(CreateMedicalAppointmentDto createMedicalAppointmentDTO) {
 
         LocalDateTime start = createMedicalAppointmentDTO.getAppointmentStartTime();
         int duration = createMedicalAppointmentDTO.getDurationMinutes() != null ? createMedicalAppointmentDTO.getDurationMinutes() : 30;
@@ -76,6 +77,61 @@ public class MedicalAppointmentService {
         return medicalAppointmentMapper.toResponseDto(savedAppointment);
     }
 
+    @Transactional
+    public MedicalAppointmentResponseDto updateMedicalAppointment(UUID id, UpdateMedicalAppointmentDto updateMedicalAppointmentDto){
+
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Appointment  not found with ID: " + id));
+        medicalAppointmentMapper.updateMedicalAppointmentDto(updateMedicalAppointmentDto, medicalAppointment);
+
+        if (updateMedicalAppointmentDto.getVeterinarianId() != null){
+            Veterinarian veterinarian = veterinarianRepository.findById(updateMedicalAppointmentDto.getVeterinarianId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Veterinarian not found with ID: " + updateMedicalAppointmentDto.getVeterinarianId()));
+        }
+
+        if (updateMedicalAppointmentDto.getAnimalId() != null){
+            Animal animal = animalRepository.findById(updateMedicalAppointmentDto.getAnimalId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Animal not found with ID: " + updateMedicalAppointmentDto.getAnimalId()));
+        }
+
+        if (updateMedicalAppointmentDto.getClientId() != null){
+            Client client = clientRepository.findById(updateMedicalAppointmentDto.getClientId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Client not found with ID: " + updateMedicalAppointmentDto.getClientId()));
+        }
+
+        if (updateMedicalAppointmentDto.getAppointmentStartTime() != null || updateMedicalAppointmentDto.getDurationMinutes() != null){
+
+            LocalDateTime start = updateMedicalAppointmentDto.getAppointmentStartTime() != null
+                    ? updateMedicalAppointmentDto.getAppointmentStartTime()
+                    : medicalAppointment.getAppointmentStartTime();
+
+            int duration = updateMedicalAppointmentDto.getDurationMinutes() != null
+                    ? updateMedicalAppointmentDto.getDurationMinutes()
+                    :medicalAppointment.getDurationMinutes();
+
+            LocalDateTime end = start.plusMinutes(duration);
+
+            boolean hasConflict = medicalAppointmentRepository.existsConflictingAppointment(medicalAppointment.getVeterinarian().getId(), start, end);
+            if (hasConflict) {
+                throw new AppointmentDateTimeAlreadyExistsException("This time slot is already booked for the veterinarian.");
+            }
+
+            medicalAppointment.setAppointmentStartTime(start);
+            medicalAppointment.setAppointmentEndTime(end);
+            medicalAppointment.setDurationMinutes(duration);
+        }
+
+        medicalAppointmentRepository.save(medicalAppointment);
+        return medicalAppointmentMapper.toResponseDto(medicalAppointment);
+    }
+
+    @Transactional
+    public void deleteMedicalAppointment(UUID id){
+        if (!medicalAppointmentRepository.existsById(id)){
+            throw new ResourceNotFoundException("Appointment not found with ID: " + id);
+        }
+        medicalAppointmentRepository.deleteById(id);
+    }
 }
 
 

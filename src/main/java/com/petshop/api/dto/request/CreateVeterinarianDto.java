@@ -1,6 +1,5 @@
 package com.petshop.api.dto.request;
 
-import com.petshop.api.model.enums.VeterinarianCategory;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +9,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateVeterinarianDTO {
+public class CreateVeterinarianDto {
+
     @NotBlank(message = "Name is required")
     private String name;
 
@@ -24,7 +24,7 @@ public class CreateVeterinarianDTO {
     private String phone;
 
     @NotNull(message = "Veterinarian Category is required")
-    private VeterinarianCategory veterinarianCategory;
+    private String category;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Email format is invalid")

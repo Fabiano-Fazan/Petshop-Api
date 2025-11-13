@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<Product> findById(UUID id);
+    Optional<Product> findWithLockById(UUID id);
 
     Page<Product> findByNameContainingIgnoreCase(String name, Pageable pageable);
 

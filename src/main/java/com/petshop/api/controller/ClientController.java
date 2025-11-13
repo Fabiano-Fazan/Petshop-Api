@@ -1,8 +1,8 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.request.UpdateClientDTO;
-import com.petshop.api.dto.response.ClientResponseDTO;
-import com.petshop.api.dto.request.CreateClientDTO;
+import com.petshop.api.dto.request.CreateClientDto;
+import com.petshop.api.dto.request.UpdateClientDto;
+import com.petshop.api.dto.response.ClientResponseDto;
 import com.petshop.api.service.ClientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,34 +21,34 @@ public class ClientController {
     private final ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<Page<ClientResponseDTO>> getAllClients(Pageable pageable) {
-        Page<ClientResponseDTO> allClients = clientService.getAllClients(pageable);
+    public ResponseEntity<Page<ClientResponseDto>> getAllClients(Pageable pageable) {
+        Page<ClientResponseDto> allClients = clientService.getAllClients(pageable);
         return ResponseEntity.ok(allClients);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> getClientById(@PathVariable UUID id) {
-        ClientResponseDTO clientById = clientService.getClientById(id);
+    @GetMapping("/id/{id}")
+    public ResponseEntity<ClientResponseDto> getClientById(@PathVariable UUID id) {
+        ClientResponseDto clientById = clientService.getClientById(id);
         return ResponseEntity.ok(clientById);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Page<ClientResponseDTO>> getClientByName(@PathVariable String name, Pageable pageable) {
-        Page<ClientResponseDTO> clientByName = clientService.getClientByNameContainingIgnoreCase(name,pageable);
+    public ResponseEntity<Page<ClientResponseDto>> getClientByName(@PathVariable String name, Pageable pageable) {
+        Page<ClientResponseDto> clientByName = clientService.getClientByNameContainingIgnoreCase(name,pageable);
         return ResponseEntity.ok(clientByName);
     }
 
     @PostMapping
-    public ResponseEntity<ClientResponseDTO> createClient(@Valid @RequestBody CreateClientDTO clientDTO) {
-        ClientResponseDTO createdClient = clientService.createClient(clientDTO);
+    public ResponseEntity<ClientResponseDto> createClient(@Valid @RequestBody CreateClientDto clientDTO) {
+        ClientResponseDto createdClient = clientService.createClient(clientDTO);
         return new ResponseEntity<>(createdClient, HttpStatus.CREATED);
     }
 
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ClientResponseDTO> updateClient(@PathVariable UUID id, @Valid @RequestBody UpdateClientDTO updateClientDTO) {
-        ClientResponseDTO updatedClient = clientService.updateClient(id, updateClientDTO);
-        return new ResponseEntity<>(updatedClient, HttpStatus.OK);
+    public ResponseEntity<ClientResponseDto> updateClient(@PathVariable UUID id, @Valid @RequestBody UpdateClientDto updateClientDTO) {
+        ClientResponseDto updatedClient = clientService.updateClient(id, updateClientDTO);
+        return ResponseEntity.ok(updatedClient);
     }
 
 

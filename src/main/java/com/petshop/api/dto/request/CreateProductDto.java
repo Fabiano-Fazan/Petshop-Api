@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-public class CreateProductDTO {
+public class CreateProductDto {
 
     @NotBlank(message = "Name is required")
     @Size(min = 3, max = 100, message = "The name must be between 3 and 100 characters")
@@ -24,7 +24,7 @@ public class CreateProductDTO {
     @Positive(message = "The price needs to be positive")
     private BigDecimal price;
 
-    private ProductCategory category;
+    private String category;
 
     @NotNull(message = "The quantity in stock cannot be null")
     @Positive(message = "The quantity in stock needs to be positive")

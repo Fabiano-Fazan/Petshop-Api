@@ -1,10 +1,11 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.request.CreateMedicalAppointmentDTO;
-import com.petshop.api.dto.response.MedicalAppointmentResponseDTO;
+import com.petshop.api.dto.request.CreateMedicalAppointmentDto;
+import com.petshop.api.dto.request.UpdateMedicalAppointmentDto;
+import com.petshop.api.dto.response.MedicalAppointmentResponseDto;
 import com.petshop.api.model.entities.MedicalAppointment;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
+
 @Mapper(componentModel = "spring")
 public interface MedicalAppointmentMapper {
 
@@ -14,7 +15,7 @@ public interface MedicalAppointmentMapper {
     @Mapping(target = "client", ignore = true)
     @Mapping(target = "animal", ignore = true)
     @Mapping(target = "veterinarian", ignore = true)
-    MedicalAppointment toEntity(CreateMedicalAppointmentDTO createMedicalAppointmentDTO);
+    MedicalAppointment toEntity(CreateMedicalAppointmentDto createMedicalAppointmentDTO);
 
     @Mapping(target = "veterinarianName", source = "veterinarian.name")
     @Mapping(target = "veterinarianId", source = "veterinarian.id")
@@ -22,7 +23,11 @@ public interface MedicalAppointmentMapper {
     @Mapping(target = "clientId", source = "client.id")
     @Mapping(target = "animalName", source = "animal.name")
     @Mapping(target = "animalId", source = "animal.id")
-    MedicalAppointmentResponseDTO toResponseDto(MedicalAppointment medicalAppointment);
+    @Mapping(target = "appointmentStatus", source = "appointmentStatus")
+    MedicalAppointmentResponseDto toResponseDto(MedicalAppointment medicalAppointment);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateMedicalAppointmentDto (UpdateMedicalAppointmentDto updateMedicalAppointmentDto, @MappingTarget MedicalAppointment medicalAppointment);
 }
 
 

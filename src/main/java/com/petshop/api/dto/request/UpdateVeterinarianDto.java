@@ -8,7 +8,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateVeterinarianDTO {
+public class UpdateVeterinarianDto {
+
     @Size(min = 1, message = "Name cannot be empty")
     private String name;
 

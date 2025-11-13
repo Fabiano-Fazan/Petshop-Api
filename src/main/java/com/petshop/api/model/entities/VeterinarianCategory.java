@@ -3,7 +3,6 @@ package com.petshop.api.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.util.UUID;
 
 @Entity
@@ -12,8 +11,9 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Veterinarian {
+@Table(name = "veterinarian_categories")
 
+public class VeterinarianCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -21,16 +21,5 @@ public class Veterinarian {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String crmv;
-
-    @Column(nullable = false)
-    private String phone;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private VeterinarianCategory category;
-
-    private String email;
-
+    private String description;
 }

@@ -1,8 +1,8 @@
 package com.petshop.api.service;
 
-import com.petshop.api.dto.response.AuthResponseDTO;
-import com.petshop.api.dto.request.LoginDTO;
-import com.petshop.api.dto.request.RegisterDTO;
+import com.petshop.api.dto.response.AuthResponseDto;
+import com.petshop.api.dto.request.LoginDto;
+import com.petshop.api.dto.request.RegisterDto;
 import com.petshop.api.model.entities.User;
 import com.petshop.api.repository.UserRepository;
 import com.petshop.api.security.JwtService;
@@ -23,7 +23,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     @Transactional
-    public AuthResponseDTO register(RegisterDTO registerDTO) {
+    public AuthResponseDto register(RegisterDto registerDTO) {
         var user = new User();
         user.setEmail(registerDTO.getEmail());
         user.setName(registerDTO.getName());
@@ -34,12 +34,12 @@ public class AuthService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        return AuthResponseDTO.builder()
+        return AuthResponseDto.builder()
                 .acessToken(jwtToken)
                 .build();
     }
 
-    public AuthResponseDTO login(LoginDTO request){
+    public AuthResponseDto login(LoginDto request){
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),
@@ -51,7 +51,7 @@ public class AuthService {
 
         var jwtToken = jwtService.generateToken(user);
 
-        return AuthResponseDTO.builder()
+        return AuthResponseDto.builder()
                 .acessToken(jwtToken)
                 .build();
     }

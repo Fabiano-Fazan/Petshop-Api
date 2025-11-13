@@ -1,7 +1,7 @@
 package com.petshop.api.model.mapper;
 
-import com.petshop.api.dto.request.CreateAnimalDTO;
-import com.petshop.api.dto.response.AnimalResponseDTO;
+import com.petshop.api.dto.request.CreateAnimalDto;
+import com.petshop.api.dto.response.AnimalResponseDto;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
 import java.util.UUID;
@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-11-05T08:31:39-0300",
+    date = "2025-11-12T20:42:33-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component
 public class AnimalMapperImpl implements AnimalMapper {
 
     @Override
-    public Animal toEntity(CreateAnimalDTO createAnimalDTO) {
+    public Animal toEntity(CreateAnimalDto createAnimalDTO) {
         if ( createAnimalDTO == null ) {
             return null;
         }
@@ -33,20 +33,21 @@ public class AnimalMapperImpl implements AnimalMapper {
     }
 
     @Override
-    public AnimalResponseDTO toResponseDto(Animal animal) {
+    public AnimalResponseDto toResponseDto(Animal animal) {
         if ( animal == null ) {
             return null;
         }
 
-        AnimalResponseDTO animalResponseDTO = new AnimalResponseDTO();
+        AnimalResponseDto animalResponseDto = new AnimalResponseDto();
 
-        animalResponseDTO.setClientId( animalClientId( animal ) );
-        animalResponseDTO.setName( animal.getName() );
-        animalResponseDTO.setSpecies( animal.getSpecies() );
-        animalResponseDTO.setBirthDate( animal.getBirthDate() );
-        animalResponseDTO.setBreed( animal.getBreed() );
+        animalResponseDto.setClientId( animalClientId( animal ) );
+        animalResponseDto.setId( animal.getId() );
+        animalResponseDto.setName( animal.getName() );
+        animalResponseDto.setSpecies( animal.getSpecies() );
+        animalResponseDto.setBirthDate( animal.getBirthDate() );
+        animalResponseDto.setBreed( animal.getBreed() );
 
-        return animalResponseDTO;
+        return animalResponseDto;
     }
 
     private UUID animalClientId(Animal animal) {

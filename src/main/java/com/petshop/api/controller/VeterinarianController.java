@@ -1,8 +1,8 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.request.CreateVeterinarianDTO;
-import com.petshop.api.dto.request.UpdateVeterinarianDTO;
-import com.petshop.api.dto.response.VeterinarianResponseDTO;
+import com.petshop.api.dto.request.CreateVeterinarianDto;
+import com.petshop.api.dto.request.UpdateVeterinarianDto;
+import com.petshop.api.dto.response.VeterinarianResponseDto;
 import com.petshop.api.service.VeterinarianService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,41 +21,39 @@ public class VeterinarianController {
     private final VeterinarianService veterinarianService;
 
     @GetMapping
-    public ResponseEntity<Page<VeterinarianResponseDTO>> getAllVeterinarians(Pageable pageable){
-        Page<VeterinarianResponseDTO> allVeterinarians = veterinarianService.getAllVeterinarians(pageable);
+    public ResponseEntity<Page<VeterinarianResponseDto>> getAllVeterinarians(Pageable pageable){
+        Page<VeterinarianResponseDto> allVeterinarians = veterinarianService.getAllVeterinarians(pageable);
         return ResponseEntity.ok(allVeterinarians);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<VeterinarianResponseDTO> getVeterinarianById(@PathVariable UUID id){
-        VeterinarianResponseDTO veterinarianById = veterinarianService.getVeterinarianById(id);
+    @GetMapping("/id/{id}")
+    public ResponseEntity<VeterinarianResponseDto> getVeterinarianById(@PathVariable UUID id){
+        VeterinarianResponseDto veterinarianById = veterinarianService.getVeterinarianById(id);
         return ResponseEntity.ok(veterinarianById);
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<Page<VeterinarianResponseDTO>> getVeterinarianByName(@PathVariable String name, Pageable pageable){
-        Page<VeterinarianResponseDTO> veterinarianByName = veterinarianService.getVeterinarianByNameContainingIgnoreCase(name,pageable);
+    public ResponseEntity<Page<VeterinarianResponseDto>> getVeterinarianByName(@PathVariable String name, Pageable pageable){
+        Page<VeterinarianResponseDto> veterinarianByName = veterinarianService.getVeterinarianByNameContainingIgnoreCase(name,pageable);
         return ResponseEntity.ok(veterinarianByName);
     }
 
     @PostMapping
-    public ResponseEntity<VeterinarianResponseDTO> createVeterinarian(@Valid @RequestBody CreateVeterinarianDTO createVeterinarianDTO){
-        VeterinarianResponseDTO createdVeterinarian = veterinarianService.createVeterinarian(createVeterinarianDTO);
+    public ResponseEntity<VeterinarianResponseDto> createVeterinarian(@Valid @RequestBody CreateVeterinarianDto createVeterinarianDTO){
+        VeterinarianResponseDto createdVeterinarian = veterinarianService.createVeterinarian(createVeterinarianDTO);
         return new ResponseEntity<>(createdVeterinarian, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<VeterinarianResponseDTO> updateVeterinarian(@PathVariable UUID id, @Valid @RequestBody UpdateVeterinarianDTO updateVeterinarianDTO){
-        VeterinarianResponseDTO updatedVeterinarian = veterinarianService.updateVeterinarian(id, updateVeterinarianDTO);
-        return new ResponseEntity<>(updatedVeterinarian, HttpStatus.OK);
+    @PatchMapping("/{id}")
+    public ResponseEntity<VeterinarianResponseDto> updateVeterinarian(@PathVariable UUID id, @Valid @RequestBody UpdateVeterinarianDto updateVeterinarianDTO){
+        VeterinarianResponseDto updatedVeterinarian = veterinarianService.updateVeterinarian(id, updateVeterinarianDTO);
+        return ResponseEntity.ok(updatedVeterinarian);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteVeterinarian(@PathVariable UUID id){
         veterinarianService.deleteVeterinarian(id);
         return ResponseEntity.noContent().build();
     }
-
 
 }

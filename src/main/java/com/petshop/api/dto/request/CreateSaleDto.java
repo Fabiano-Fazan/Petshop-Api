@@ -12,12 +12,13 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class CreateSaleDTO {
+public class CreateSaleDto {
+
     @NotNull(message = "Client ID is required")
     private UUID clientId;
 
     @NotEmpty(message = "Product sales list is required")
     @Valid
-    private List<CreateProductSaleDTO> productSales;
+    private List<CreateProductSaleDto> productSales;
 
 }

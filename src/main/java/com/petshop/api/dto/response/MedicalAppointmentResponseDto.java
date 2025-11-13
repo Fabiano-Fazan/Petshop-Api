@@ -1,6 +1,7 @@
 package com.petshop.api.dto.response;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,11 +14,17 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicalAppointmentResponseDTO {
+public class MedicalAppointmentResponseDto {
+
     private UUID id;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime appointmentStartTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime appointmentEndTime;
-    private String status;
+
+    private String appointmentStatus;
     private String diagnosis;
     private String treatment;
 
