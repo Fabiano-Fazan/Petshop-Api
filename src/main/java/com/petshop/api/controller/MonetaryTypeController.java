@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateMonetaryType;
 import com.petshop.api.dto.update.UpdateMonetaryTypeDto;
 import com.petshop.api.dto.response.MonetaryTypeResponseDto;
 import com.petshop.api.service.MonetaryTypeService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,12 +18,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/monetary-types")
 @RequiredArgsConstructor
+@Tag(name = "Tipo Monetário", description = "Endpoints para gestão de tipos monetários")
 public class MonetaryTypeController {
 
     private final MonetaryTypeService monetaryTypeService;
 
     @GetMapping
-    public ResponseEntity<Page<MonetaryTypeResponseDto>> getAllMonetaryTypes(Pageable pageable) {
+    public ResponseEntity<Page<MonetaryTypeResponseDto>> getAllMonetaryTypes(@ParameterObject Pageable pageable) {
         Page<MonetaryTypeResponseDto> allMonetaryTypes = monetaryTypeService.getAllMonetaryTypes(pageable);
         return ResponseEntity.ok(allMonetaryTypes);
     }
@@ -33,7 +36,7 @@ public class MonetaryTypeController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<MonetaryTypeResponseDto>> getByName(@RequestParam String name, Pageable pageable){
+    public ResponseEntity<Page<MonetaryTypeResponseDto>> getByName(@RequestParam String name, @ParameterObject Pageable pageable){
         Page<MonetaryTypeResponseDto> monetaryTypeByName = monetaryTypeService.getMonetaryTypeByNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(monetaryTypeByName);
     }

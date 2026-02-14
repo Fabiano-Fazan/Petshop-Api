@@ -2,6 +2,7 @@ package com.petshop.api.controller;
 
 import com.petshop.api.dto.request.CreateStockMovementDto;
 import com.petshop.api.service.StockMovementService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stock")
+@Tag(name = "Estoque", description = "Endpoints para gestão de estoque")
 public class StockMovementController {
 
     private final StockMovementService stockMovementService;

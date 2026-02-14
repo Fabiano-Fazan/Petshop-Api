@@ -1,8 +1,8 @@
 package com.petshop.api.model.mapper;
 
 import com.petshop.api.dto.request.CreateAnimalDto;
-import com.petshop.api.dto.request.UpdateAnimalDto;
 import com.petshop.api.dto.response.AnimalResponseDto;
+import com.petshop.api.dto.update.UpdateAnimalDto;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
 import java.util.UUID;
@@ -11,24 +11,24 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-11T22:02:17-0300",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
+    date = "2026-02-13T22:36:55-0300",
+    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class AnimalMapperImpl implements AnimalMapper {
 
     @Override
-    public Animal toEntity(CreateAnimalDto createAnimalDTO) {
-        if ( createAnimalDTO == null ) {
+    public Animal toEntity(CreateAnimalDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         Animal.AnimalBuilder animal = Animal.builder();
 
-        animal.name( createAnimalDTO.getName() );
-        animal.species( createAnimalDTO.getSpecies() );
-        animal.breed( createAnimalDTO.getBreed() );
-        animal.birthDate( createAnimalDTO.getBirthDate() );
+        animal.name( dto.getName() );
+        animal.species( dto.getSpecies() );
+        animal.breed( dto.getBreed() );
+        animal.birthDate( dto.getBirthDate() );
 
         return animal.build();
     }
@@ -52,22 +52,22 @@ public class AnimalMapperImpl implements AnimalMapper {
     }
 
     @Override
-    public void updateAnimalFromDTO(UpdateAnimalDto updateAnimalDTO, Animal animal) {
-        if ( updateAnimalDTO == null ) {
+    public void updateAnimalFromDto(UpdateAnimalDto updateAnimalDto, Animal animal) {
+        if ( updateAnimalDto == null ) {
             return;
         }
 
-        if ( updateAnimalDTO.getName() != null ) {
-            animal.setName( updateAnimalDTO.getName() );
+        if ( updateAnimalDto.getName() != null ) {
+            animal.setName( updateAnimalDto.getName() );
         }
-        if ( updateAnimalDTO.getSpecies() != null ) {
-            animal.setSpecies( updateAnimalDTO.getSpecies() );
+        if ( updateAnimalDto.getSpecies() != null ) {
+            animal.setSpecies( updateAnimalDto.getSpecies() );
         }
-        if ( updateAnimalDTO.getBreed() != null ) {
-            animal.setBreed( updateAnimalDTO.getBreed() );
+        if ( updateAnimalDto.getBreed() != null ) {
+            animal.setBreed( updateAnimalDto.getBreed() );
         }
-        if ( updateAnimalDTO.getBirthDate() != null ) {
-            animal.setBirthDate( updateAnimalDTO.getBirthDate() );
+        if ( updateAnimalDto.getBirthDate() != null ) {
+            animal.setBirthDate( updateAnimalDto.getBirthDate() );
         }
     }
 

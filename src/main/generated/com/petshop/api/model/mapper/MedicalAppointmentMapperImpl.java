@@ -6,33 +6,30 @@ import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.MedicalAppointment;
 import com.petshop.api.model.entities.Veterinarian;
-import com.petshop.api.model.enums.AppointmentStatus;
 import java.util.UUID;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-11T22:02:17-0300",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
+    date = "2026-02-13T22:36:55-0300",
+    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
 
     @Override
-    public MedicalAppointment toEntity(CreateMedicalAppointmentDto createMedicalAppointmentDTO) {
-        if ( createMedicalAppointmentDTO == null ) {
+    public MedicalAppointment toEntity(CreateMedicalAppointmentDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         MedicalAppointment.MedicalAppointmentBuilder medicalAppointment = MedicalAppointment.builder();
 
-        medicalAppointment.diagnosis( createMedicalAppointmentDTO.getDiagnosis() );
-        medicalAppointment.treatment( createMedicalAppointmentDTO.getTreatment() );
-        medicalAppointment.appointmentStartTime( createMedicalAppointmentDTO.getAppointmentStartTime() );
-        medicalAppointment.durationMinutes( createMedicalAppointmentDTO.getDurationMinutes() );
-
-        medicalAppointment.status( AppointmentStatus.SCHEDULED );
+        medicalAppointment.notes( dto.getNotes() );
+        medicalAppointment.diagnosis( dto.getDiagnosis() );
+        medicalAppointment.appointmentStartTime( dto.getAppointmentStartTime() );
+        medicalAppointment.durationMinutes( dto.getDurationMinutes() );
 
         return medicalAppointment.build();
     }
@@ -54,6 +51,7 @@ public class MedicalAppointmentMapperImpl implements MedicalAppointmentMapper {
         if ( medicalAppointment.getAppointmentStatus() != null ) {
             medicalAppointmentResponseDto.setAppointmentStatus( medicalAppointment.getAppointmentStatus().name() );
         }
+        medicalAppointmentResponseDto.setNotes( medicalAppointment.getNotes() );
         medicalAppointmentResponseDto.setId( medicalAppointment.getId() );
         medicalAppointmentResponseDto.setAppointmentStartTime( medicalAppointment.getAppointmentStartTime() );
         medicalAppointmentResponseDto.setAppointmentEndTime( medicalAppointment.getAppointmentEndTime() );

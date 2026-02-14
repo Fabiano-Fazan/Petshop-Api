@@ -1,8 +1,8 @@
 package com.petshop.api.model.mapper;
 
 import com.petshop.api.dto.request.CreateProductDto;
-import com.petshop.api.dto.request.UpdateProductDto;
 import com.petshop.api.dto.response.ProductResponseDto;
+import com.petshop.api.dto.update.UpdateProductDto;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.entities.ProductCategory;
 import javax.annotation.processing.Generated;
@@ -10,29 +10,29 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-11T22:02:18-0300",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
+    date = "2026-02-13T22:36:55-0300",
+    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class ProductMapperImpl implements ProductMapper {
 
     @Override
-    public Product toEntity(CreateProductDto createProductDTO) {
-        if ( createProductDTO == null ) {
+    public Product toEntity(CreateProductDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         Product.ProductBuilder product = Product.builder();
 
-        if ( createProductDTO.getQuantityInStock() != null ) {
-            product.quantityInStock( createProductDTO.getQuantityInStock() );
+        if ( dto.getQuantityInStock() != null ) {
+            product.quantityInStock( dto.getQuantityInStock() );
         }
         else {
             product.quantityInStock( 0 );
         }
-        product.name( createProductDTO.getName() );
-        product.description( createProductDTO.getDescription() );
-        product.price( createProductDTO.getPrice() );
+        product.name( dto.getName() );
+        product.description( dto.getDescription() );
+        product.price( dto.getPrice() );
 
         return product.build();
     }
@@ -56,19 +56,19 @@ public class ProductMapperImpl implements ProductMapper {
     }
 
     @Override
-    public void updateProductFromDTO(UpdateProductDto updateProductDTO, Product product) {
-        if ( updateProductDTO == null ) {
+    public void updateProductFromDto(UpdateProductDto updateProductDto, Product product) {
+        if ( updateProductDto == null ) {
             return;
         }
 
-        if ( updateProductDTO.getName() != null ) {
-            product.setName( updateProductDTO.getName() );
+        if ( updateProductDto.getName() != null ) {
+            product.setName( updateProductDto.getName() );
         }
-        if ( updateProductDTO.getDescription() != null ) {
-            product.setDescription( updateProductDTO.getDescription() );
+        if ( updateProductDto.getDescription() != null ) {
+            product.setDescription( updateProductDto.getDescription() );
         }
-        if ( updateProductDTO.getPrice() != null ) {
-            product.setPrice( updateProductDTO.getPrice() );
+        if ( updateProductDto.getPrice() != null ) {
+            product.setPrice( updateProductDto.getPrice() );
         }
     }
 

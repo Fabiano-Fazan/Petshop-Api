@@ -182,6 +182,7 @@ class MedicalAppointmentServiceTest {
 
         verify(timeCalculator).validateAppointmentTimeConflict(
                 dto.getVeterinarianId(),
+                dto.getClientId(),
                 dto.getAppointmentStartTime(),
                 calculatedEnd
         );

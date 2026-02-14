@@ -3,6 +3,8 @@ package com.petshop.api.controller;
 import com.petshop.api.dto.request.CreateSaleDto;
 import com.petshop.api.dto.response.SaleResponseDto;
 import com.petshop.api.service.SaleService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,11 +18,12 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/sale")
+@Tag(name = "Vendas", description = "Endpoints para gestão de vendas")
 public class SaleController {
     private  final SaleService saleService;
 
     @GetMapping
-    public ResponseEntity<Page<SaleResponseDto>> getAllSales(Pageable pageable){
+    public ResponseEntity<Page<SaleResponseDto>> getAllSales(@ParameterObject Pageable pageable){
         Page<SaleResponseDto> sales = saleService.getAllSales(pageable);
         return ResponseEntity.ok(sales);
     }
@@ -32,7 +35,7 @@ public class SaleController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<SaleResponseDto>> getByClientName(@RequestParam String name, Pageable pageable){
+    public ResponseEntity<Page<SaleResponseDto>> getByClientName(@RequestParam String name, @ParameterObject Pageable pageable){
         Page<SaleResponseDto> sales = saleService.getSaleByClientNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(sales);
     }

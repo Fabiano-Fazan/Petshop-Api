@@ -29,10 +29,25 @@ public class AppointmentTimeCalculator {
         return start.plusMinutes(duration);
     }
 
-    public void validateAppointmentTimeConflict(UUID veterinarianId, LocalDateTime startTime, LocalDateTime endTime) {
+    public void validateAppointmentTimeConflict(UUID veterinarianId,UUID clientId, LocalDateTime startTime, LocalDateTime endTime) {
         boolean hasConflict = medicalAppointmentRepository.existsConflictingAppointment(veterinarianId, startTime, endTime);
+        boolean hasConflictByClient = medicalAppointmentRepository.existsConflictingAppointmentByClient(clientId, startTime, endTime);
         if (hasConflict) {
             throw new AppointmentDateTimeAlreadyExistsException("This time slot is already booked for this veterinarian");
+        }
+        if (hasConflictByClient) {
+            throw new AppointmentDateTimeAlreadyExistsException("This time slot is already booked for this client");
+        }
+    }
+
+    public void validateConflict(UUID veterinarianId, UUID clientId, LocalDateTime start, LocalDateTime end, UUID currentAppointmentId) {
+        boolean hasConflict = medicalAppointmentRepository.existsConflictingAppointmentForUpdate(veterinarianId, start, end, currentAppointmentId);
+        boolean hasConflictByClient = medicalAppointmentRepository.existsConflictingAppointmentByClientForUpdate(clientId, veterinarianId, start, end, currentAppointmentId);
+        if (hasConflict) {
+            throw new AppointmentDateTimeAlreadyExistsException("This time slot is already booked for this veterinarian");
+        }
+        if (hasConflictByClient) {
+            throw new AppointmentDateTimeAlreadyExistsException("This time slot is already booked for this client");
         }
     }
 }

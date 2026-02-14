@@ -1,8 +1,8 @@
 package com.petshop.api.model.mapper;
 
 import com.petshop.api.dto.request.CreateVeterinarianDto;
-import com.petshop.api.dto.request.UpdateVeterinarianDto;
 import com.petshop.api.dto.response.VeterinarianResponseDto;
+import com.petshop.api.dto.update.UpdateVeterinarianDto;
 import com.petshop.api.model.entities.Veterinarian;
 import com.petshop.api.model.entities.VeterinarianCategory;
 import javax.annotation.processing.Generated;
@@ -10,24 +10,24 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-11T22:02:17-0300",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
+    date = "2026-02-13T22:36:55-0300",
+    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class VeterinarianMapperImpl implements VeterinarianMapper {
 
     @Override
-    public Veterinarian toEntity(CreateVeterinarianDto createVeterinarianDTO) {
-        if ( createVeterinarianDTO == null ) {
+    public Veterinarian toEntity(CreateVeterinarianDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         Veterinarian.VeterinarianBuilder veterinarian = Veterinarian.builder();
 
-        veterinarian.name( createVeterinarianDTO.getName() );
-        veterinarian.crmv( createVeterinarianDTO.getCrmv() );
-        veterinarian.phone( createVeterinarianDTO.getPhone() );
-        veterinarian.email( createVeterinarianDTO.getEmail() );
+        veterinarian.name( dto.getName() );
+        veterinarian.crmv( dto.getCrmv() );
+        veterinarian.phone( dto.getPhone() );
+        veterinarian.email( dto.getEmail() );
 
         return veterinarian.build();
     }
@@ -51,19 +51,19 @@ public class VeterinarianMapperImpl implements VeterinarianMapper {
     }
 
     @Override
-    public void updateVeterinarianFromDTO(UpdateVeterinarianDto updateVeterinarianDTO, Veterinarian veterinarian) {
-        if ( updateVeterinarianDTO == null ) {
+    public void updateVeterinarianFromDto(UpdateVeterinarianDto updateVeterinarianDto, Veterinarian veterinarian) {
+        if ( updateVeterinarianDto == null ) {
             return;
         }
 
-        if ( updateVeterinarianDTO.getName() != null ) {
-            veterinarian.setName( updateVeterinarianDTO.getName() );
+        if ( updateVeterinarianDto.getName() != null ) {
+            veterinarian.setName( updateVeterinarianDto.getName() );
         }
-        if ( updateVeterinarianDTO.getPhone() != null ) {
-            veterinarian.setPhone( updateVeterinarianDTO.getPhone() );
+        if ( updateVeterinarianDto.getPhone() != null ) {
+            veterinarian.setPhone( updateVeterinarianDto.getPhone() );
         }
-        if ( updateVeterinarianDTO.getEmail() != null ) {
-            veterinarian.setEmail( updateVeterinarianDTO.getEmail() );
+        if ( updateVeterinarianDto.getEmail() != null ) {
+            veterinarian.setEmail( updateVeterinarianDto.getEmail() );
         }
     }
 

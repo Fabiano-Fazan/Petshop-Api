@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateMedicalAppointmentDto;
 import com.petshop.api.dto.update.UpdateMedicalAppointmentDto;
 import com.petshop.api.dto.response.MedicalAppointmentResponseDto;
 import com.petshop.api.service.MedicalAppointmentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,11 +19,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/medical-appointments")
 @RequiredArgsConstructor
+@Tag(name = "Agendamentos", description = "Endpoints para gestão de agendamentos")
 public class MedicalAppointmentController {
     private final MedicalAppointmentService medicalAppointmentService;
 
     @GetMapping
-    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getAllMedicalAppointments(Pageable pageable){
+    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getAllMedicalAppointments(@ParameterObject Pageable pageable){
         Page<MedicalAppointmentResponseDto> allMedicalAppointments = medicalAppointmentService.getAllMedicalAppointments(pageable);
         return ResponseEntity.ok(allMedicalAppointments);
     }
@@ -33,13 +36,13 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/veterinarian")
-    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByVeterinarianName(@RequestParam String name, Pageable pageable){
+    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByVeterinarianName(@RequestParam String name, @ParameterObject Pageable pageable){
         Page<MedicalAppointmentResponseDto> medicalAppointments = medicalAppointmentService.getMedicalAppointmentsByVeterinarianNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(medicalAppointments);
     }
 
     @GetMapping("/client")
-    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByClientName(@RequestParam String name, Pageable pageable){
+    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByClientName(@RequestParam String name, @ParameterObject Pageable pageable){
         Page<MedicalAppointmentResponseDto> medicalAppointments = medicalAppointmentService.getMedicalAppointmentsByClientNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(medicalAppointments);
     }

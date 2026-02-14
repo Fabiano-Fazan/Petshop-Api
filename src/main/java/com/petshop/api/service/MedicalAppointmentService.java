@@ -60,7 +60,7 @@ public class MedicalAppointmentService {
     public MedicalAppointmentResponseDto createMedicalAppointment(CreateMedicalAppointmentDto dto) {
         LocalDateTime start = dto.getAppointmentStartTime();
         LocalDateTime end = timeCalculator.end(start, dto.getDurationMinutes());
-        timeCalculator.validateAppointmentTimeConflict(dto.getVeterinarianId(), start, end);
+        timeCalculator.validateAppointmentTimeConflict(dto.getVeterinarianId(),dto.getClientId() ,start, end);
         var appointment = medicalAppointmentMapper.toEntity(dto);
         appointment.setAppointmentEndTime(end);
         appointment.setClient(validatorEntities.validate(dto.getClientId(), clientRepository, "Client"));
@@ -72,6 +72,9 @@ public class MedicalAppointmentService {
 
     @Transactional
     public MedicalAppointmentResponseDto updateMedicalAppointment(UUID id, UpdateMedicalAppointmentDto updateDto){
+        LocalDateTime start = updateDto.getAppointmentStartTime();
+        LocalDateTime end = timeCalculator.end(start, updateDto.getDurationMinutes());
+        timeCalculator.validateConflict(updateDto.getVeterinarianId(),updateDto.getClientId(),start, end, id);
         var medicalAppointment = validatorEntities.validate(id, medicalAppointmentRepository, "Medical Appointment");
         updaterAppointment.updateAppointment(medicalAppointment, updateDto);
         return medicalAppointmentMapper.toResponseDto(medicalAppointmentRepository.save(medicalAppointment));

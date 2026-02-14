@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateProductDto;
 import com.petshop.api.dto.update.UpdateProductDto;
 import com.petshop.api.dto.response.ProductResponseDto;
 import com.petshop.api.service.ProductService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,11 +20,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/products")
+@Tag(name = "Produtos", description = "Endpoints para gestão de produtos")
 public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductResponseDto>> getAllProducts(Pageable pageable) {
+    public ResponseEntity<Page<ProductResponseDto>> getAllProducts(@ParameterObject Pageable pageable) {
         Page<ProductResponseDto> products = productService.getAllProducts(pageable);
         return ResponseEntity.ok(products);
     }
@@ -34,13 +37,13 @@ public class ProductController {
     }
 
     @GetMapping("/category")
-    public ResponseEntity<Page<ProductResponseDto>> getProductByCategory(@RequestParam UUID categoryId, Pageable pageable) {
+    public ResponseEntity<Page<ProductResponseDto>> getProductByCategory(@RequestParam UUID categoryId, @ParameterObject Pageable pageable) {
         Page<ProductResponseDto> productsByCategory = productService.getProductByCategory(categoryId,pageable);
         return ResponseEntity.ok(productsByCategory);
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<ProductResponseDto>> getProductByName(@RequestParam String name, Pageable pageable) {
+    public ResponseEntity<Page<ProductResponseDto>> getProductByName(@RequestParam String name, @ParameterObject Pageable pageable) {
         Page<ProductResponseDto> productsByName = productService.getProductByNameContainingIgnoreCase(name,pageable);
         return ResponseEntity.ok(productsByName);
     }

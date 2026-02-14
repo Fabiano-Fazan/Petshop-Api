@@ -1,8 +1,8 @@
 package com.petshop.api.controller;
 
-import com.petshop.api.dto.response.AuthResponseDto;
 import com.petshop.api.dto.request.CreateLoginDto;
 import com.petshop.api.dto.request.CreateRegisterDto;
+import com.petshop.api.dto.response.AuthResponseDto;
 import com.petshop.api.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,4 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody CreateLoginDto createLoginDTO){return ResponseEntity.ok(authService.login(createLoginDTO));}
-
-
-
 }

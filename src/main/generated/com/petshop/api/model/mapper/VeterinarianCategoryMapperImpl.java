@@ -1,30 +1,30 @@
 package com.petshop.api.model.mapper;
 
 import com.petshop.api.dto.request.CreateVeterinarianCategoryDto;
-import com.petshop.api.dto.request.UpdateVeterinarianCategoryDto;
 import com.petshop.api.dto.response.VeterinarianCategoryResponseDto;
+import com.petshop.api.dto.update.UpdateVeterinarianCategoryDto;
 import com.petshop.api.model.entities.VeterinarianCategory;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-11T22:02:17-0300",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
+    date = "2026-02-13T22:36:55-0300",
+    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class VeterinarianCategoryMapperImpl implements VeterinarianCategoryMapper {
 
     @Override
-    public VeterinarianCategory toEntity(CreateVeterinarianCategoryDto createVeterinarianCategoryDTO) {
-        if ( createVeterinarianCategoryDTO == null ) {
+    public VeterinarianCategory toEntity(CreateVeterinarianCategoryDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         VeterinarianCategory.VeterinarianCategoryBuilder veterinarianCategory = VeterinarianCategory.builder();
 
-        veterinarianCategory.name( createVeterinarianCategoryDTO.getName() );
-        veterinarianCategory.description( createVeterinarianCategoryDTO.getDescription() );
+        veterinarianCategory.name( dto.getName() );
+        veterinarianCategory.description( dto.getDescription() );
 
         return veterinarianCategory.build();
     }
@@ -47,7 +47,7 @@ public class VeterinarianCategoryMapperImpl implements VeterinarianCategoryMappe
     }
 
     @Override
-    public void updateVeterinarianCategoryFromDTO(UpdateVeterinarianCategoryDto updateVeterinarianCategoryDto, VeterinarianCategory veterinarianCategory) {
+    public void updateVeterinarianCategoryFromDto(UpdateVeterinarianCategoryDto updateVeterinarianCategoryDto, VeterinarianCategory veterinarianCategory) {
         if ( updateVeterinarianCategoryDto == null ) {
             return;
         }

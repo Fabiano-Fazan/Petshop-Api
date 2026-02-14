@@ -1,30 +1,30 @@
 package com.petshop.api.model.mapper;
 
 import com.petshop.api.dto.request.CreateProductCategoryDto;
-import com.petshop.api.dto.request.UpdateProductCategoryDto;
 import com.petshop.api.dto.response.ProductCategoryResponseDto;
+import com.petshop.api.dto.update.UpdateProductCategoryDto;
 import com.petshop.api.model.entities.ProductCategory;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-11T22:02:17-0300",
-    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
+    date = "2026-02-13T22:36:55-0300",
+    comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class ProductCategoryMapperImpl implements ProductCategoryMapper {
 
     @Override
-    public ProductCategory toEntity(CreateProductCategoryDto createProductCategoryDTO) {
-        if ( createProductCategoryDTO == null ) {
+    public ProductCategory toEntity(CreateProductCategoryDto dto) {
+        if ( dto == null ) {
             return null;
         }
 
         ProductCategory.ProductCategoryBuilder productCategory = ProductCategory.builder();
 
-        productCategory.name( createProductCategoryDTO.getName() );
-        productCategory.description( createProductCategoryDTO.getDescription() );
+        productCategory.name( dto.getName() );
+        productCategory.description( dto.getDescription() );
 
         return productCategory.build();
     }
@@ -45,16 +45,16 @@ public class ProductCategoryMapperImpl implements ProductCategoryMapper {
     }
 
     @Override
-    public void updateProductCategoryFromDTO(UpdateProductCategoryDto updateProductCategoryDTO, ProductCategory productCategory) {
-        if ( updateProductCategoryDTO == null ) {
+    public void updateProductCategoryFromDto(UpdateProductCategoryDto updateProductCategoryDto, ProductCategory productCategory) {
+        if ( updateProductCategoryDto == null ) {
             return;
         }
 
-        if ( updateProductCategoryDTO.getName() != null ) {
-            productCategory.setName( updateProductCategoryDTO.getName() );
+        if ( updateProductCategoryDto.getName() != null ) {
+            productCategory.setName( updateProductCategoryDto.getName() );
         }
-        if ( updateProductCategoryDTO.getDescription() != null ) {
-            productCategory.setDescription( updateProductCategoryDTO.getDescription() );
+        if ( updateProductCategoryDto.getDescription() != null ) {
+            productCategory.setDescription( updateProductCategoryDto.getDescription() );
         }
     }
 }

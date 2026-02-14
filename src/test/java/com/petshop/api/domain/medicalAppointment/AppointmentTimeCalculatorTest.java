@@ -112,12 +112,13 @@ class AppointmentTimeCalculatorTest {
     void validate_ShouldThrowException_WhenConflictFound() {
 
         UUID vetId = UUID.randomUUID();
+        UUID clientId = UUID.randomUUID();
         LocalDateTime start = LocalDateTime.now();
         LocalDateTime end = start.plusMinutes(30);
 
         when(medicalAppointmentRepository.existsConflictingAppointment(vetId, start, end)).thenReturn(true);
 
-        assertThatThrownBy(() -> appointmentTimeCalculator.validateAppointmentTimeConflict(vetId, start, end))
+        assertThatThrownBy(() -> appointmentTimeCalculator.validateAppointmentTimeConflict(vetId,clientId ,start, end))
                 .isInstanceOf(AppointmentDateTimeAlreadyExistsException.class)
                 .hasMessage("This time slot is already booked for this veterinarian");
 
@@ -129,12 +130,13 @@ class AppointmentTimeCalculatorTest {
     void validate_ShouldPass_WhenNoConflict() {
 
         UUID vetId = UUID.randomUUID();
+        UUID clientId = UUID.randomUUID();
         LocalDateTime start = LocalDateTime.now();
         LocalDateTime end = start.plusMinutes(30);
 
         when(medicalAppointmentRepository.existsConflictingAppointment(vetId, start, end)).thenReturn(false);
 
-        assertThatCode(() -> appointmentTimeCalculator.validateAppointmentTimeConflict(vetId, start, end)).doesNotThrowAnyException();
+        assertThatCode(() -> appointmentTimeCalculator.validateAppointmentTimeConflict(vetId, clientId, start, end)).doesNotThrowAnyException();
 
         verify(medicalAppointmentRepository).existsConflictingAppointment(vetId, start, end);
     }

@@ -3,6 +3,7 @@ package com.petshop.api.domain.medicalAppointment;
 import com.petshop.api.domain.validator.ValidatorEntities;
 import com.petshop.api.dto.update.UpdateMedicalAppointmentDto;
 import com.petshop.api.model.entities.MedicalAppointment;
+import com.petshop.api.model.entities.Veterinarian;
 import com.petshop.api.repository.AnimalRepository;
 import com.petshop.api.repository.ClientRepository;
 import com.petshop.api.repository.VeterinarianRepository;
@@ -32,11 +33,17 @@ public class AppointmentUpdater {
             medicalAppointment.setAnimal(validatorEntities.validate(updateDto.getAnimalId(), animalRepository, "Animal"));
         }
 
-        if(updateDto.getVeterinarianId() != null){
-            medicalAppointment.setVeterinarian(validatorEntities.validate(updateDto.getVeterinarianId(), veterinarianRepository, "Veterinarian"));
+        Veterinarian savedVet = medicalAppointment.getVeterinarian();
+
+        if (updateDto.getVeterinarianId() != null) {
+            savedVet = validatorEntities.validate(updateDto.getVeterinarianId(), veterinarianRepository, "Veterinarian");
         }
 
-        if(updateDto.getAppointmentStartTime() != null || updateDto.getDurationMinutes() != null){
+        boolean timeChanged = updateDto.getAppointmentStartTime() != null || updateDto.getDurationMinutes() != null;
+        boolean vetChanged = updateDto.getVeterinarianId() != null;
+
+        if (timeChanged || vetChanged) {
+
             LocalDateTime start = timeCalculator.start(
                     updateDto.getAppointmentStartTime(),
                     medicalAppointment.getAppointmentStartTime()
@@ -49,6 +56,18 @@ public class AppointmentUpdater {
 
             LocalDateTime end = timeCalculator.end(start, duration);
 
+            timeCalculator.validateConflict(
+                    savedVet.getId(),
+                    medicalAppointment.getClient().getId(),
+                    start,
+                    end,
+                    medicalAppointment.getId()
+            );
+
+            if (vetChanged) {
+                medicalAppointment.setVeterinarian(savedVet);
+            }
+
             medicalAppointment.setAppointmentStartTime(start);
             medicalAppointment.setAppointmentEndTime(end);
             medicalAppointment.setDurationMinutes(duration);
@@ -57,11 +76,9 @@ public class AppointmentUpdater {
         if (updateDto.getAppointmentStatus() != null) {
             medicalAppointment.setAppointmentStatus(updateDto.getAppointmentStatus());
         }
-
         if (updateDto.getNotes() != null) {
             medicalAppointment.setNotes(updateDto.getNotes());
         }
-
         if (updateDto.getTreatment() != null) {
             medicalAppointment.setTreatment(updateDto.getTreatment());
         }

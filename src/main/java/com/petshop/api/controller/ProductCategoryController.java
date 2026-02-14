@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateProductCategoryDto;
 import com.petshop.api.dto.update.UpdateProductCategoryDto;
 import com.petshop.api.dto.response.ProductCategoryResponseDto;
 import com.petshop.api.service.ProductCategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,11 +19,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/product-categories")
 @RequiredArgsConstructor
+@Tag(name = "Categoria de Produtos", description = "Endpoints para gestão de categorias de produtos")
 public class ProductCategoryController {
     private  final ProductCategoryService productCategoryService;
 
     @GetMapping
-    public ResponseEntity<Page<ProductCategoryResponseDto>> getAllProductCategories(Pageable pageable) {
+    public ResponseEntity<Page<ProductCategoryResponseDto>> getAllProductCategories(@ParameterObject Pageable pageable) {
         Page<ProductCategoryResponseDto> allProductCategories = productCategoryService.getAllProductCategories(pageable);
         return ResponseEntity.ok(allProductCategories);
     }
@@ -33,7 +36,7 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<ProductCategoryResponseDto>> getProductCategoriesByName(@RequestParam String name, Pageable pageable) {
+    public ResponseEntity<Page<ProductCategoryResponseDto>> getProductCategoriesByName(@RequestParam String name, @ParameterObject Pageable pageable) {
         Page<ProductCategoryResponseDto> productCategoriesByName = productCategoryService.getProductCategoryByNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(productCategoriesByName);
     }

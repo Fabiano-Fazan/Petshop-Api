@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateFinancialDto;
 import com.petshop.api.dto.request.CreateFinancialPaymentDto;
 import com.petshop.api.dto.response.FinancialResponseDto;
 import com.petshop.api.service.FinancialService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,11 +20,12 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/financial")
+@Tag(name = "Financeiro", description = "Endpoints para gestão de financeiro")
 public class FinancialController {
     private final FinancialService financialService;
 
     @GetMapping
-    public ResponseEntity<Page<FinancialResponseDto>> getAllFinancial(Pageable pageable){
+    public ResponseEntity<Page<FinancialResponseDto>> getAllFinancial(@ParameterObject Pageable pageable){
         Page<FinancialResponseDto> financials = financialService.getAllFinancial(pageable);
         return ResponseEntity.ok(financials);
     }
@@ -34,7 +37,7 @@ public class FinancialController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<FinancialResponseDto>> getByClientName(@RequestParam String name, Pageable pageable){
+    public ResponseEntity<Page<FinancialResponseDto>> getByClientName(@RequestParam String name, @ParameterObject Pageable pageable){
         Page<FinancialResponseDto> financials = financialService.getByClientNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(financials);
     }

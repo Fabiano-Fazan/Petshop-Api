@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateClientDto;
 import com.petshop.api.dto.update.UpdateClientDto;
 import com.petshop.api.dto.response.ClientResponseDto;
 import com.petshop.api.service.ClientService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,11 +19,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/clients")
 @RequiredArgsConstructor
+@Tag(name = "Cliente", description = "Endpoints para gestão de cliente")
 public class ClientController {
     private final ClientService clientService;
 
     @GetMapping
-    public ResponseEntity<Page<ClientResponseDto>> getAllClients(Pageable pageable) {
+    public ResponseEntity<Page<ClientResponseDto>> getAllClients(@ParameterObject Pageable pageable) {
         Page<ClientResponseDto> allClients = clientService.getAllClients(pageable);
         return ResponseEntity.ok(allClients);
     }
@@ -33,7 +36,7 @@ public class ClientController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<ClientResponseDto>> getClientByName(@RequestParam String name, Pageable pageable) {
+    public ResponseEntity<Page<ClientResponseDto>> getClientByName(@RequestParam String name, @ParameterObject Pageable pageable) {
         Page<ClientResponseDto> clientByName = clientService.getClientByNameContainingIgnoreCase(name,pageable);
         return ResponseEntity.ok(clientByName);
     }

@@ -29,7 +29,56 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
             @Param("end") LocalDateTime end
     );
 
+    @Query("""
+           SELECT EXISTS(
+           SELECT a FROM MedicalAppointment a
+           WHERE a.client.id = :clientId
+           AND :start < a.appointmentEndTime
+           AND :end > a.appointmentStartTime)
+           """)
+    boolean existsConflictingAppointmentByClient(
+            @Param("clientId") UUID clientId,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end
+    );
+
     Page<MedicalAppointment> findByClientNameContainingIgnoreCase(String name, Pageable pageable);
+
+    @Query("""
+        SELECT EXISTS(
+        SELECT 1 FROM MedicalAppointment a
+        WHERE a.veterinarian.id = :veterinarianId
+        AND a.id != :currentAppointmentId
+        AND :start < a.appointmentEndTime
+        AND :end > a.appointmentStartTime
+        )
+        """)
+    boolean existsConflictingAppointmentForUpdate(
+            @Param("veterinarianId") UUID veterinarianId,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end,
+            @Param("currentAppointmentId") UUID currentAppointmentId
+    );
+
+    @Query("""
+        SELECT EXISTS(
+        SELECT 1 FROM MedicalAppointment a
+        WHERE a.client.id = :clientId
+        AND a.id != :currentAppointmentId
+        AND a.veterinarian.id != :veterinarianId
+        AND :start < a.appointmentEndTime
+        AND :end > a.appointmentStartTime
+        )
+        """)
+    boolean existsConflictingAppointmentByClientForUpdate(
+            @Param("clientId") UUID clientId,
+            @Param("veterinarianId") UUID veterinarianId,
+            @Param("start") LocalDateTime start,
+            @Param("end") LocalDateTime end,
+            @Param("currentAppointmentId") UUID currentAppointmentId
+    );
+
+
 
     Page<MedicalAppointment> findByVeterinarianNameContainingIgnoreCase(String name, Pageable pageable);
 

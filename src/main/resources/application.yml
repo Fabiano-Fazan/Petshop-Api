@@ -20,6 +20,12 @@ spring:
   application:
    name: petshop-api
 
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+
 application:
   security:
     jwt:

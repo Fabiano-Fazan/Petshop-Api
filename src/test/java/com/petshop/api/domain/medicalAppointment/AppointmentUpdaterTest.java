@@ -2,6 +2,7 @@ package com.petshop.api.domain.medicalAppointment;
 
 import com.petshop.api.domain.validator.ValidatorEntities;
 import com.petshop.api.dto.update.UpdateMedicalAppointmentDto;
+import com.petshop.api.exception.AppointmentDateTimeAlreadyExistsException;
 import com.petshop.api.model.entities.Animal;
 import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.MedicalAppointment;
@@ -21,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -51,6 +53,8 @@ class AppointmentUpdaterTest {
     void updateAppointment_ShouldUpdateRelationships_WhenIdsPresent() {
 
         MedicalAppointment appointment = new MedicalAppointment();
+        appointment.setDurationMinutes(30);
+        appointment.setAppointmentStartTime(LocalDateTime.now());
         UpdateMedicalAppointmentDto updateDto = new UpdateMedicalAppointmentDto();
         updateDto.setClientId(UUID.randomUUID());
         updateDto.setAnimalId(UUID.randomUUID());
@@ -63,12 +67,17 @@ class AppointmentUpdaterTest {
         when(validatorEntities.validate(updateDto.getAnimalId(), animalRepository, "Animal")).thenReturn(animal);
         when(validatorEntities.validate(updateDto.getVeterinarianId(), veterinarianRepository, "Veterinarian")).thenReturn(veterinarian);
 
+        LocalDateTime startTime = appointment.getAppointmentStartTime();
+        when(timeCalculator.start(any(), any())).thenReturn(startTime);
+        when(timeCalculator.duration(any(), anyInt())).thenReturn(30);
+        when(timeCalculator.end(any(), any())).thenReturn(appointment.getAppointmentStartTime().plusMinutes(30));
+
         appointmentUpdater.updateAppointment(appointment, updateDto);
 
         assertThat(appointment.getClient()).isEqualTo(client);
         assertThat(appointment.getAnimal()).isEqualTo(animal);
         assertThat(appointment.getVeterinarian()).isEqualTo(veterinarian);
-        verifyNoInteractions(timeCalculator);
+        verify(timeCalculator).validateConflict(any(), any(), any(),any(), any());
     }
 
     @Test
@@ -79,6 +88,8 @@ class AppointmentUpdaterTest {
         LocalDateTime newStart = LocalDateTime.now().plusDays(1);
         LocalDateTime calculatedEnd = newStart.plusMinutes(60);
         MedicalAppointment appointment = new MedicalAppointment();
+        appointment.setVeterinarian(new Veterinarian());
+        appointment.setClient(new Client());
         appointment.setAppointmentStartTime(oldStart);
         appointment.setDurationMinutes(30);
         UpdateMedicalAppointmentDto updateDto = new UpdateMedicalAppointmentDto();
@@ -97,6 +108,7 @@ class AppointmentUpdaterTest {
         verify(timeCalculator).start(any(), any());
         verify(timeCalculator).duration(any(), anyInt());
         verify(timeCalculator).end(any(), anyInt());
+        verify(timeCalculator, times(1)).validateConflict(any(), any(), any(), any(), any());
     }
 
     @Test
@@ -136,5 +148,51 @@ class AppointmentUpdaterTest {
 
         assertThat(appointment.getNotes()).isEqualTo("Original Note");
         assertThat(appointment.getClient()).isNull();
+    }
+
+    @Test
+    @DisplayName("Should throw AppointmentDateTimeAlreadyExistsException when update causes a time conflict")
+    void updateAppointment_ShouldThrowException_WhenTimeConflictIsDetected() {
+
+        UUID appointmentId = UUID.randomUUID();
+        UUID vetId = UUID.randomUUID();
+        UUID clientId = UUID.randomUUID();
+
+
+        MedicalAppointment appointment = new MedicalAppointment();
+        appointment.setId(appointmentId);
+        appointment.setAppointmentStartTime(LocalDateTime.now());
+        appointment.setDurationMinutes(30);
+
+        Veterinarian vet = new Veterinarian();
+        vet.setId(vetId);
+        appointment.setVeterinarian(vet);
+
+        Client client = new Client();
+        client.setId(clientId);
+        appointment.setClient(client);
+
+
+        UpdateMedicalAppointmentDto updateDto = new UpdateMedicalAppointmentDto();
+        LocalDateTime newStart = LocalDateTime.now().plusHours(2); // Mudando para daqui 2h
+        updateDto.setAppointmentStartTime(newStart);
+
+        when(timeCalculator.start(any(), any())).thenReturn(newStart);
+        when(timeCalculator.duration(any(), anyInt())).thenReturn(30);
+        when(timeCalculator.end(any(), anyInt())).thenReturn(newStart.plusMinutes(30));
+
+
+        doThrow(new AppointmentDateTimeAlreadyExistsException("This time slot is already booked for this veterinarian"))
+                .when(timeCalculator)
+                .validateConflict(eq(vetId),any(), eq(newStart), any(), eq(appointmentId));
+
+
+
+
+        assertThatThrownBy(() -> appointmentUpdater.updateAppointment(appointment, updateDto))
+                .isInstanceOf(AppointmentDateTimeAlreadyExistsException.class)
+                .hasMessage("This time slot is already booked for this veterinarian");
+
+        assertThat(appointment.getAppointmentStartTime()).isNotEqualTo(newStart);
     }
 }

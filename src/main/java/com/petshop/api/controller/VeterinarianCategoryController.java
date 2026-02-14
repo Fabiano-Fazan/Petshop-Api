@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateVeterinarianCategoryDto;
 import com.petshop.api.dto.update.UpdateVeterinarianCategoryDto;
 import com.petshop.api.dto.response.VeterinarianCategoryResponseDto;
 import com.petshop.api.service.VeterinarianCategoryService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -18,11 +20,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/veterinarian-categories")
 @RequiredArgsConstructor
+@Tag(name = "Categoria Veterinário", description = "Endpoints para gestão de categorias de veterinários")
 public class VeterinarianCategoryController {
     private final VeterinarianCategoryService veterinarianCategoryService;
 
     @GetMapping
-    public ResponseEntity<Page<VeterinarianCategoryResponseDto>> getAllVeterinarianCategories(Pageable pageable) {
+    public ResponseEntity<Page<VeterinarianCategoryResponseDto>> getAllVeterinarianCategories(@ParameterObject Pageable pageable) {
         Page<VeterinarianCategoryResponseDto> allVeterinarianCategories = veterinarianCategoryService.getAllVeterinarianCategories(pageable);
         return ResponseEntity.ok(allVeterinarianCategories);
     }
@@ -34,7 +37,7 @@ public class VeterinarianCategoryController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<VeterinarianCategoryResponseDto>> getByName(@RequestParam String name, Pageable pageable) {
+    public ResponseEntity<Page<VeterinarianCategoryResponseDto>> getByName(@RequestParam String name, @ParameterObject Pageable pageable) {
         Page<VeterinarianCategoryResponseDto> veterinarianCategoryByName = veterinarianCategoryService.getVeterinarianCategoryByNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(veterinarianCategoryByName);
     }

@@ -4,6 +4,8 @@ import com.petshop.api.dto.request.CreateAnimalDto;
 import com.petshop.api.dto.update.UpdateAnimalDto;
 import com.petshop.api.dto.response.AnimalResponseDto;
 import com.petshop.api.service.AnimalService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,12 +20,13 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/animals")
 @RequiredArgsConstructor
+@Tag(name = "Animais", description = "Endpoints para gestão de pets")
 public class AnimalController {
 
     private final AnimalService animalService;
 
     @GetMapping
-    public ResponseEntity<Page<AnimalResponseDto>> getAllAnimals(Pageable pageable) {
+    public ResponseEntity<Page<AnimalResponseDto>> getAllAnimals(@ParameterObject Pageable pageable) {
         Page<AnimalResponseDto> animals = animalService.getAllAnimals(pageable);
         return ResponseEntity.ok(animals);
     }
@@ -35,13 +38,13 @@ public class AnimalController {
     }
 
     @GetMapping("/species")
-    public ResponseEntity<Page<AnimalResponseDto>> getAnimalsBySpecies(@RequestParam String species, Pageable pageable) {
+    public ResponseEntity<Page<AnimalResponseDto>> getAnimalsBySpecies(@RequestParam String species, @ParameterObject Pageable pageable) {
         Page<AnimalResponseDto> animalsBySpecies = animalService.getAnimalsBySpecies(species, pageable);
         return ResponseEntity.ok(animalsBySpecies);
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<AnimalResponseDto>> getAnimalsByName(@RequestParam String name, Pageable pageable) {
+    public ResponseEntity<Page<AnimalResponseDto>> getAnimalsByName(@RequestParam String name, @ParameterObject Pageable pageable) {
         Page<AnimalResponseDto> animalsByName = animalService.getAnimalByNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(animalsByName);
     }

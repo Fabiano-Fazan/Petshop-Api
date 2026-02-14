@@ -1,6 +1,7 @@
 package com.petshop.api.dto.request;
 
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,21 +15,26 @@ import java.util.UUID;
 @Setter
 public class CreateVeterinarianDto {
 
+    @Schema(description = "Veterinarian name", example = "Dr. House")
     @NotBlank(message = "Name is required")
     private String name;
 
+    @Schema(description = "CRMV", example = "12345")
     @NotBlank(message = "CRMv is required")
     private String crmv;
 
+    @Schema(description = "Phone number", example = "(11) 91234-5678")
     @Pattern(
             regexp = "^\\(?\\d{2}\\)?[\\s-]?9?\\d{4}-?\\d{4}$",
             message = "Phone number must be in the format (XX) XXXXX-XXXX or (XX) XXXX-XXXX"
     )
     private String phone;
 
+    @Schema(description = "Category ID", example = "123e4567-e89b-12d3-a456-426614174000")
     @NotNull(message = "Veterinarian Category is required")
     private UUID categoryId;
 
+    @Schema(description = "Email", example = "dr.house@example.com")
     @NotBlank(message = "Email is required")
     @Email(message = "Email format is invalid")
     private String email;
