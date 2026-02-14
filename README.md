@@ -10,12 +10,34 @@ Este projeto foi desenvolvido para testar meus estudos. O sistema não apenas re
 * **Agendamentos:** Validação inteligente de conflitos de horários para veterinários.
 * **Financeiro:** Geração automática de parcelas e controle de pagamentos parciais ou totais.
 
+
+## 📖 Documentação da API (Swagger)
+
+A API utiliza Swagger UI (OpenAPI 3) para documentação interativa. Com a aplicação rodando, acesse:
+
+* **URL:** http://localhost:8082/swagger-ui/index.html
+
+Como testar endpoints protegidos:
+
+1. Obter Token: Utilize o endpoint de login para gerar um JWT.
+
+2. Autorizar: No topo da página do Swagger, clique no botão "Authorize".
+
+3. Configurar: Insira o token gerado.
+
+### 🗄️ Gerenciamento do Banco de Dados
+
+Além do PostgreSQL, o ambiente Docker inclui o **Adminer** para visualização das tabelas:
+* **Acesso:** `http://localhost:8081`
+* **Servidor:** `host.docker.internal:5433`
+
 ## 🚀 Tecnologias Utilizadas
 
 * **Linguagem:** Java 21
 * **Framework:** Spring Boot 3 (Web, Data JPA, Validation)
 * **Segurança:** Spring Security + JWT (JSON Web Token)
 * **Banco de Dados:** PostgreSQL (Produção/Dev)
+* **Documentação:** Springdoc OpenAPI 3
 * **Build Tool:** Gradle
 * **Mapeamento:** MapStruct
 * **Utilitários:** Lombok
@@ -32,8 +54,7 @@ Este projeto foi desenvolvido para testar meus estudos. O sistema não apenas re
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/seu-usuario/petshop-api.git](https://github.com/seu-usuario/petshop-api.git)
-    cd petshop-api
+    git clone git clone https://github.com/fabiano-fazan/petshop-api.git
     ```
 
 2.  **Configuração do Banco de Dados:**
@@ -49,7 +70,7 @@ Este projeto foi desenvolvido para testar meus estudos. O sistema não apenas re
      gradlew.bat bootRun
      ```
 
-A API estará disponível em: `http://localhost:8080`
+A API estará disponível em: `http://localhost:8082`
 
 ## 🧪 Rodando os Testes
 
