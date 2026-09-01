@@ -41,8 +41,9 @@ public class AppointmentUpdater {
 
         boolean timeChanged = updateDto.getAppointmentStartTime() != null || updateDto.getDurationMinutes() != null;
         boolean vetChanged = updateDto.getVeterinarianId() != null;
+        boolean clientChanged = updateDto.getClientId() != null;
 
-        if (timeChanged || vetChanged) {
+        if (timeChanged || vetChanged || clientChanged) {
 
             LocalDateTime start = timeCalculator.start(
                     updateDto.getAppointmentStartTime(),
@@ -81,6 +82,9 @@ public class AppointmentUpdater {
         }
         if (updateDto.getTreatment() != null) {
             medicalAppointment.setTreatment(updateDto.getTreatment());
+        }
+        if (updateDto.getDiagnosis() != null) {
+            medicalAppointment.setDiagnosis(updateDto.getDiagnosis());
         }
     }
 }

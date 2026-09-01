@@ -1,7 +1,6 @@
 package com.petshop.api.domain.sale;
 
 import com.petshop.api.dto.request.CreateProductSaleDto;
-import com.petshop.api.dto.request.CreateSaleDto;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.Product;
 import com.petshop.api.model.entities.ProductSale;
@@ -45,10 +44,10 @@ class SaleGeneratorTest {
         CreateProductSaleDto dto = new CreateProductSaleDto();
         dto.setProductId(productId);
         dto.setQuantity(5);
-        dto.setPrice(new BigDecimal("10.00"));
         Sale sale = new Sale();
         Product product = new Product();
         product.setId(productId);
+        product.setPrice(new BigDecimal("10.00"));
 
         when(productRepository.findWithLockById(productId)).thenReturn(Optional.of(product));
 
@@ -85,16 +84,11 @@ class SaleGeneratorTest {
     @DisplayName("Should calculate total value correctly summing all items")
     void calculateSaleTotal_ShouldReturnSumOfItems() {
 
-        CreateProductSaleDto item1 = new CreateProductSaleDto();
-        item1.setQuantity(2);
-        item1.setPrice(new BigDecimal("10.00"));
-        CreateProductSaleDto item2 = new CreateProductSaleDto();
-        item2.setQuantity(3);
-        item2.setPrice(new BigDecimal("5.00"));
-        CreateSaleDto saleDto = new CreateSaleDto();
-        saleDto.setProductSales(List.of(item1, item2));
+        ProductSale item1 = ProductSale.builder().quantity(2).unitPrice(new BigDecimal("10.00")).build();
+        ProductSale item2 = ProductSale.builder().quantity(3).unitPrice(new BigDecimal("5.00")).build();
+        Sale sale = Sale.builder().productSales(List.of(item1, item2)).build();
 
-        BigDecimal result = saleGenerator.calculateSaleTotal(saleDto);
+        BigDecimal result = saleGenerator.calculateSaleTotal(sale);
 
         assertThat(result).isEqualByComparingTo(new BigDecimal("35.00"));
     }
@@ -104,10 +98,9 @@ class SaleGeneratorTest {
     @DisplayName("Should return zero when list is empty")
     void calculateSaleTotal_ShouldReturnZero_WhenListEmpty() {
 
-        CreateSaleDto saleDto = new CreateSaleDto();
-        saleDto.setProductSales(List.of());
+        Sale sale = Sale.builder().productSales(List.of()).build();
 
-        BigDecimal result = saleGenerator.calculateSaleTotal(saleDto);
+        BigDecimal result = saleGenerator.calculateSaleTotal(sale);
 
         assertThat(result).isEqualByComparingTo(BigDecimal.ZERO);
     }

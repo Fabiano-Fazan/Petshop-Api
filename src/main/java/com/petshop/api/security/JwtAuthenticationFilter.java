@@ -67,11 +67,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
                 SecurityContextHolder.getContext().setAuthentication(authToken);
-            }else{
-                System.out.println("VALIDAÇÃO DO TOKEN FALHOU, O ACESSO NÃO FOI AUTORIZADO");
             }
         }
         filterChain.doFilter(request, response);
     }
 }
-

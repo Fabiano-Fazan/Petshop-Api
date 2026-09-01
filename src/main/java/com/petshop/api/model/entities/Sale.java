@@ -24,6 +24,9 @@ public class Sale {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Version
+    private Long version;
+
     @Column(name = "sale_date", nullable = false)
     private LocalDateTime saleDate;
 

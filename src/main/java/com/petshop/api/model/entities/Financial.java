@@ -22,6 +22,9 @@ public class Financial {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Version
+    private Long version;
+
     @Column(nullable = false)
     private String description;
 

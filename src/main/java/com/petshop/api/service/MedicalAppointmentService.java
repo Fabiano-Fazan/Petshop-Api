@@ -58,11 +58,15 @@ public class MedicalAppointmentService {
 
     @Transactional
     public MedicalAppointmentResponseDto createMedicalAppointment(CreateMedicalAppointmentDto dto) {
+        veterinarianRepository.findWithLockById(dto.getVeterinarianId())
+                .orElseThrow(() -> new com.petshop.api.exception.ResourceNotFoundException("Veterinarian not found"));
         LocalDateTime start = dto.getAppointmentStartTime();
-        LocalDateTime end = timeCalculator.end(start, dto.getDurationMinutes());
+        int duration = timeCalculator.duration(dto.getDurationMinutes(), 30);
+        LocalDateTime end = timeCalculator.end(start, duration);
         timeCalculator.validateAppointmentTimeConflict(dto.getVeterinarianId(),dto.getClientId() ,start, end);
         var appointment = medicalAppointmentMapper.toEntity(dto);
         appointment.setAppointmentEndTime(end);
+        appointment.setDurationMinutes(duration);
         appointment.setClient(validatorEntities.validate(dto.getClientId(), clientRepository, "Client"));
         appointment.setAnimal(validatorEntities.validate(dto.getAnimalId(), animalRepository, "Animal"));
         appointment.setVeterinarian(validatorEntities.validate(dto.getVeterinarianId(), veterinarianRepository, "Veterinarian"));
@@ -72,10 +76,12 @@ public class MedicalAppointmentService {
 
     @Transactional
     public MedicalAppointmentResponseDto updateMedicalAppointment(UUID id, UpdateMedicalAppointmentDto updateDto){
-        LocalDateTime start = updateDto.getAppointmentStartTime();
-        LocalDateTime end = timeCalculator.end(start, updateDto.getDurationMinutes());
-        timeCalculator.validateConflict(updateDto.getVeterinarianId(),updateDto.getClientId(),start, end, id);
         var medicalAppointment = validatorEntities.validate(id, medicalAppointmentRepository, "Medical Appointment");
+        UUID veterinarianId = updateDto.getVeterinarianId() != null
+                ? updateDto.getVeterinarianId()
+                : medicalAppointment.getVeterinarian().getId();
+        veterinarianRepository.findWithLockById(veterinarianId)
+                .orElseThrow(() -> new com.petshop.api.exception.ResourceNotFoundException("Veterinarian not found"));
         updaterAppointment.updateAppointment(medicalAppointment, updateDto);
         return medicalAppointmentMapper.toResponseDto(medicalAppointmentRepository.save(medicalAppointment));
     }
@@ -93,7 +99,6 @@ public class MedicalAppointmentService {
         }
     }
 }
-
 
 
 

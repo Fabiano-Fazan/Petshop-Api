@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Future;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -29,10 +31,12 @@ public class CreateMedicalAppointmentDto {
 
     @Schema(description = "Appointment start time", example = "2023-12-30T14:00:00")
     @NotNull(message = "Appointment date is required")
+    @Future(message = "Appointment date must be in the future")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime appointmentStartTime;
 
     @Schema(description = "Duration in minutes", example = "60")
+    @Positive(message = "Duration must be greater than zero")
     private Integer durationMinutes;
 
     @Schema(description = "Diagnosis", example = "Healthy animal")

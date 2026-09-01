@@ -19,9 +19,12 @@ public class MedicalAppointment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Version
+    private Long version;
+
     private String notes;
 
-    @Column(nullable = false)
+    @Column
     private String diagnosis;
 
 
@@ -42,8 +45,10 @@ public class MedicalAppointment {
     @Column(nullable = false)
     private LocalDateTime appointmentStartTime;
 
+    @Column(nullable = false)
     private LocalDateTime appointmentEndTime;
 
+    @Column(nullable = false)
     private Integer durationMinutes;
 
     @Enumerated(EnumType.STRING)

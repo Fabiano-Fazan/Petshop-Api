@@ -20,6 +20,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Version
+    private Long version;
+
     @Column(nullable = false)
     private String name;
 
@@ -28,7 +31,7 @@ public class Product {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(name = "quantity_in_stock")
+    @Column(name = "quantity_in_stock", nullable = false)
     private Integer quantityInStock = 0;
 
     @ManyToOne

@@ -29,7 +29,7 @@ public class StockMovementService {
     @Transactional
     public void registerInput(Product product, Integer quantity, String description, String invoice, BigDecimal price, Sale sale){
         var productSaved = validatorEntities.validate(product.getId(), productRepository, "Product");
-        productSaved.setQuantityInStock(product.getQuantityInStock() + quantity);
+        productSaved.setQuantityInStock(productSaved.getQuantityInStock() + quantity);
         productRepository.save(productSaved);
 
         StockMovement stockMovement = StockMovement.builder()
@@ -58,7 +58,7 @@ public class StockMovementService {
             throw new InsufficientStockException("Not enough stock for product %s. Requested: %s, Available: %s"
                     .formatted(productSaved.getName(), quantity, productSaved.getQuantityInStock()));
         }
-        productSaved.setQuantityInStock(product.getQuantityInStock() - quantity);
+        productSaved.setQuantityInStock(productSaved.getQuantityInStock() - quantity);
         productRepository.save(productSaved);
 
         StockMovement stockMovement = StockMovement.builder()

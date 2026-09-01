@@ -4,8 +4,10 @@ package com.petshop.api.service;
 import com.petshop.api.domain.sale.SaleCancel;
 import com.petshop.api.domain.sale.SaleGenerator;
 import com.petshop.api.domain.validator.ValidatorEntities;
+import com.petshop.api.dto.request.CreateProductSaleDto;
 import com.petshop.api.dto.request.CreateSaleDto;
 import com.petshop.api.dto.response.SaleResponseDto;
+import com.petshop.api.exception.BusinessException;
 import com.petshop.api.model.entities.*;
 import com.petshop.api.model.enums.SaleStatus;
 import com.petshop.api.model.mapper.SaleMapper;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.UUID;
+import java.util.HashSet;
 
 
 @Service
@@ -52,6 +55,13 @@ public class SaleService {
 
     @Transactional
     public SaleResponseDto createSale(CreateSaleDto dto) {
+        var productIds = new HashSet<UUID>();
+        boolean hasDuplicates = dto.getProductSales().stream()
+                .map(CreateProductSaleDto::getProductId)
+                .anyMatch(id -> !productIds.add(id));
+        if (hasDuplicates) {
+            throw new BusinessException("A product cannot appear more than once in the same sale.");
+        }
         Sale newSale = new Sale();
         newSale.setClient(validatorEntities.validate(dto.getClientId(), clientRepository, "Client"));
         newSale.setStatus(SaleStatus.COMPLETED);
@@ -61,7 +71,7 @@ public class SaleService {
             var productSale = saleGenerator.generateProductSale(item, newSale);
             newSale.getProductSales().add(productSale);
         });
-        BigDecimal totalValue = saleGenerator.calculateSaleTotal(dto);
+        BigDecimal totalValue = saleGenerator.calculateSaleTotal(newSale);
         newSale.setTotalValue(totalValue);
         var savedSale = saleRepository.save(newSale);
         saleGenerator.registerStockMovementsFromSale(savedSale);
@@ -97,6 +107,5 @@ public class SaleService {
         });
     }
 }
-
 
 

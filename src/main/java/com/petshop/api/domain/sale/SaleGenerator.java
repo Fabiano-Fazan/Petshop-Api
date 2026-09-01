@@ -1,7 +1,6 @@
 package com.petshop.api.domain.sale;
 
 import com.petshop.api.dto.request.CreateProductSaleDto;
-import com.petshop.api.dto.request.CreateSaleDto;
 import com.petshop.api.exception.ResourceNotFoundException;
 import com.petshop.api.model.entities.ProductSale;
 import com.petshop.api.model.entities.Sale;
@@ -25,14 +24,14 @@ public class SaleGenerator {
         return ProductSale.builder()
                 .product(product)
                 .quantity(dto.getQuantity())
-                .unitPrice(dto.getPrice())
+                .unitPrice(product.getPrice())
                 .sale(sale)
                 .build();
     }
 
-    public BigDecimal calculateSaleTotal(CreateSaleDto dto){
-        return dto.getProductSales().stream()
-                .map(dto1 -> dto1.getPrice().multiply(BigDecimal.valueOf(dto1.getQuantity())))
+    public BigDecimal calculateSaleTotal(Sale sale){
+        return sale.getProductSales().stream()
+                .map(item -> item.getUnitPrice().multiply(BigDecimal.valueOf(item.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

@@ -1,82 +1,79 @@
 # 🐾 PetShop API
 
-Uma API RESTful para o gerenciamento de um PetShop. O sistema orquestra desde o controle de estoque e fluxo de vendas até o agendamento de consultas veterinárias e gestão financeira automatizada.
+API REST para gerenciamento de pet shop, com vendas, estoque, financeiro, clientes, animais e consultas veterinárias.
 
-## 📋 Sobre o Projeto
+## Principais regras
 
-Este projeto foi desenvolvido para testar meus estudos. O sistema não apenas realiza CRUDs básicos, mas gerencia o ciclo de vida das operações comerciais:
+- A conclusão de uma venda baixa o estoque e gera os lançamentos financeiros na mesma transação.
+- O preço da venda é obtido do produto cadastrado, não do corpo da requisição.
+- Movimentações concorrentes de estoque utilizam lock pessimista e controle otimista de versão.
+- Agendamentos impedem conflitos do veterinário e do cliente.
+- Consultas canceladas liberam o horário.
+- Cancelar uma venda devolve os itens ao estoque e remove parcelas ainda não pagas.
 
-* **Vendas:** Ao finalizar uma venda, o sistema automaticamente baixa o estoque e gera os registros financeiros (contas a receber).
-* **Agendamentos:** Validação inteligente de conflitos de horários para veterinários.
-* **Financeiro:** Geração automática de parcelas e controle de pagamentos parciais ou totais.
+## Tecnologias
 
+- Java 21 e Spring Boot 3
+- Spring Data JPA e PostgreSQL
+- Spring Security, JWT e BCrypt
+- Flyway
+- MapStruct e Lombok
+- OpenAPI/Swagger
+- JUnit 5, Mockito, AssertJ e Testcontainers
+- Docker e Docker Compose
 
-## 📖 Documentação da API (Swagger)
+## Executando com Docker
 
-A API utiliza Swagger UI (OpenAPI 3) para documentação interativa. Com a aplicação rodando, acesse:
+1. Copie `.env.example` para `.env`.
+2. Troque todas as senhas e gere uma chave JWT Base64 com pelo menos 32 bytes.
+3. Execute:
 
-* **URL:** http://localhost:8082/swagger-ui/index.html
+```bash
+docker compose up --build
+```
 
-Como testar endpoints protegidos:
+Serviços:
 
-1. Obter Token: Utilize o endpoint de login para gerar um JWT.
+- API: http://localhost:8083
+- Swagger: http://localhost:8083/swagger-ui/index.html
+- Adminer: http://localhost:8081
 
-2. Autorizar: No topo da página do Swagger, clique no botão "Authorize".
+No Adminer, utilize servidor `postgres`, porta `5432` e as credenciais definidas no `.env`.
 
-3. Configurar: Insira o token gerado.
+O administrador inicial é criado somente quando `ADMIN_EMAIL` e `ADMIN_PASSWORD` estiverem preenchidos. Contas registradas pela API recebem `ROLE_USER` e possuem acesso de leitura. Operações de escrita exigem `ROLE_ADMIN`.
 
-### 🗄️ Gerenciamento do Banco de Dados
+## Executando localmente
 
-Além do PostgreSQL, o ambiente Docker inclui o **Adminer** para visualização das tabelas:
-* **Acesso:** `http://localhost:8081`
-* **Servidor:** `host.docker.internal:5433`
+Suba apenas a infraestrutura:
 
-## 🚀 Tecnologias Utilizadas
+```bash
+docker compose up -d postgres adminer
+```
 
-* **Linguagem:** Java 21
-* **Framework:** Spring Boot 3 (Web, Data JPA, Validation)
-* **Segurança:** Spring Security + JWT (JSON Web Token)
-* **Banco de Dados:** PostgreSQL (Produção/Dev)
-* **Documentação:** Springdoc OpenAPI 3
-* **Build Tool:** Gradle
-* **Mapeamento:** MapStruct
-* **Utilitários:** Lombok
-* **Containerização:** Docker & Docker Compose
-* **Testes:** JUnit 5, Mockito, AssertJ
+Defina `JWT_SECRET`, `DB_URL`, `DB_USERNAME` e `DB_PASSWORD`. Depois execute:
 
-## 📦 Como Rodar o Projeto
+```bash
+./gradlew bootRun
+```
 
-### Pré-requisitos
-* Java 21+ instalado.
-* Docker e Docker Compose (Opcional, mas recomendado para o Banco de Dados).
+No Windows:
 
-### Passo a Passo
+```cmd
+gradlew.bat bootRun
+```
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone git clone https://github.com/fabiano-fazan/petshop-api.git
-    ```
-
-2.  **Configuração do Banco de Dados:**
-    O projeto já possui um arquivo `docker-compose.yml`. Para subir o PostgreSQL:
-    ```bash
-    docker-compose up -d
-    ```
-
-3.  **Execute a aplicação:**
-    Utilize o wrapper do Gradle (não é necessário ter o Gradle instalado globalmente).
-    * **Windows:**
-     ```cmd
-     gradlew.bat bootRun
-     ```
-
-A API estará disponível em: `http://localhost:8082`
-
-## 🧪 Rodando os Testes
-
-O projeto conta com uma suíte abrangente de testes unitários cobrindo Services, Generators e Validadores.
-
-Para executar os testes:
+## Testes
 
 ```bash
 ./gradlew test
+```
+
+Os testes unitários usam H2 em modo de compatibilidade com PostgreSQL.
+
+## Banco de dados
+
+O esquema é controlado pelo Flyway em `src/main/resources/db/migration`. O Hibernate utiliza `ddl-auto: validate`, portanto mudanças nas entidades devem ser acompanhadas de uma nova migration.
+
+## Segurança
+
+O arquivo `.env` está ignorado pelo Git; use apenas `.env.example` como modelo.

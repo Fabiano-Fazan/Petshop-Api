@@ -5,10 +5,17 @@ import com.petshop.api.model.entities.VeterinarianCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
+import jakarta.persistence.LockModeType;
+import java.util.Optional;
 
 import java.util.UUID;
 
 public interface VeterinarianRepository extends JpaRepository<Veterinarian, UUID> {
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    Optional<Veterinarian> findWithLockById(UUID id);
+
     Page<Veterinarian> findByNameContainingIgnoreCase(String name, Pageable pageable);
 
     boolean existsByCategory(VeterinarianCategory category);

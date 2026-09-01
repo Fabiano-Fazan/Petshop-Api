@@ -168,6 +168,8 @@ class MedicalAppointmentServiceTest {
         Veterinarian veterinarian = new Veterinarian();
         MedicalAppointmentResponseDto responseDto = new MedicalAppointmentResponseDto();
 
+        when(veterinarianRepository.findWithLockById(dto.getVeterinarianId())).thenReturn(java.util.Optional.of(veterinarian));
+        when(timeCalculator.duration(dto.getDurationMinutes(), 30)).thenReturn(30);
         when(timeCalculator.end(dto.getAppointmentStartTime(), dto.getDurationMinutes())).thenReturn(calculatedEnd);
         when(medicalAppointmentMapper.toEntity(dto)).thenReturn(entity);
         when(validatorEntities.validate(dto.getClientId(), clientRepository, "Client")).thenReturn(client);
@@ -204,10 +206,14 @@ class MedicalAppointmentServiceTest {
         UpdateMedicalAppointmentDto updateDto = new UpdateMedicalAppointmentDto();
         MedicalAppointment appointment = new MedicalAppointment();
         appointment.setId(id);
+        Veterinarian veterinarian = new Veterinarian();
+        veterinarian.setId(UUID.randomUUID());
+        appointment.setVeterinarian(veterinarian);
         MedicalAppointment savedAppointment = new MedicalAppointment();
         MedicalAppointmentResponseDto responseDto = new MedicalAppointmentResponseDto();
 
         when(validatorEntities.validate(id, medicalAppointmentRepository, "Medical Appointment")).thenReturn(appointment);
+        when(veterinarianRepository.findWithLockById(veterinarian.getId())).thenReturn(java.util.Optional.of(veterinarian));
         when(medicalAppointmentRepository.save(appointment)).thenReturn(savedAppointment);
         when(medicalAppointmentMapper.toResponseDto(savedAppointment)).thenReturn(responseDto);
 

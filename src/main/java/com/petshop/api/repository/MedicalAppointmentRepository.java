@@ -19,6 +19,7 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
             SELECT EXISTS(
             SELECT 1 FROM MedicalAppointment a
             WHERE a.veterinarian.id = :veterinarianId
+            AND a.appointmentStatus = com.petshop.api.model.enums.AppointmentStatus.SCHEDULED
             AND :start < a.appointmentEndTime
             AND :end > a.appointmentStartTime
             )
@@ -33,6 +34,7 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
            SELECT EXISTS(
            SELECT a FROM MedicalAppointment a
            WHERE a.client.id = :clientId
+           AND a.appointmentStatus = com.petshop.api.model.enums.AppointmentStatus.SCHEDULED
            AND :start < a.appointmentEndTime
            AND :end > a.appointmentStartTime)
            """)
@@ -48,6 +50,7 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
         SELECT EXISTS(
         SELECT 1 FROM MedicalAppointment a
         WHERE a.veterinarian.id = :veterinarianId
+        AND a.appointmentStatus = com.petshop.api.model.enums.AppointmentStatus.SCHEDULED
         AND a.id != :currentAppointmentId
         AND :start < a.appointmentEndTime
         AND :end > a.appointmentStartTime
@@ -64,15 +67,14 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
         SELECT EXISTS(
         SELECT 1 FROM MedicalAppointment a
         WHERE a.client.id = :clientId
+        AND a.appointmentStatus = com.petshop.api.model.enums.AppointmentStatus.SCHEDULED
         AND a.id != :currentAppointmentId
-        AND a.veterinarian.id != :veterinarianId
         AND :start < a.appointmentEndTime
         AND :end > a.appointmentStartTime
         )
         """)
     boolean existsConflictingAppointmentByClientForUpdate(
             @Param("clientId") UUID clientId,
-            @Param("veterinarianId") UUID veterinarianId,
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end,
             @Param("currentAppointmentId") UUID currentAppointmentId

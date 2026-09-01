@@ -4,12 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 @Getter
@@ -25,8 +23,4 @@ public class CreateProductSaleDto {
     @Min(value = 1, message = "Quantity must be at least 1")
     private Integer quantity;
 
-    @Schema(description = "Price of the product", example = "10.50")
-    @NotNull(message = "The price cannot be null")
-    @Positive(message = "The price needs to be positive")
-    private BigDecimal price;
 }

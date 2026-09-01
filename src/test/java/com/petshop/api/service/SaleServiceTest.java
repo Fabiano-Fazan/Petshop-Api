@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
@@ -149,7 +150,7 @@ class SaleServiceTest {
 
         when(validatorEntities.validate(createDto.getClientId(), clientRepository, "Client")).thenReturn(client);
         when(saleGenerator.generateProductSale(any(), any(Sale.class))).thenReturn(productSale);
-        when(saleGenerator.calculateSaleTotal(createDto)).thenReturn(new BigDecimal("100.00"));
+        when(saleGenerator.calculateSaleTotal(any(Sale.class))).thenReturn(new BigDecimal("100.00"));
         when(saleRepository.save(any(Sale.class))).thenReturn(savedSale);
         when(saleMapper.toResponseDto(savedSale)).thenReturn(responseDto);
 
@@ -158,10 +159,30 @@ class SaleServiceTest {
         assertThat(result).isNotNull();
         verify(validatorEntities).validate(createDto.getClientId(), clientRepository, "Client");
         verify(saleGenerator, times(1)).generateProductSale(eq(itemDto), any(Sale.class));
-        verify(saleGenerator).calculateSaleTotal(createDto);
+        verify(saleGenerator).calculateSaleTotal(any(Sale.class));
         verify(saleRepository).save(any(Sale.class));
         verify(saleGenerator).registerStockMovementsFromSale(savedSale);
         verify(financialService).createFinancialFromSale(savedSale, createDto.getInstallments(), createDto.getIntervalDays());
+    }
+
+    @Test
+    @DisplayName("Should reject a duplicated product in the same sale")
+    void createSale_ShouldRejectDuplicatedProduct() {
+        UUID productId = UUID.randomUUID();
+        CreateProductSaleDto first = new CreateProductSaleDto();
+        first.setProductId(productId);
+        first.setQuantity(1);
+        CreateProductSaleDto second = new CreateProductSaleDto();
+        second.setProductId(productId);
+        second.setQuantity(2);
+        CreateSaleDto dto = new CreateSaleDto();
+        dto.setProductSales(List.of(first, second));
+
+        assertThatThrownBy(() -> saleService.createSale(dto))
+                .isInstanceOf(com.petshop.api.exception.BusinessException.class)
+                .hasMessageContaining("cannot appear more than once");
+
+        verifyNoInteractions(saleRepository);
     }
 
 
