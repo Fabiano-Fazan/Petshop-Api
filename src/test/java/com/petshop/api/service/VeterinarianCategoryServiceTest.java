@@ -114,7 +114,7 @@ class VeterinarianCategoryServiceTest {
         when(veterinarianCategoryRepository.findByNameContainingIgnoreCase(name, pageable)).thenReturn(categoryPage);
         when(veterinarianCategoryMapper.toResponseDto(category)).thenReturn(responseDto);
 
-        Page<VeterinarianCategoryResponseDto> result = veterinarianCategoryService.getVeterinarianCategoryByNameContainingIgnoreCase(name, pageable);
+        Page<VeterinarianCategoryResponseDto> result = veterinarianCategoryService.getVeterinarianCategoryByName(name, pageable);
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(1);

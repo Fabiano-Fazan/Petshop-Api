@@ -37,19 +37,25 @@ public class VeterinarianCategoryController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<VeterinarianCategoryResponseDto>> getByName(@RequestParam String name, @ParameterObject Pageable pageable) {
-        Page<VeterinarianCategoryResponseDto> veterinarianCategoryByName = veterinarianCategoryService.getVeterinarianCategoryByNameContainingIgnoreCase(name, pageable);
+    public ResponseEntity<Page<VeterinarianCategoryResponseDto>> getByName(
+            @RequestParam String name,
+            @ParameterObject Pageable pageable
+    ) {
+        Page<VeterinarianCategoryResponseDto> veterinarianCategoryByName = veterinarianCategoryService.getVeterinarianCategoryByName(name, pageable);
         return ResponseEntity.ok(veterinarianCategoryByName);
     }
 
     @PostMapping
-    public ResponseEntity<VeterinarianCategoryResponseDto> createVeterinarianCategory(@Valid @RequestBody CreateVeterinarianCategoryDto createVeterinarianCategoryDTO){
+    public ResponseEntity<VeterinarianCategoryResponseDto> createVeterinarianCategory(
+            @Valid @RequestBody CreateVeterinarianCategoryDto createVeterinarianCategoryDTO){
         VeterinarianCategoryResponseDto createdVeterinarianCategory = veterinarianCategoryService.createVeterinarianCategory(createVeterinarianCategoryDTO);
         return new ResponseEntity<>(createdVeterinarianCategory, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<VeterinarianCategoryResponseDto> updateVeterinarianCategory(@PathVariable UUID id, @Valid @RequestBody UpdateVeterinarianCategoryDto updateVeterinarianCategoryDTO) {
+    public ResponseEntity<VeterinarianCategoryResponseDto> updateVeterinarianCategory(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateVeterinarianCategoryDto updateVeterinarianCategoryDTO) {
         VeterinarianCategoryResponseDto updatedVeterinarianCategory = veterinarianCategoryService.updateVeterinarianCategory(id, updateVeterinarianCategoryDTO);
         return ResponseEntity.ok(updatedVeterinarianCategory);
     }

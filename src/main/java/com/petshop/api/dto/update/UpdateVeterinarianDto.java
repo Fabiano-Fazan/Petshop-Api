@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -28,6 +27,4 @@ public class UpdateVeterinarianDto {
     @Email(message = "Email format is invalid")
     private String email;
 
-    @Schema(description = "Category ID", example = "123e4567-e89b-12d3-a456-426614174000")
-    private UUID categoryId;
 }

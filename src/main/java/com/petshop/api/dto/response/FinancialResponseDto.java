@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -38,4 +39,10 @@ public class FinancialResponseDto {
     private UUID saleId;
     @Schema(description = "Notes", example = "Paid via bank transfer")
     private String notes;
+    @Schema(description = "Balance", example = "150.00")
+    private BigDecimal balance;
+    @Schema(description = "Date created", example = "2023-12-30")
+    private LocalDate dateCreated;
+    @Schema(description = "Payments")
+    private List<FinancialPaymentResponseDto> payments;
 }

@@ -2,6 +2,7 @@ package com.petshop.api.domain.sale;
 
 import com.petshop.api.exception.BusinessException;
 import com.petshop.api.model.entities.Financial;
+import com.petshop.api.model.entities.FinancialPayment;
 import com.petshop.api.model.entities.Sale;
 import com.petshop.api.model.enums.SaleStatus;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +41,32 @@ class SaleCancelTest {
 
         assertThat(sale.getStatus()).isEqualTo(SaleStatus.CANCELED);
         assertThat(sale.getFinancial()).isEmpty();
+    }
+
+    @Test
+    void shouldNotCancelSaleWithPartialPayment() {
+        FinancialPayment payment = new FinancialPayment();
+
+        Financial financial = Financial.builder()
+                .amount(new BigDecimal("100.00"))
+                .balance(new BigDecimal("60.00"))
+                .isPaid(false)
+                .financialPayments(new ArrayList<>(List.of(payment)))
+                .build();
+
+        Sale sale = Sale.builder()
+                .status(SaleStatus.COMPLETED)
+                .financial(new ArrayList<>(List.of(financial)))
+                .build();
+
+        assertThatThrownBy(() -> saleCancel.cancel(sale))
+                .isInstanceOf(BusinessException.class)
+                .hasMessage(
+                        "Cannot cancel a sale with registered payments."
+                );
+
+        assertThat(sale.getStatus()).isEqualTo(SaleStatus.COMPLETED);
+        assertThat(sale.getFinancial()).containsExactly(financial);
     }
 
 

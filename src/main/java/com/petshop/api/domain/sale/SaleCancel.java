@@ -1,7 +1,6 @@
 package com.petshop.api.domain.sale;
 
 import com.petshop.api.exception.BusinessException;
-import com.petshop.api.model.entities.Financial;
 import com.petshop.api.model.entities.Sale;
 import com.petshop.api.model.enums.SaleStatus;
 import org.springframework.stereotype.Component;
@@ -14,17 +13,20 @@ public class SaleCancel {
             throw new BusinessException("This sale is already canceled");
         }
 
-        boolean hasPaidInstallments = sale.getFinancial().stream()
-                .anyMatch(Financial::getIsPaid);
+        boolean hasAnyPayment = sale.getFinancial() != null
+                && sale.getFinancial().stream()
+                .anyMatch(financial ->
+                        financial.getFinancialPayments()
+                        != null && !financial.getFinancialPayments().isEmpty()
+                );
 
-        if (hasPaidInstallments) {
-            throw new BusinessException("Cannot cancel a sale with paid installments.");
+        if (hasAnyPayment) {
+            throw new BusinessException(
+                    "Cannot cancel a sale with registered payments."
+            );
         }
 
         sale.setStatus(SaleStatus.CANCELED);
-
-        if (sale.getFinancial() != null) {
-            sale.getFinancial().clear();
-        }
+        sale.getFinancial().clear();
     }
 }

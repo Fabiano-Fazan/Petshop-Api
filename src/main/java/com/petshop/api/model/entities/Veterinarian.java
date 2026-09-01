@@ -24,7 +24,7 @@ public class Veterinarian {
     @Column(nullable = false)
     private String crmv;
 
-    @Column(nullable = false)
+    @Column( )
     private String phone;
 
     @ManyToOne

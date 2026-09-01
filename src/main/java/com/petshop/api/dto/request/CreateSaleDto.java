@@ -28,6 +28,7 @@ public class CreateSaleDto {
 
     @Schema(description = "Number of installments", example = "1")
     @Min(value = 1, message = "The sale must have at least one installment.")
+    @NotNull(message = "Number of installments is required")
     private Integer installments;
 
     @Schema(description = "Interval in days between installments", example = "30")

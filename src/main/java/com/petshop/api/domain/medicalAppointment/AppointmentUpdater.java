@@ -2,8 +2,11 @@ package com.petshop.api.domain.medicalAppointment;
 
 import com.petshop.api.domain.validator.ValidatorEntities;
 import com.petshop.api.dto.update.UpdateMedicalAppointmentDto;
+import com.petshop.api.model.entities.Animal;
+import com.petshop.api.model.entities.Client;
 import com.petshop.api.model.entities.MedicalAppointment;
 import com.petshop.api.model.entities.Veterinarian;
+import com.petshop.api.model.enums.AppointmentStatus;
 import com.petshop.api.repository.AnimalRepository;
 import com.petshop.api.repository.ClientRepository;
 import com.petshop.api.repository.VeterinarianRepository;
@@ -23,68 +26,138 @@ public class AppointmentUpdater {
     private final ValidatorEntities validatorEntities;
     private final AppointmentTimeCalculator timeCalculator;
 
-    public void updateAppointment(MedicalAppointment medicalAppointment, @NonNull UpdateMedicalAppointmentDto updateDto){
+    private final AppointmentRelationshipValidator relationshipValidator;
 
-        if(updateDto.getClientId() != null){
-            medicalAppointment.setClient(validatorEntities.validate(updateDto.getClientId(), clientRepository, "Client"));
+    public void updateAppointment(
+            MedicalAppointment appointment,
+            @NonNull UpdateMedicalAppointmentDto updateDto
+    ) {
+        boolean clientChanged =
+                updateDto.getClientId() != null;
+
+        boolean animalChanged =
+                updateDto.getAnimalId() != null;
+
+        boolean veterinarianChanged =
+                updateDto.getVeterinarianId() != null;
+
+        boolean timeChanged =
+                updateDto.getAppointmentStartTime() != null
+                        || updateDto.getDurationMinutes() != null;
+
+        Client finalClient = appointment.getClient();
+
+        if (clientChanged) {
+            finalClient = validatorEntities.validate(
+                    updateDto.getClientId(),
+                    clientRepository,
+                    "Client"
+            );
         }
 
-        if(updateDto.getAnimalId() != null){
-            medicalAppointment.setAnimal(validatorEntities.validate(updateDto.getAnimalId(), animalRepository, "Animal"));
+        Animal finalAnimal = appointment.getAnimal();
+
+        if (animalChanged) {
+            finalAnimal = validatorEntities.validate(
+                    updateDto.getAnimalId(),
+                    animalRepository,
+                    "Animal"
+            );
         }
 
-        Veterinarian savedVet = medicalAppointment.getVeterinarian();
+        Veterinarian finalVeterinarian =
+                appointment.getVeterinarian();
 
-        if (updateDto.getVeterinarianId() != null) {
-            savedVet = validatorEntities.validate(updateDto.getVeterinarianId(), veterinarianRepository, "Veterinarian");
+        if (veterinarianChanged) {
+            finalVeterinarian = validatorEntities.validate(
+                    updateDto.getVeterinarianId(),
+                    veterinarianRepository,
+                    "Veterinarian"
+            );
         }
 
-        boolean timeChanged = updateDto.getAppointmentStartTime() != null || updateDto.getDurationMinutes() != null;
-        boolean vetChanged = updateDto.getVeterinarianId() != null;
-        boolean clientChanged = updateDto.getClientId() != null;
+        if (clientChanged || animalChanged) {
+            relationshipValidator
+                    .validateAnimalBelongsToClient(
+                            finalAnimal,
+                            finalClient
+                    );
+        }
 
-        if (timeChanged || vetChanged || clientChanged) {
 
+        boolean isReactivating =
+                updateDto.getAppointmentStatus()
+                        == AppointmentStatus.SCHEDULED
+                        && appointment.getAppointmentStatus()
+                        != AppointmentStatus.SCHEDULED;
+
+        boolean mustValidateConflict =
+                timeChanged
+                        || veterinarianChanged
+                        || clientChanged
+                        || isReactivating;
+
+        if (mustValidateConflict) {
             LocalDateTime start = timeCalculator.start(
                     updateDto.getAppointmentStartTime(),
-                    medicalAppointment.getAppointmentStartTime()
+                    appointment.getAppointmentStartTime()
             );
 
             int duration = timeCalculator.duration(
                     updateDto.getDurationMinutes(),
-                    medicalAppointment.getDurationMinutes()
+                    appointment.getDurationMinutes()
             );
 
-            LocalDateTime end = timeCalculator.end(start, duration);
+            LocalDateTime end = timeCalculator.end(
+                    start,
+                    duration
+            );
 
             timeCalculator.validateConflict(
-                    savedVet.getId(),
-                    medicalAppointment.getClient().getId(),
+                    finalVeterinarian.getId(),
+                    finalClient.getId(),
                     start,
                     end,
-                    medicalAppointment.getId()
+                    appointment.getId()
             );
 
-            if (vetChanged) {
-                medicalAppointment.setVeterinarian(savedVet);
-            }
+            appointment.setAppointmentStartTime(start);
+            appointment.setAppointmentEndTime(end);
+            appointment.setDurationMinutes(duration);
+        }
 
-            medicalAppointment.setAppointmentStartTime(start);
-            medicalAppointment.setAppointmentEndTime(end);
-            medicalAppointment.setDurationMinutes(duration);
+        if (clientChanged) {
+            appointment.setClient(finalClient);
+        }
+
+        if (animalChanged) {
+            appointment.setAnimal(finalAnimal);
+        }
+
+        if (veterinarianChanged) {
+            appointment.setVeterinarian(finalVeterinarian);
         }
 
         if (updateDto.getAppointmentStatus() != null) {
-            medicalAppointment.setAppointmentStatus(updateDto.getAppointmentStatus());
+            appointment.setAppointmentStatus(
+                    updateDto.getAppointmentStatus()
+            );
         }
+
         if (updateDto.getNotes() != null) {
-            medicalAppointment.setNotes(updateDto.getNotes());
+            appointment.setNotes(updateDto.getNotes());
         }
+
         if (updateDto.getTreatment() != null) {
-            medicalAppointment.setTreatment(updateDto.getTreatment());
+            appointment.setTreatment(
+                    updateDto.getTreatment()
+            );
         }
+
         if (updateDto.getDiagnosis() != null) {
-            medicalAppointment.setDiagnosis(updateDto.getDiagnosis());
+            appointment.setDiagnosis(
+                    updateDto.getDiagnosis()
+            );
         }
     }
 }

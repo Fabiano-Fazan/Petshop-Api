@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import jakarta.validation.constraints.PastOrPresent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,7 @@ public class CreateAnimalDto {
     private String breed;
 
     @Schema(description = "Animal birth date", example = "2020-01-01")
+    @PastOrPresent(message = "Birth date must be in the past or present")
     private LocalDate birthDate;
 
     @Schema(description = "Client ID", example = "123e4567-e89b-12d3-a456-426614174000")

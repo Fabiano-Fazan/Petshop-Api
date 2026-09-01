@@ -48,7 +48,10 @@ public class VeterinarianController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<VeterinarianResponseDto> updateVeterinarian(@PathVariable UUID id, @Valid @RequestBody UpdateVeterinarianDto updateVeterinarianDTO){
+    public ResponseEntity<VeterinarianResponseDto> updateVeterinarian(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateVeterinarianDto updateVeterinarianDTO
+    ){
         VeterinarianResponseDto updatedVeterinarian = veterinarianService.updateVeterinarian(id, updateVeterinarianDTO);
         return ResponseEntity.ok(updatedVeterinarian);
     }

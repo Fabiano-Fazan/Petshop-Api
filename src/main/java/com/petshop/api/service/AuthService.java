@@ -32,10 +32,10 @@ public class AuthService {
         User savedUser = userRepository.save(user);
 
 
-        var jwtToken = jwtService.generateToken(user);
+        var jwtToken = jwtService.generateToken(savedUser);
 
         return AuthResponseDto.builder()
-                .acessToken(jwtToken)
+                .accessToken(jwtToken)
                 .build();
     }
 
@@ -52,7 +52,7 @@ public class AuthService {
         var jwtToken = jwtService.generateToken(user);
 
         return AuthResponseDto.builder()
-                .acessToken(jwtToken)
+                .accessToken(jwtToken)
                 .build();
     }
 }

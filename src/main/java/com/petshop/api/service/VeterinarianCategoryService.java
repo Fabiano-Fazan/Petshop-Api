@@ -40,7 +40,7 @@ public class VeterinarianCategoryService {
                 .map(veterinarianCategoryMapper::toResponseDto);
     }
 
-    public Page<VeterinarianCategoryResponseDto> getVeterinarianCategoryByNameContainingIgnoreCase(String name, Pageable pageable) {
+    public Page<VeterinarianCategoryResponseDto> getVeterinarianCategoryByName(String name, Pageable pageable) {
         return veterinarianCategoryRepository.findByNameContainingIgnoreCase(name, pageable)
                 .map(veterinarianCategoryMapper::toResponseDto);
     }

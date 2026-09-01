@@ -11,6 +11,6 @@ import lombok.*;
 public class AuthResponseDto {
 
     @Schema(description = "Access token", example = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...")
-    private String acessToken;
+    private String accessToken;
 
 }

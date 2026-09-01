@@ -35,6 +35,7 @@ public class CreateFinancialDto {
 
     @Schema(description = "Number of installments", example = "1")
     @NotNull(message = "The installment cannot be null")
+    @Positive(message = "The installment needs to be positive")
     private Integer installments;
 
     @Schema(description = "Interval in days between installments", example = "30")

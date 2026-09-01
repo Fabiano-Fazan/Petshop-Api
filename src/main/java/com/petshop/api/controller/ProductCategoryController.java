@@ -36,7 +36,9 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/name")
-    public ResponseEntity<Page<ProductCategoryResponseDto>> getProductCategoriesByName(@RequestParam String name, @ParameterObject Pageable pageable) {
+    public ResponseEntity<Page<ProductCategoryResponseDto>> getProductCategoriesByName(
+            @RequestParam String name,
+            @ParameterObject Pageable pageable) {
         Page<ProductCategoryResponseDto> productCategoriesByName = productCategoryService.getProductCategoryByNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(productCategoriesByName);
     }
@@ -48,7 +50,10 @@ public class ProductCategoryController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<ProductCategoryResponseDto> updateProductCategory(@PathVariable UUID id, @Valid @RequestBody UpdateProductCategoryDto updateProductCategoryDTO){
+    public ResponseEntity<ProductCategoryResponseDto> updateProductCategory(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateProductCategoryDto updateProductCategoryDTO
+    ){
         ProductCategoryResponseDto updatedProductCategory = productCategoryService.updateProductCategory(id, updateProductCategoryDTO);
         return ResponseEntity.ok(updatedProductCategory);
     }

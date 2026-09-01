@@ -19,8 +19,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDto> register(@Valid @RequestBody CreateRegisterDto createRegisterDTO){return ResponseEntity.ok(authService.register(createRegisterDTO));}
+    public ResponseEntity<AuthResponseDto> register(@Valid @RequestBody CreateRegisterDto createRegisterDTO){
+        return ResponseEntity.ok(authService.register(createRegisterDTO));}
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody CreateLoginDto createLoginDTO){return ResponseEntity.ok(authService.login(createLoginDTO));}
+    public ResponseEntity<AuthResponseDto> login(@Valid @RequestBody CreateLoginDto createLoginDTO){
+        return ResponseEntity.ok(authService.login(createLoginDTO));}
 }

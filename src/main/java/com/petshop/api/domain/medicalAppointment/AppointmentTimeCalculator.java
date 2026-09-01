@@ -29,7 +29,12 @@ public class AppointmentTimeCalculator {
         return start.plusMinutes(duration);
     }
 
-    public void validateAppointmentTimeConflict(UUID veterinarianId,UUID clientId, LocalDateTime startTime, LocalDateTime endTime) {
+    public void validateAppointmentTimeConflict(
+            UUID veterinarianId,
+            UUID clientId,
+            LocalDateTime startTime,
+            LocalDateTime endTime
+    ){
         boolean hasConflict = medicalAppointmentRepository.existsConflictingAppointment(veterinarianId, startTime, endTime);
         boolean hasConflictByClient = medicalAppointmentRepository.existsConflictingAppointmentByClient(clientId, startTime, endTime);
         if (hasConflict) {
@@ -40,7 +45,13 @@ public class AppointmentTimeCalculator {
         }
     }
 
-    public void validateConflict(UUID veterinarianId, UUID clientId, LocalDateTime start, LocalDateTime end, UUID currentAppointmentId) {
+    public void validateConflict(
+            UUID veterinarianId,
+            UUID clientId,
+            LocalDateTime start,
+            LocalDateTime end,
+            UUID currentAppointmentId
+    ) {
         boolean hasConflict = medicalAppointmentRepository.existsConflictingAppointmentForUpdate(veterinarianId, start, end, currentAppointmentId);
         boolean hasConflictByClient = medicalAppointmentRepository.existsConflictingAppointmentByClientForUpdate(clientId, start, end, currentAppointmentId);
         if (hasConflict) {

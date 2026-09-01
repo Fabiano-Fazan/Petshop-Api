@@ -2,10 +2,7 @@ package com.petshop.api.dto.request;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -34,5 +31,6 @@ public class CreateProductDto {
     private UUID categoryId;
 
     @Schema(description = "Quantity in stock", example = "100")
+    @PositiveOrZero(message = "The quantity in stock needs to be positive or zero")
     private Integer quantityInStock;
 }

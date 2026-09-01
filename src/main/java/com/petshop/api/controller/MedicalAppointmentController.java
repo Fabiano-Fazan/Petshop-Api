@@ -36,25 +36,36 @@ public class MedicalAppointmentController {
     }
 
     @GetMapping("/veterinarian")
-    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByVeterinarianName(@RequestParam String name, @ParameterObject Pageable pageable){
+    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByVeterinarianName(
+            @RequestParam String name,
+            @ParameterObject Pageable pageable
+    ){
         Page<MedicalAppointmentResponseDto> medicalAppointments = medicalAppointmentService.getMedicalAppointmentsByVeterinarianNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(medicalAppointments);
     }
 
     @GetMapping("/client")
-    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByClientName(@RequestParam String name, @ParameterObject Pageable pageable){
+    public ResponseEntity<Page<MedicalAppointmentResponseDto>> getMedicalAppointmentsByClientName(
+            @RequestParam String name,
+            @ParameterObject Pageable pageable
+    ){
         Page<MedicalAppointmentResponseDto> medicalAppointments = medicalAppointmentService.getMedicalAppointmentsByClientNameContainingIgnoreCase(name, pageable);
         return ResponseEntity.ok(medicalAppointments);
     }
 
     @PostMapping
-    public ResponseEntity<MedicalAppointmentResponseDto> createMedicalAppointment(@Valid @RequestBody CreateMedicalAppointmentDto createMedicalAppointmentDto){
+    public ResponseEntity<MedicalAppointmentResponseDto> createMedicalAppointment(
+            @Valid @RequestBody CreateMedicalAppointmentDto createMedicalAppointmentDto
+    ){
         MedicalAppointmentResponseDto createdMedicalAppointment = medicalAppointmentService.createMedicalAppointment(createMedicalAppointmentDto);
         return new ResponseEntity<>(createdMedicalAppointment, HttpStatus.CREATED);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<MedicalAppointmentResponseDto> updateMedicalAppointment(@PathVariable UUID id, @Valid @RequestBody UpdateMedicalAppointmentDto updateMedicalAppointmentDto){
+    public ResponseEntity<MedicalAppointmentResponseDto> updateMedicalAppointment(
+            @PathVariable UUID id,
+            @Valid @RequestBody UpdateMedicalAppointmentDto updateMedicalAppointmentDto
+    ){
         MedicalAppointmentResponseDto updatedMedicalAppointment = medicalAppointmentService.updateMedicalAppointment(id, updateMedicalAppointmentDto);
         return ResponseEntity.ok(updatedMedicalAppointment);
     }

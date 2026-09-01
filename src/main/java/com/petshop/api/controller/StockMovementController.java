@@ -19,14 +19,14 @@ public class StockMovementController {
     private final StockMovementService stockMovementService;
 
     @PostMapping("/input/{id}")
-    public ResponseEntity<Void> giveInputStock(@Valid @PathVariable UUID id, @RequestBody  CreateStockMovementDto createStockMovementDTO){
+    public ResponseEntity<Void> giveInputStock(@PathVariable UUID id, @Valid @RequestBody  CreateStockMovementDto createStockMovementDTO){
         stockMovementService.registerInput(id, createStockMovementDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/output/{id}")
-    public ResponseEntity<Void> giveOutputStock(@Valid @PathVariable UUID id,@RequestBody  CreateStockMovementDto createStockMovementDTO){
+    public ResponseEntity<Void> giveOutputStock( @PathVariable UUID id, @Valid @RequestBody  CreateStockMovementDto createStockMovementDTO){
         stockMovementService.registerOutput(id, createStockMovementDTO);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

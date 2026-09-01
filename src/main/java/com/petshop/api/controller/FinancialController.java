@@ -43,25 +43,25 @@ public class FinancialController {
     }
 
     @PostMapping
-    public ResponseEntity<List<FinancialResponseDto>> createFinancial(@RequestBody @Valid CreateFinancialDto createFinancialDto){
+    public ResponseEntity<List<FinancialResponseDto>> createFinancial(@Valid @RequestBody  CreateFinancialDto createFinancialDto){
         List<FinancialResponseDto> financials = financialService.createManualFinancial(createFinancialDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(financials);
     }
 
     @PatchMapping("/payment/{id}")
-    public ResponseEntity<FinancialResponseDto> payFinancial(@Valid @PathVariable UUID id, @RequestBody CreateFinancialPaymentDto createFinancialPaymentDto){
+    public ResponseEntity<FinancialResponseDto> payFinancial(@PathVariable UUID id, @Valid @RequestBody CreateFinancialPaymentDto createFinancialPaymentDto){
         FinancialResponseDto paidFinancial = financialService.payFinancial(id, createFinancialPaymentDto);
         return ResponseEntity.ok(paidFinancial);
     }
 
-    @DeleteMapping("/refund/{id}")
-    public ResponseEntity<FinancialResponseDto> refundFinancial(@Valid @PathVariable UUID id) {
-        FinancialResponseDto refundedFinancial = financialService.refundFinancial(id);
-        return ResponseEntity.ok(refundedFinancial);
-
+    @PostMapping("/payments/{paymentId}/refund")
+    public ResponseEntity<FinancialResponseDto> refundFinancial(@PathVariable UUID paymentId) {
+        FinancialResponseDto financial = financialService.refundFinancial(paymentId);
+        return ResponseEntity.ok(financial);
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFinancial(@Valid @PathVariable UUID id){
+    public ResponseEntity<Void> deleteFinancial(@PathVariable UUID id){
         financialService.deleteFinancial(id);
         return ResponseEntity.noContent().build();
     }

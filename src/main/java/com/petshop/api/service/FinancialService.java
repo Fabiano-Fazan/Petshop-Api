@@ -101,8 +101,8 @@ public class FinancialService {
         var financialPayment = validatorEntities.validate(id, financialPaymentRepository, "Financial Payment");
         var financial = financialPayment.getFinancial();
         paymentGenerator.revertPayment(financial, financialPayment);
-        financialPaymentRepository.delete(financialPayment);
-        return financialMapper.toResponseDto(financialRepository.save(financial));
+        var savedFinancial = financialRepository.save(financial);
+        return financialMapper.toResponseDto(savedFinancial);
     }
 
     @Transactional
@@ -116,6 +116,10 @@ public class FinancialService {
     private void canDelete(Financial financial) {
         if (!financial.getIsPaid().equals(Boolean.FALSE)){
             throw new BusinessException("Cannot delete financial that has been paid");
+        }
+        boolean hasAnyPayment = financial.getFinancialPayments() != null && !financial.getFinancialPayments().isEmpty();
+        if (hasAnyPayment) {
+            throw new BusinessException("Cannot delete financial that has payments");
         }
     }
 

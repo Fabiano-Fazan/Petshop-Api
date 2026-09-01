@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/sale")
+@RequestMapping("/api/v1/sales")
 @Tag(name = "Vendas", description = "Endpoints para gestão de vendas")
 public class SaleController {
     private  final SaleService saleService;

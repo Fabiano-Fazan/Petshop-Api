@@ -49,13 +49,13 @@ public class MonetaryTypeController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<MonetaryTypeResponseDto> updateMonetaryType(@Valid @PathVariable UUID id, @RequestBody UpdateMonetaryTypeDto updateMonetaryTypeDto){
+    public ResponseEntity<MonetaryTypeResponseDto> updateMonetaryType(@PathVariable UUID id,  @Valid @RequestBody UpdateMonetaryTypeDto updateMonetaryTypeDto){
         MonetaryTypeResponseDto updatedMonetaryType = monetaryTypeService.updateMonetaryType(id, updateMonetaryTypeDto);
         return ResponseEntity.ok(updatedMonetaryType);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteMonetaryType(@Valid @PathVariable UUID id){
+    public ResponseEntity<Void> deleteMonetaryType(@PathVariable UUID id){
         monetaryTypeService.deleteMonetaryType(id);
         return ResponseEntity.noContent().build();
     }

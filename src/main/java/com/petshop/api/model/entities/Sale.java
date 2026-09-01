@@ -30,7 +30,7 @@ public class Sale {
     @Column(name = "sale_date", nullable = false)
     private LocalDateTime saleDate;
 
-    @Column(name = "payment_type")
+    @Column(nullable = false, name = "payment_type")
     @Enumerated(EnumType.STRING)
     private SalePaymentType paymentType;
 

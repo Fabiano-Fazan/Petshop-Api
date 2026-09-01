@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +15,7 @@ import lombok.Setter;
 public class VeterinarianCategoryResponseDto {
 
     @Schema(description = "Category ID", example = "123e4567-e89b-12d3-a456-426614174000")
-    private String id;
+    private UUID id;
     @Schema(description = "Category name", example = "Surgeon")
     private String name;
     @Schema(description = "Category description", example = "Performs surgeries")
