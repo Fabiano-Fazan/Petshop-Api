@@ -471,6 +471,8 @@ Regras efetivas:
 ### 9.4 Categorias de veterinário
 
 **Objetivo:** classificar veterinários por especialidade ou função.
+
+| Componente | Papel |
 |---|---|
 | `VeterinarianCategoryController` | CRUD, filtro por nome e espécie. |
 | `VeterinarianCategoryService` | Resolve categoria, persiste e protege exclusão. |
@@ -532,6 +534,8 @@ Regras efetivas:
 ### 9.7 Categorias de produto
 
 **Objetivo:** organizar o catálogo de produtos.
+
+| Componente | Papel |
 |---|---|
 | `ProductCategoryController` | CRUD, filtro por nome e espécie. |
 | `ProductCategoryService` | Resolve categoria, persiste e protege exclusão. |
@@ -649,6 +653,8 @@ Regras efetivas:
 ### 9.12 Tipos monetários
 
 **Objetivo:** catalogar a forma registrada em um pagamento financeiro.
+
+| Componente | Papel |
 |---|---|
 | `MonetaryTypeController` | CRUD, filtro por nome e espécie. |
 | `MonetaryTypeService` | Orquestra lançamentos e pagamentos. |
