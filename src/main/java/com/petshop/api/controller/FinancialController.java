@@ -49,19 +49,19 @@ public class FinancialController {
     }
 
     @PatchMapping("/payment/{id}")
-    public ResponseEntity<FinancialResponseDto> payFinancial(@PathVariable UUID id, @RequestBody CreateFinancialPaymentDto createFinancialPaymentDto){
+    public ResponseEntity<FinancialResponseDto> payFinancial(@Valid @PathVariable UUID id, @RequestBody CreateFinancialPaymentDto createFinancialPaymentDto){
         FinancialResponseDto paidFinancial = financialService.payFinancial(id, createFinancialPaymentDto);
         return ResponseEntity.ok(paidFinancial);
     }
 
     @DeleteMapping("/refund/{id}")
-    public ResponseEntity<FinancialResponseDto> refundFinancial(@PathVariable UUID id) {
+    public ResponseEntity<FinancialResponseDto> refundFinancial(@Valid @PathVariable UUID id) {
         FinancialResponseDto refundedFinancial = financialService.refundFinancial(id);
         return ResponseEntity.ok(refundedFinancial);
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFinancial(@PathVariable UUID id){
+    public ResponseEntity<Void> deleteFinancial(@Valid @PathVariable UUID id){
         financialService.deleteFinancial(id);
         return ResponseEntity.noContent().build();
     }

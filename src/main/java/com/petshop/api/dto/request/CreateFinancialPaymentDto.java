@@ -26,6 +26,7 @@ public class CreateFinancialPaymentDto {
     private LocalDate paymentDate;
 
     @Schema(description = "Monetary type ID", example = "123e4567-e89b-12d3-a456-426614174000")
+    @NotNull(message = "The monetary type ID cannot be null")
     private UUID monetaryTypeId;
 
     @Schema(description = "Next due date", example = "2024-01-30")

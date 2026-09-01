@@ -30,6 +30,7 @@ public class CreateProductDto {
     private BigDecimal price;
 
     @Schema(description = "Category ID", example = "123e4567-e89b-12d3-a456-426614174000")
+    @NotNull(message = "Category ID is required")
     private UUID categoryId;
 
     @Schema(description = "Quantity in stock", example = "100")
